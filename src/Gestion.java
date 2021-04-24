@@ -1,6 +1,9 @@
+
 import java.util.ArrayList;
 
+
 public class Gestion implements gestionObjet{
+
 	public void AddObj(Object obj) {
 		if(obj instanceof Commande) {
 			boolean test=false;
@@ -93,7 +96,7 @@ public class Gestion implements gestionObjet{
 		
 	}
 	/////////PARTIE RECHERCHE/////////
-	public Client RecherchClientParNom(String nom,String prenom) {
+	public Client RechercheClientParNom(String nom,String prenom) {
 		for(Client c : ListCl) {
 			if(( c.getNom().toLowerCase().equals(nom.toLowerCase())  || c.getNom().toLowerCase().equals(prenom.toLowerCase()) )&&( c.getPrenom().toLowerCase().equals(nom.toLowerCase()) || c.getPrenom().toLowerCase().equals(prenom.toLowerCase()))) {
 				return c;
@@ -101,12 +104,44 @@ public class Gestion implements gestionObjet{
 		}
 		return null;
 	}
-	public Client RecherchClientParMatricule(int Mat) {
+	public Client RechercheClientParMatricule(int Mat) {
 		for(Client c : ListCl) {
 			if(c.getMatricule()==Mat) {
 				return c;
 			}
 		}
 		return null;
+	}
+	public ArrayList<Commande> RechercheCommandesParNomClient(String nom,String prenom){
+		ArrayList<Commande> tmp=new ArrayList<Commande>();
+		for(Commande c : ListC) {
+			if(c.getClient().equals(RechercheClientParNom(nom,prenom)))
+				tmp.add(c);
+		}
+		return tmp;
+	}
+	public ArrayList<Commande> RechercheCommandesParMatClient(int Matricule){
+		ArrayList<Commande> tmp=new ArrayList<Commande>();
+		for(Commande c : ListC) {
+			if(c.getClient().equals(RechercheClientParMatricule(Matricule)))
+				tmp.add(c);
+		}
+		return tmp;
+	}
+	public ArrayList<Commande> RechercheCommandesPariD(int id){
+		ArrayList<Commande> tmp=new ArrayList<Commande>();
+		for(Commande c : ListC) {
+			if(c.getId()==id)
+				tmp.add(c);
+		}
+		return tmp;
+	}
+	public ArrayList<Commande> RechercheCommandesParDate(String d){
+		ArrayList<Commande> tmp=new ArrayList<Commande>();
+		for(Commande c : ListC) {
+			if(c.getDateCmd().equals(d))
+				tmp.add(c);
+		}
+		return tmp;
 	}
 }

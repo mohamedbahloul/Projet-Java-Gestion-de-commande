@@ -1,15 +1,23 @@
 import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 public class Commande {
 	public void setClient(Client client) {
 		this.client = client;
 	}
 	private Client client;
-	private Date dateCmd;
+	private String dateCmd;
+	public static int NbCommande;
+	private int Id;
+	DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+	public int getId() {
+		return Id;
+	}
 	public Client getClient() {
 		return client;
 	}
-	public Date getDateCmd() {
+	public String getDateCmd() {
 		return dateCmd;
 	}
 	public ArrayList<Produit> getListP() {
@@ -17,11 +25,14 @@ public class Commande {
 	}
 	private ArrayList<Produit> ListP;
 	public Commande(Client client) {
-		dateCmd=new Date();
+
+		Id=NbCommande++;
+		dateCmd=format.format(new Date());
 		this.client=client;
 		ListP=new ArrayList<Produit>();
 	}
-	public Commande (Client client,Date dateCmd) {
+	public Commande (Client client,String dateCmd) {
+		Id=NbCommande++;
 		this.dateCmd=dateCmd;
 		this.client=client;
 		ListP=new ArrayList<Produit>();
@@ -46,7 +57,7 @@ public class Commande {
 		
 	}
 	public String toString() {
-		return client.toString()+"\t date = "+dateCmd;
+		return "id = "+ Id +"\t"+ client.toString()+"\t date = "+dateCmd;
 	}
 	
 }
