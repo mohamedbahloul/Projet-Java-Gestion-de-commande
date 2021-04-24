@@ -25,26 +25,23 @@ public class Produit {
 	public void setSolde(float solde) {
 		this.solde=solde;
 	}
+	public String getRef() {
+		return ref;
+	}
+	public String getLibelle() {
+		return libelle;
+	}
 	public int modifyQte(int n) {
-		if(n+Qte<0)
-			return 1;
-		else {
 			Qte += n;
-			return 0;
-		}
+			return Qte;		
 	}
+	
+	
 	public float getTauxReduction() {
-		if(solde!=0)
 			return (PHT+Taxe)*(solde/100);
-		else
-			return 0;
 	}
-	private float getPrixfinal() {
-		if(solde!=0) {
-			return (PHT+Taxe)+(PHT+Taxe)*(solde/100);
-		}
-		else 
-			return PHT+Taxe;
+	public float getPrixfinal() {
+		return (PHT+Taxe)+(PHT+Taxe)*(solde/100);
 	}
 	public Produit(String ref,String libelle,float PHT,float Taxe,int Qte) {
 		this.ref=ref;
@@ -52,16 +49,6 @@ public class Produit {
 		this.PHT=PHT;
 		this.Taxe=Taxe;
 		this.Qte=Qte;		
-	}
-	public Produit(String ref,String libelle,float PHT,float Taxe) {
-		this.ref=ref;
-		this.libelle=libelle;
-		this.PHT=PHT;
-		this.Taxe=Taxe;
-	}
-	public Produit(String ref,String libelle) {
-		this.ref=ref;
-		this.libelle=libelle;
 	}
 	public String toString() {
 		 String S="Ref = "+ref+"\t Libelle = "+libelle+"\t prix Produit = "+getPrixfinal()+"\t Quantité en stock = "+Qte;

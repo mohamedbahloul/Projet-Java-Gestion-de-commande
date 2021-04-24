@@ -9,4 +9,44 @@ public class Client {
 		this.matricule=matricule;
 		idC=nbClient++;		
 	}
+	
+	
+	public int getMatricule() {
+		return matricule;
+	}
+
+
+	public String getNom() {
+		return nom;
+	}
+
+
+	public String getPrenom() {
+		return prenom;
+	}
+
+
+	public void setIdC(int idC) {
+		this.idC = idC;
+	}
+
+
+	public void setMatricule(int matricule) {
+		this.matricule = matricule;
+	}
+
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+
+	public String toString() {
+		return "Id client = "+idC+"\t matricule = "+matricule+"\t nom = "+nom+"\t prenom = "+prenom;
+	}
 }
