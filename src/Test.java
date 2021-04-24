@@ -29,9 +29,18 @@ public class Test {
 		System.out.println(G.RechercheCommandesParDate("24/04/2021").toString());
 		
 		
+		System.out.println("Recherchee Produit");
+		System.out.println(G.RechercheProduitParLibelle("Ma3joun asnen") .toString());
+		System.out.println(G.RechercheProduitParRef("0022") .toString());
+		System.out.println(G.RechercheProduitPartranchedePrix(0, 400) .toString());
 		
+		System.out.println("calcul et affichage des produits dans une periode donnée");
+		System.out.println(G.RechercheCommandeParintervalleDate("1/01/2021", "30/10/2024") .toString());
+		System.out.println("le nombre de commande dans cette periode est : " +G.countCommandeParintervalleDate("1/01/2021", "30/10/2024"));
+
+
 		
-		
+
 	}
 
 }

@@ -144,4 +144,75 @@ public class Gestion implements gestionObjet{
 		}
 		return tmp;
 	}
+	public ArrayList<Produit> RechercheProduitParRef(String R){
+		ArrayList<Produit> tmp=new ArrayList<Produit>();
+		for(Produit p : ListP) {
+			if(p.getRef() .equals(R))
+				tmp.add(p);
+		}
+		return tmp;
+	}
+	
+	public ArrayList<Produit> RechercheProduitParLibelle(String L){
+		ArrayList<Produit> tmp=new ArrayList<Produit>();
+		for(Produit p : ListP) {
+			if(p.getLibelle().equals(L))
+				tmp.add(p);
+		}
+		return tmp;
+	}
+	
+	public ArrayList<Produit> RechercheProduitPartranchedePrix(float prixmin , float prixmax){
+		ArrayList<Produit> tmp=new ArrayList<Produit>();
+		for(Produit p : ListP) {
+			if(p.getPrixfinal() >= prixmin && p.getPrixfinal() <= prixmax)
+				tmp.add(p);
+		}
+		return tmp;
+	}
+	
+        /////////PARTIE CALCUL ET AFFICHAGE DES COMMANDES DANS UNE PERIODE DONNEE/////////
+	
+	public ArrayList<Commande> RechercheCommandeParintervalleDate(String datemin , String datemax){
+		ArrayList<Commande> tmp=new ArrayList<Commande>();
+		for(Commande c : ListC) {
+			String[] min = datemin.split("/");
+			String[] max = datemax.split("/");
+			String[] date= (c.getDateCmd()).split("/"); 
+			if( Integer.valueOf(date[2])  >= Integer.valueOf(min[2]) && Integer.valueOf(max[2])  >= Integer.valueOf(date[2]) )
+			{
+				if( Integer.valueOf(date[1])  >= Integer.valueOf(min[1]) && Integer.valueOf(max[1])  >= Integer.valueOf(date[1]) )
+					if ( Integer.valueOf(date[0])  >= Integer.valueOf(min[0]) && Integer.valueOf(max[0])  >= Integer.valueOf(date[0]) )
+						{tmp.add(c);
+						
+						}
+			}
+				
+		}
+		return tmp;
+		}
+		
+		
+		public int countCommandeParintervalleDate(String datemin , String datemax){
+			int count=0; 
+			for(Commande c : ListC) {
+				String[] min = datemin.split("/");
+				String[] max = datemax.split("/");
+				String[] date= (c.getDateCmd()).split("/"); 
+				if( Integer.valueOf(date[2])  >= Integer.valueOf(min[2]) && Integer.valueOf(max[2])  >= Integer.valueOf(date[2]) )
+				{
+					if( Integer.valueOf(date[1])  >= Integer.valueOf(min[1]) && Integer.valueOf(max[1])  >= Integer.valueOf(date[1]) )
+						if ( Integer.valueOf(date[0])  >= Integer.valueOf(min[0]) && Integer.valueOf(max[0])  >= Integer.valueOf(date[0]) )
+							{
+							count++;
+							}
+				}
+					
+			}
+			return count;
+		
+	}
+	
+	
+	
 }
