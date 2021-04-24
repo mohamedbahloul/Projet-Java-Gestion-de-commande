@@ -7,5 +7,5 @@ public interface gestionObjet {
 	public void AddObj(Object obj);
 	public void DeleteObj(Object obj) ;
 	
-	///test
+
 }
