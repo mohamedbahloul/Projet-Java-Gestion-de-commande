@@ -9,8 +9,7 @@ public class Client {
 		this.matricule=matricule;
 		idC=nbClient++;		
 	}
-	
-	
+
 	public int getMatricule() {
 		return matricule;
 	}

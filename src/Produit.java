@@ -31,9 +31,14 @@ public class Produit {
 	public String getLibelle() {
 		return libelle;
 	}
-	public int modifyQte(int n) {
+	public void modifyQte(int n) {
+		if(Qte>= Math.abs(n)) {
 			Qte += n;
-			return Qte;		
+			System.out.println("La quantité du produit ayant la ref "+ref+" a été modifié!  La nouvelle quantité est  "+Qte);
+		}	
+		else {
+			System.out.println("Cette Quantité est indisponible dans le stock");
+		}
 	}
 	
 	
@@ -41,7 +46,7 @@ public class Produit {
 			return (PHT+Taxe)*(solde/100);
 	}
 	public float getPrixfinal() {
-		return (PHT+Taxe)+(PHT+Taxe)*(solde/100);
+		return (PHT+Taxe)-(PHT+Taxe)*(solde/100);
 	}
 	public Produit(String ref,String libelle,float PHT,float Taxe,int Qte) {
 		this.ref=ref;

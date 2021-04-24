@@ -19,17 +19,17 @@ public class Gestion implements gestionObjet{
 			ListCl.add((Client)obj);
 		}
 		else if(obj instanceof Produit) {
-			boolean test=false;
+
 			for(Produit p : ListP)
-				if(((Produit)obj).getRef()== p.getRef() && ((Produit)obj).getLibelle()== p.getLibelle()){ // le prix du produit peut differt lorsque il y q un nouveau stock 
-					test=true;
-					if(((Produit)obj).getPrixfinal()== p.getPrixfinal()) {
+				if(((Produit)obj).getRef()== p.getRef() ){ 
+					if(((Produit)obj).getLibelle()== p.getLibelle() && ((Produit)obj).getPrixfinal()== p.getPrixfinal())	{
 						p.modifyQte(((Produit)obj).getQte());
-					} else {
-						System.out.println("2 Produits ayant la méme ref et un prix différent ! SVP Changer l'une des eux ");
 					}
+					else {
+						System.out.println("Cet référence existe déja!!");
+					}
+					return ;
 				}
-			if(test==false)
 				ListP.add((Produit)obj);
 		}
 	}
@@ -48,25 +48,65 @@ public class Gestion implements gestionObjet{
 	public ArrayList<Client> getListCl(){return ListCl;}
 	public ArrayList<Commande> getListC(){return ListC;}
 	public String AfficherCommandes () {
-		String s="";
-		for(int i=0;i<ListC.size();i++) {
-			s+=ListC.toString()+"\n";
-		}
-		return s;
+		return ListC.toString()+"\n";
 	}
-	public String AfficherClient () {
-		String s="";
-		for(int i=0;i<ListCl.size();i++) {
-			s+=ListCl.toString()+"\n";
-		}
-		return s;
+	public String AfficherClients () {
+		return ListCl.toString()+"\n";
 	}
-	public String AfficherProduit () {
-		String s="";
-		for(int i=0;i<ListP.size();i++) {
-			s+=ListP.toString()+"\n";
-		}
-		return s;
-	}
+	public String AfficherProduits () {
+			
 
+		return ListP.toString()+"\n";
+	}
+	public void setSoldeP(String ref,float solde) {
+		for(Produit p : ListP) {
+			if(p.getRef()==ref) {
+				p.setSolde(solde);
+				System.out.println(p.toString());
+				System.out.println("Le produit ayant la reférence "+ref +" est soldé avec un taux de réduction égale à "+p.getTauxReduction() +" Le prix finale de ce produit est "+p.getPrixfinal());
+				return;
+			}
+		System.out.println("Ce produit n'existe pas!!");
+		}
+		
+	}
+	public void unsetSolde(String ref) {
+		for(Produit p : ListP) {
+			if(p.getRef()==ref) {
+				p.setSolde(0);
+				System.out.println("Le produit ayant la reférence "+ref +" n'est pas soldé");
+				return;
+			}
+		System.out.println("Ce produit n'existe pas!!");
+		}
+	}
+	public void modifierQteProduit(String ref,int Qte) {
+		for(Produit p : ListP)
+		{
+			if(p.getRef()==ref) {
+				p.modifyQte(Qte);
+				return;
+			}
+		}
+		System.out.println("Ce produit n'existe pas!!");
+		
+		
+	}
+	/////////PARTIE RECHERCHE/////////
+	public Client RecherchClientParNom(String nom,String prenom) {
+		for(Client c : ListCl) {
+			if(( c.getNom().toLowerCase().equals(nom.toLowerCase())  || c.getNom().toLowerCase().equals(prenom.toLowerCase()) )&&( c.getPrenom().toLowerCase().equals(nom.toLowerCase()) || c.getPrenom().toLowerCase().equals(prenom.toLowerCase()))) {
+				return c;
+			}
+		}
+		return null;
+	}
+	public Client RecherchClientParMatricule(int Mat) {
+		for(Client c : ListCl) {
+			if(c.getMatricule()==Mat) {
+				return c;
+			}
+		}
+		return null;
+	}
 }
