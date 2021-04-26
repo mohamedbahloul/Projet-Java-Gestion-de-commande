@@ -1,7 +1,10 @@
 import java.util.ArrayList;
+
 public class Test {
 
 	public static void main(String[] args) {
+		SerializeArrayList SAL=new SerializeArrayList();
+		SAL.ReadProd();
 		Gestion G=new Gestion();
 		G.AddObj(new Client(111,"mohamed","ali"));
 		System.out.println(G.AfficherClients());
@@ -38,6 +41,8 @@ public class Test {
 		System.out.println(G.RechercheCommandeParintervalleDate("1/01/2021", "30/10/2024") .toString());
 		System.out.println("le nombre de commande dans cette periode est : " +G.countCommandeParintervalleDate("1/01/2021", "30/10/2024"));
 
+		
+		SAL.WriteProdInfos(G.getListP());
 
 		
 
