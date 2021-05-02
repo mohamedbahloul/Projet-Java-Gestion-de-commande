@@ -55,6 +55,10 @@ public class Produit {
 		this.Taxe=Taxe;
 		this.Qte=Qte;		
 	}
+	public String Save() {
+		return ref+"\t"+libelle+"\t"+PHT+"\t"+Taxe+"\t"+Qte+"\t"+solde;
+	}
+	
 	public String toString() {
 		 String S="Ref = "+ref+"\t Libelle = "+libelle+"\t prix Produit = "+getPrixfinal()+"\t Quantité en stock = "+Qte;
 		 if(solde!=0)
