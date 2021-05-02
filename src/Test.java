@@ -42,7 +42,7 @@ public class Test {
 		
 		System.out.println("calcul et affichage des produits dans une periode donnée");
 		System.out.println(G.RechercheCommandeParintervalleDate("1/01/2021", "30/10/2024") .toString());
-		System.out.println("le nombre de commande dans cette periode est : " +G.countCommandeParintervalleDate("1/01/2021", "30/10/2024"));
+		System.out.println("le nombre de commande dans cette periode est : " +G.countCommandeParintervalleDate("1/01/2021", "30/10/2021"));
 
 		
 		SAL.WriteProdInfos(G.getListP());
