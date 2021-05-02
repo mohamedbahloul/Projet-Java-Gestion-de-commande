@@ -56,6 +56,9 @@ public class Commande {
 	public void AddProduitRef(String ref,int Qte) {
 		
 	}
+	public String Save() {
+		return Id +"\t"+ client.toString()+"\t"+dateCmd;
+	}
 	public String toString() {
 		return "id = "+ Id +"\t"+ client.toString()+"\t date = "+dateCmd;
 	}

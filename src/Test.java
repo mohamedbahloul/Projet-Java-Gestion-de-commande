@@ -3,9 +3,12 @@ import java.util.ArrayList;
 public class Test {
 
 	public static void main(String[] args) {
-		SerializeArrayList SAL=new SerializeArrayList();
-		SAL.ReadProd();
 		Gestion G=new Gestion();
+		SerializeArrayList SAL=new SerializeArrayList();
+		ArrayList<Produit> p=SAL.ReadProd(G.getListP());
+		System.out.println(G.AfficherProduits());
+		
+		/*
 		G.AddObj(new Client(111,"mohamed","ali"));
 		System.out.println(G.AfficherClients());
 		G.AddObj(new Commande(new Client(111,"mohamed","ali")));
@@ -43,8 +46,8 @@ public class Test {
 
 		
 		SAL.WriteProdInfos(G.getListP());
-
-		
+		SAL.WriteCmdInfos(G.getListC());
+		*/
 
 	}
 
