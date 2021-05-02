@@ -7,7 +7,7 @@ public class Test {
 		SerializeArrayList SAL=new SerializeArrayList();
 		ArrayList<Produit> p=SAL.ReadProd(G.getListP());
 		System.out.println(G.AfficherProduits());
-		
+		SAL.WriteProdInfos(G.getListP());
 		/*
 		G.AddObj(new Client(111,"mohamed","ali"));
 		System.out.println(G.AfficherClients());

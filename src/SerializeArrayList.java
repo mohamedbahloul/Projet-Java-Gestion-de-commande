@@ -20,6 +20,7 @@ public class SerializeArrayList  extends Gestion{
          try {
 
              output = new BufferedOutputStream(Files.newOutputStream(chemin));
+             
              for(Produit p : P)
             	 output.write((p.Save()+"\n").getBytes());
 

@@ -1,6 +1,2 @@
 0021	Ma3joun asnen	400.0	87.0	60	20.0
 0022	Ma3joun asnen	500.0	80.0	20	0.0
-0021	Ma3joun asnen	400.0	87.0	60	20.0
-0022	Ma3joun asnen	500.0	80.0	20	0.0
-0021	Ma3joun asnen	400.0	87.0	60	20.0
-0022	Ma3joun asnen	500.0	80.0	20	0.0
