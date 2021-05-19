@@ -4,21 +4,22 @@ public class Test {
 
 	public static void main(String[] args) {
 		Gestion G=new Gestion();
-		SerializeArrayList SAL=new SerializeArrayList();
-		SAL.ReadProd(G.getListP());
-		SAL.ReadCl(G.getListCl());
-		SAL.ReadCmd(G);
+		SerializeArrayList SAL=new SerializeArrayList(G);
+		SAL.ReadProd();
+		SAL.ReadCl();
+		SAL.ReadCmd();
 		System.out.println(G.AfficherProduits());
 		System.out.println(G.AfficherClients());
 		System.out.println(G.AfficherCommandes());
 		//SAL.WriteProdInfos(G.getListP());
 		
-		
-		/*G.AddObj(new Client(111,"mohamed","ali"));
+		/*
+		G.AddObj(new Client(111,"mohamed","ali"));
 		System.out.println(G.AfficherClients());
 		G.AddObj(new Commande(new Client(111,"mohamed","ali")));
 		G.AddObj(new Commande(new Client(111,"mohamed","ali")));
 		G.AddObj(new Commande(new Client(112,"touhemi","ali")));
+		G.AddObj(new Commande(new Client(113,"2hemi","hama")));
 		System.out.println(G.AfficherCommandes());
 		System.out.println(G.AfficherClients());
 		G.AddObj(new Produit("0021","Ma3joun asnen",400,87,60));
@@ -51,9 +52,9 @@ public class Test {
 		System.out.println("le nombre de commande dans cette periode est : " +G.countCommandeParintervalleDate("1/01/2021", "30/10/2021"));
 		
 		
-		SAL.WriteProdInfos(G.getListP());
-		SAL.WriteCmdInfos(G.getListC());
-		SAL.WriteClInfos(G.getListCl());
+		SAL.WriteProdInfos();
+		SAL.WriteCmdInfos();
+		SAL.WriteClInfos();
 	*/}
 
 }

@@ -9,9 +9,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class SerializeArrayList  extends Gestion{
-
-  public void WriteProdInfos(ArrayList<Produit> P) {
+public class SerializeArrayList  {
+	private Gestion G;
+	public SerializeArrayList (Gestion G) {
+		this.G=G;
+	}
+  public void WriteProdInfos() {
 	  
      try {
     	 Path chemin = Paths.get("Produit.txt");
@@ -21,7 +24,7 @@ public class SerializeArrayList  extends Gestion{
 
              output = new BufferedOutputStream(Files.newOutputStream(chemin));
              
-             for(Produit p : P)
+             for(Produit p : G.getListP())
             	 output.write((p.Save()+"\n").getBytes());
 
              output.flush();
@@ -34,7 +37,7 @@ public class SerializeArrayList  extends Gestion{
          }
   }catch(Exception e) {System.out.println("Message " + e);};
   }
-  public void WriteClInfos(ArrayList<Client> C) {
+  public void WriteClInfos() {
 	  
 	     try {
 	    	 Path chemin = Paths.get("Client.txt");
@@ -44,7 +47,7 @@ public class SerializeArrayList  extends Gestion{
 
 	             output = new BufferedOutputStream(Files.newOutputStream(chemin));
 	             
-	             for(Client c : C)
+	             for(Client c : G.getListCl())
 	            	 output.write((c.Save()+"\n").getBytes());
 
 	             output.flush();
@@ -57,7 +60,7 @@ public class SerializeArrayList  extends Gestion{
 	         }
 	  }catch(Exception e) {System.out.println("Message " + e);};
 	  }
-  public void WriteCmdInfos(ArrayList<Commande> C) {
+  public void WriteCmdInfos() {
 	  
 	     try {
 	    	 Path chemin = Paths.get("Commande.txt");
@@ -66,7 +69,7 @@ public class SerializeArrayList  extends Gestion{
 	         try {
 
 	             output = new BufferedOutputStream(Files.newOutputStream(chemin));
-	             for(Commande c : C)
+	             for(Commande c : G.getListC())
 	            	 output.write((c.Save()+"\n").getBytes());
 	             
 	             output.flush();
@@ -82,7 +85,7 @@ public class SerializeArrayList  extends Gestion{
 
 
 
-  public void ReadProd(ArrayList<Produit> P) {
+  public void ReadProd() {
       Path chemin = Paths.get("Produit.txt");
       InputStream input = null;
       try {
@@ -94,8 +97,8 @@ public class SerializeArrayList  extends Gestion{
 	    	  String s=reader.readLine();
 	          String [] Str = s.split("\t");
 	          if(Str.length!=0) {
-		          P.add(new Produit(Str[0],Str[1],Float.parseFloat(Str[2]) ,Float.parseFloat(Str[3]),Integer.parseInt(Str[4])));
-		          P.get(i++).setSolde(Float.parseFloat(Str[5]));
+		          G.getListP().add(new Produit(Str[0],Str[1],Float.parseFloat(Str[2]) ,Float.parseFloat(Str[3]),Integer.parseInt(Str[4])));
+		          G.getListP().get(i++).setSolde(Float.parseFloat(Str[5]));
           
 	          }
           }
@@ -106,7 +109,7 @@ public class SerializeArrayList  extends Gestion{
           System.out.println("Message " + e);
       }
   }
-  public void ReadCl(ArrayList<Client> Cl) {
+  public void ReadCl() {
       Path chemin = Paths.get("Client.txt");
       InputStream input = null;
       try {
@@ -118,8 +121,8 @@ public class SerializeArrayList  extends Gestion{
 	    	  String s=reader.readLine();
 	          String [] Str = s.split("\t");
 	          if(Str.length!=0) {
-		          Cl.add(new Client(Integer.parseInt(Str[1]),Str[2] ,Str[3]));
-		          Cl.get(i++).setIdC(Integer.parseInt(Str[0]));
+	        	  G.getListCl().add(new Client(Integer.parseInt(Str[1]),Str[2] ,Str[3]));
+	        	  G.getListCl().get(i++).setIdC(Integer.parseInt(Str[0]));
           
 	          }
           }
@@ -130,7 +133,7 @@ public class SerializeArrayList  extends Gestion{
           System.out.println("Message " + e);
       }
   }
-  public void ReadCmd(Gestion G) {
+  public void ReadCmd() {
       Path chemin = Paths.get("Commande.txt");
       InputStream input = null;
       try {
