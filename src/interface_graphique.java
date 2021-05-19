@@ -680,7 +680,7 @@ public class interface_graphique extends JFrame {
 		
 		JPanel panel_6_1_1_1_2_1 = new JPanel();
 		panel_6_1_1_1_2_1.setBackground(Color.BLACK);
-		panel_6_1_1_1_2_1.setBounds(44, 11, 57, 20);
+		panel_6_1_1_1_2_1.setBounds(44, 11, 46, 20);
 		panel_5_1.add(panel_6_1_1_1_2_1);
 		
 		JLabel lblNewLabel_8_1 = new JLabel("id client");
@@ -690,7 +690,7 @@ public class interface_graphique extends JFrame {
 		
 		JPanel panel_6_1_1_1_2_6 = new JPanel();
 		panel_6_1_1_1_2_6.setBackground(Color.BLACK);
-		panel_6_1_1_1_2_6.setBounds(93, 11, 56, 20);
+		panel_6_1_1_1_2_6.setBounds(92, 11, 57, 20);
 		panel_5_1.add(panel_6_1_1_1_2_6);
 		
 		JLabel lblNewLabel_8_7 = new JLabel("prix final");
@@ -726,7 +726,7 @@ public class interface_graphique extends JFrame {
 		
 		JPanel panel_6_1_1_1_2_5 = new JPanel();
 		panel_6_1_1_1_2_5.setBackground(Color.BLACK);
-		panel_6_1_1_1_2_5.setBounds(321, 11, 57, 20);
+		panel_6_1_1_1_2_5.setBounds(321, 11, 56, 20);
 		panel_5_1.add(panel_6_1_1_1_2_5);
 		
 		JLabel lblNewLabel_8_6 = new JLabel("prix unit");
@@ -756,7 +756,7 @@ public class interface_graphique extends JFrame {
 		
 		JPanel panel_6_1_1_1_2_6_1 = new JPanel();
 		panel_6_1_1_1_2_6_1.setBackground(Color.BLACK);
-		panel_6_1_1_1_2_6_1.setBounds(373, 11, 48, 20);
+		panel_6_1_1_1_2_6_1.setBounds(376, 11, 45, 20);
 		panel_5_1.add(panel_6_1_1_1_2_6_1);
 		
 		JLabel lblNewLabel_8_7_1 = new JLabel("prix final");
