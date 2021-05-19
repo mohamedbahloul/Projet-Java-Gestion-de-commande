@@ -5,11 +5,16 @@ public class Test {
 	public static void main(String[] args) {
 		Gestion G=new Gestion();
 		SerializeArrayList SAL=new SerializeArrayList();
-		ArrayList<Produit> p=SAL.ReadProd(G.getListP());
+		SAL.ReadProd(G.getListP());
+		SAL.ReadCl(G.getListCl());
+		SAL.ReadCmd(G);
 		System.out.println(G.AfficherProduits());
-		SAL.WriteProdInfos(G.getListP());
-		/*
-		G.AddObj(new Client(111,"mohamed","ali"));
+		System.out.println(G.AfficherClients());
+		System.out.println(G.AfficherCommandes());
+		//SAL.WriteProdInfos(G.getListP());
+		
+		
+		/*G.AddObj(new Client(111,"mohamed","ali"));
 		System.out.println(G.AfficherClients());
 		G.AddObj(new Commande(new Client(111,"mohamed","ali")));
 		G.AddObj(new Commande(new Client(111,"mohamed","ali")));
@@ -33,22 +38,22 @@ public class Test {
 		System.out.println(G.RechercheCommandesParNomClient("mohamed", "ali").toString());
 		System.out.println(G.RechercheCommandesPariD(1).toString());
 		System.out.println(G.RechercheCommandesParDate("24/04/2021").toString());
-		
-		
+		(G.RechercheCommandesParMatClient(112)).get(0).AddProduit(G.RechercheProduitParRef("0022"), 20);
+		(G.RechercheCommandesParMatClient(112)).get(0).AddProduit(G.RechercheProduitParRef("0021"), 2);
+		(G.RechercheCommandesParMatClient(112)).get(0).AddProduit(G.RechercheProduitParRef("0021"), 2);
 		System.out.println("Recherchee Produit");
-		System.out.println(G.RechercheProduitParLibelle("Ma3joun asnen") .toString());
+		System.out.println(G.RechercheProduitParLibelle("Ma3joun asnen").toString());
 		System.out.println(G.RechercheProduitParRef("0022") .toString());
 		System.out.println(G.RechercheProduitPartranchedePrix(0, 400) .toString());
 		
 		System.out.println("calcul et affichage des produits dans une periode donnée");
 		System.out.println(G.RechercheCommandeParintervalleDate("1/01/2021", "30/10/2024") .toString());
 		System.out.println("le nombre de commande dans cette periode est : " +G.countCommandeParintervalleDate("1/01/2021", "30/10/2021"));
-
+		
 		
 		SAL.WriteProdInfos(G.getListP());
 		SAL.WriteCmdInfos(G.getListC());
-		*/
-
-	}
+		SAL.WriteClInfos(G.getListCl());
+	*/}
 
 }

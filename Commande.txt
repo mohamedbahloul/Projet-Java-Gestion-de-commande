@@ -1,3 +1,3 @@
-0	Id client = 0	 matricule = 111	 nom = mohamed	 prenom = ali	27/04/2021
-1	Id client = 0	 matricule = 111	 nom = mohamed	 prenom = ali	27/04/2021
-2	Id client = 1	 matricule = 112	 nom = touhemi	 prenom = ali	27/04/2021
+0	111	19/05/2021	
+1	111	19/05/2021	
+2	112	19/05/2021	0022	20	0021	4	

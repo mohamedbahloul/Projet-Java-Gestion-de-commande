@@ -9,7 +9,6 @@ public class Client {
 		this.matricule=matricule;
 		idC=nbClient++;		
 	}
-
 	public int getMatricule() {
 		return matricule;
 	}
@@ -44,7 +43,9 @@ public class Client {
 		this.prenom = prenom;
 	}
 
-
+	public String Save() {
+		return idC+"\t"+matricule+"\t"+nom+"\t"+prenom;
+	}
 	public String toString() {
 		return "Id client = "+idC+"\t matricule = "+matricule+"\t nom = "+nom+"\t prenom = "+prenom;
 	}

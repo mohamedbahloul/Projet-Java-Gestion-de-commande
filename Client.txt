@@ -1,1 +1,2 @@
-[Id client = 0	 matricule = 111	 nom = mohamed	 prenom = ali, Id client = 1	 matricule = 112	 nom = touhemi	 prenom = ali]
+0	111	mohamed	ali
+1	112	touhemi	ali

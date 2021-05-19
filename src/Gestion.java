@@ -47,6 +47,9 @@ public class Gestion implements gestionObjet{
 			ListP.remove((Produit)obj);
 		}
 	}
+	public void AddProduitToCmd(Produit P,Commande C,int Qte) {
+		
+	}
 	public ArrayList<Produit> getListP(){return ListP;}
 	public ArrayList<Client> getListCl(){return ListCl;}
 	public ArrayList<Commande> getListC(){return ListC;}
@@ -144,13 +147,12 @@ public class Gestion implements gestionObjet{
 		}
 		return tmp;
 	}
-	public ArrayList<Produit> RechercheProduitParRef(String R){
-		ArrayList<Produit> tmp=new ArrayList<Produit>();
+	public Produit RechercheProduitParRef(String R){
 		for(Produit p : ListP) {
-			if(p.getRef() .equals(R))
-				tmp.add(p);
+			if(p.getRef().equals(R))
+				return p;
 		}
-		return tmp;
+		return null;
 	}
 	
 	public ArrayList<Produit> RechercheProduitParLibelle(String L){
