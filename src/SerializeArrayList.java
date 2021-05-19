@@ -91,10 +91,13 @@ public class SerializeArrayList  extends Gestion{
           BufferedReader reader = new BufferedReader(new InputStreamReader(input));
           int i=0;
           while(reader.ready()){
-    	  String s=reader.readLine();
-          String [] Str = s.split("\t");
-          P.add(new Produit(Str[0],Str[1],Float.parseFloat(Str[2]) ,Float.parseFloat(Str[3]),Integer.parseInt(Str[4])));
-          P.get(i++).setSolde(Float.parseFloat(Str[5]));
+	    	  String s=reader.readLine();
+	          String [] Str = s.split("\t");
+	          if(Str.length!=0) {
+		          P.add(new Produit(Str[0],Str[1],Float.parseFloat(Str[2]) ,Float.parseFloat(Str[3]),Integer.parseInt(Str[4])));
+		          P.get(i++).setSolde(Float.parseFloat(Str[5]));
+          
+	          }
           }
           input.close();
           
@@ -112,10 +115,13 @@ public class SerializeArrayList  extends Gestion{
           BufferedReader reader = new BufferedReader(new InputStreamReader(input));
           int i=0;
           while(reader.ready()){
-    	  String s=reader.readLine();
-          String [] Str = s.split("\t");
-          Cl.add(new Client(Integer.parseInt(Str[1]),Str[2] ,Str[3]));
-          Cl.get(i++).setIdC(Integer.parseInt(Str[0]));
+	    	  String s=reader.readLine();
+	          String [] Str = s.split("\t");
+	          if(Str.length!=0) {
+		          Cl.add(new Client(Integer.parseInt(Str[1]),Str[2] ,Str[3]));
+		          Cl.get(i++).setIdC(Integer.parseInt(Str[0]));
+          
+	          }
           }
           input.close();
           
@@ -132,15 +138,17 @@ public class SerializeArrayList  extends Gestion{
            
           BufferedReader reader = new BufferedReader(new InputStreamReader(input));
           while(reader.ready()){
-    	  String s=reader.readLine();
-          String [] Str = s.split("\t");
-          Commande cmd=new Commande(G.RechercheClientParMatricule(Integer.parseInt(Str[1])),Str[2]);
-          cmd.setId(Integer.parseInt(Str[0]));
-          for(int i=3;i<Str.length;i++) {     
-    		  cmd.AddProduitFromRead(G.RechercheProduitParRef(Str[i++]), Integer.parseInt(Str[i]));
-    	  }
-          //System.out.println(cmd.toString());
-          G.getListC().add(cmd);
+	    	  String s=reader.readLine();
+	          String [] Str = s.split("\t");
+	          if(Str.length!=0) {
+		          Commande cmd=new Commande(G.RechercheClientParMatricule(Integer.parseInt(Str[1])),Str[2]);
+		          cmd.setId(Integer.parseInt(Str[0]));
+		          for(int i=3;i<Str.length;i++) {     
+		    		  cmd.AddProduitFromRead(G.RechercheProduitParRef(Str[i++]), Integer.parseInt(Str[i]));
+		    	  }
+		          //System.out.println(cmd.toString());
+		          G.getListC().add(cmd);
+	          }
           }
           input.close();
           
