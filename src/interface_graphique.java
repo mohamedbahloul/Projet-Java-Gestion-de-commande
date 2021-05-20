@@ -25,33 +25,33 @@ import javax.swing.UIManager;
 public class interface_graphique extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_8;
-	private JTextField textField_9;
-	private JTextField textField_10;
-	private JTextField textField_11;
-	private JTextField textField_12;
-	private JTextField textField_14;
-	private JTextField textField_15;
-	private JTextField textField_16;
-	private JTextField textField_17;
-	private JTextField textField_18;
-	private JTextField textField_19;
-	private JTextField textField_20;
-	private JTextField textField_21;
-	private JTextField textField_22;
-	private JTable table;
-	private JTable table_1;
-	private JTable table_2;
-	private JTextField textField_23;
-	private JTextField textField_5;
-	private JTable table_3;
+	private JTextField nomClient;
+	private JTextField prenomClient;
+	private JTextField matClient;
+	private JTextField datecmd;
+	private JTextField refpdcmd;
+	private JTextField libelleproduit;
+	private JTextField refproduit;
+	private JTextField taxe;
+	private JTextField prixhorstaxe;
+	private JTextField quantité;
+	private JTextField taux_de_reduction;
+	private JTextField id_client;
+	private JTextField nom_client;
+	private JTextField id_commande;
+	private JTextField date_commande;
+	private JTextField ref_produit;
+	private JTextField libelle_produit;
+	private JTextField prix_min;
+	private JTextField prix_max;
+	private JTextField date_min;
+	private JTextField date_max;
+	private JTable table_affichage_client;
+	private JTable table_affichage_commande_1;
+	private JTable table_affichage_produit;
+	private JTextField prixfinal;
+	private JTextField qtpdcmd;
+	private JTable table_affichage_commande_2;
 
 	/**
 	 * Launch the application.
@@ -108,25 +108,25 @@ public class interface_graphique extends JFrame {
 		lblDateDeLa.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
 		panel.add(lblDateDeLa);
 		
-		textField = new JTextField();
-		textField.setBounds(156, 15, 102, 27);
-		panel.add(textField);
-		textField.setColumns(10);
+		nomClient = new JTextField();
+		nomClient.setBounds(156, 15, 102, 27);
+		panel.add(nomClient);
+		nomClient.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(156, 59, 102, 27);
-		textField_1.setColumns(10);
-		panel.add(textField_1);
+		prenomClient = new JTextField();
+		prenomClient.setBounds(156, 59, 102, 27);
+		prenomClient.setColumns(10);
+		panel.add(prenomClient);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(156, 101, 102, 27);
-		textField_2.setColumns(10);
-		panel.add(textField_2);
+		matClient = new JTextField();
+		matClient.setBounds(156, 101, 102, 27);
+		matClient.setColumns(10);
+		panel.add(matClient);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(156, 148, 102, 27);
-		textField_3.setColumns(10);
-		panel.add(textField_3);
+		datecmd = new JTextField();
+		datecmd.setBounds(156, 148, 102, 27);
+		datecmd.setColumns(10);
+		panel.add(datecmd);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(10, 186, 248, 31);
@@ -140,10 +140,10 @@ public class interface_graphique extends JFrame {
 		lblNewLabel_2.setBounds(10, 0, 238, 25);
 		panel_2.add(lblNewLabel_2);
 		
-		textField_4 = new JTextField();
-		textField_4.setBounds(20, 265, 69, 31);
-		panel.add(textField_4);
-		textField_4.setColumns(10);
+		refpdcmd = new JTextField();
+		refpdcmd.setBounds(20, 265, 69, 31);
+		panel.add(refpdcmd);
+		refpdcmd.setColumns(10);
 		
 		JPanel panel_3_1_1_1 = new JPanel();
 		panel_3_1_1_1.setBounds(20, 228, 69, 31);
@@ -159,10 +159,10 @@ public class interface_graphique extends JFrame {
 		lblPrixFinalCmd.setBounds(10, 307, 139, 31);
 		panel.add(lblPrixFinalCmd);
 		
-		textField_23 = new JTextField();
-		textField_23.setColumns(10);
-		textField_23.setBounds(156, 307, 102, 27);
-		panel.add(textField_23);
+		prixfinal = new JTextField();
+		prixfinal.setColumns(10);
+		prixfinal.setBounds(156, 307, 102, 27);
+		panel.add(prixfinal);
 		
 		JPanel panel_3_1_2 = new JPanel();
 		panel_3_1_2.setLayout(null);
@@ -173,18 +173,18 @@ public class interface_graphique extends JFrame {
 		lblNewLabel_5.setBounds(10, 11, 59, 14);
 		panel_3_1_2.add(lblNewLabel_5);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(99, 265, 69, 31);
-		panel.add(textField_5);
+		qtpdcmd = new JTextField();
+		qtpdcmd.setColumns(10);
+		qtpdcmd.setBounds(99, 265, 69, 31);
+		panel.add(qtpdcmd);
 		
-		JButton btnNewButton_3 = new JButton("ajouter");
-		btnNewButton_3.setBounds(178, 228, 89, 31);
-		panel.add(btnNewButton_3);
+		JButton ajoutgestionproduit = new JButton("ajouter");
+		ajoutgestionproduit.setBounds(178, 228, 89, 31);
+		panel.add(ajoutgestionproduit);
 		
-		JButton btnNewButton_3_1 = new JButton("supprimer");
-		btnNewButton_3_1.setBounds(178, 269, 89, 31);
-		panel.add(btnNewButton_3_1);
+		JButton suppressiongestionproduit = new JButton("supprimer");
+		suppressiongestionproduit.setBounds(178, 269, 89, 31);
+		panel.add(suppressiongestionproduit);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 228, 196));
@@ -244,97 +244,97 @@ public class interface_graphique extends JFrame {
 		lblLibelleProduit.setBounds(10, 53, 128, 31);
 		panel_3.add(lblLibelleProduit);
 		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(156, 53, 102, 27);
-		panel_3.add(textField_6);
+		libelleproduit = new JTextField();
+		libelleproduit.setColumns(10);
+		libelleproduit.setBounds(156, 53, 102, 27);
+		panel_3.add(libelleproduit);
 		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBounds(156, 11, 102, 27);
-		panel_3.add(textField_7);
+		refproduit = new JTextField();
+		refproduit.setColumns(10);
+		refproduit.setBounds(156, 11, 102, 27);
+		panel_3.add(refproduit);
 		
-		textField_8 = new JTextField();
-		textField_8.setColumns(10);
-		textField_8.setBounds(156, 140, 102, 27);
-		panel_3.add(textField_8);
+		taxe = new JTextField();
+		taxe.setColumns(10);
+		taxe.setBounds(156, 140, 102, 27);
+		panel_3.add(taxe);
 		
-		textField_9 = new JTextField();
-		textField_9.setColumns(10);
-		textField_9.setBounds(156, 98, 102, 27);
-		panel_3.add(textField_9);
+		prixhorstaxe = new JTextField();
+		prixhorstaxe.setColumns(10);
+		prixhorstaxe.setBounds(156, 98, 102, 27);
+		panel_3.add(prixhorstaxe);
 		
-		textField_10 = new JTextField();
-		textField_10.setColumns(10);
-		textField_10.setBounds(156, 182, 102, 27);
-		panel_3.add(textField_10);
+		quantité = new JTextField();
+		quantité.setColumns(10);
+		quantité.setBounds(156, 182, 102, 27);
+		panel_3.add(quantité);
 		
-		textField_11 = new JTextField();
-		textField_11.setColumns(10);
-		textField_11.setBounds(156, 224, 102, 27);
-		panel_3.add(textField_11);
+		taux_de_reduction = new JTextField();
+		taux_de_reduction.setColumns(10);
+		taux_de_reduction.setBounds(156, 224, 102, 27);
+		panel_3.add(taux_de_reduction);
 		
-		JButton btnNewButton = new JButton("Ajouter une Commande ");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton ajouter_une_Commande = new JButton("Ajouter une Commande ");
+		ajouter_une_Commande.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
-		btnNewButton.setBackground(new Color(128, 128, 128));
-		btnNewButton.setBounds(288, 46, 202, 89);
-		contentPane.add(btnNewButton);
+		ajouter_une_Commande.setForeground(new Color(255, 255, 255));
+		ajouter_une_Commande.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
+		ajouter_une_Commande.setBackground(new Color(128, 128, 128));
+		ajouter_une_Commande.setBounds(288, 46, 202, 89);
+		contentPane.add(ajouter_une_Commande);
 		
-		JButton btnNewButton_1_1 = new JButton("Supprimer la Commande ");
-		btnNewButton_1_1.addActionListener(new ActionListener() {
+		JButton supprimer_la_commande = new JButton("Supprimer la Commande ");
+		supprimer_la_commande.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_1_1.setForeground(new Color(245, 255, 250));
-		btnNewButton_1_1.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
-		btnNewButton_1_1.setBackground(new Color(128, 128, 128));
-		btnNewButton_1_1.setBounds(288, 253, 202, 89);
-		contentPane.add(btnNewButton_1_1);
+		supprimer_la_commande.setForeground(new Color(245, 255, 250));
+		supprimer_la_commande.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
+		supprimer_la_commande.setBackground(new Color(128, 128, 128));
+		supprimer_la_commande.setBounds(288, 253, 202, 89);
+		contentPane.add(supprimer_la_commande);
 		
-		JButton btnNewButton_1 = new JButton("Modifier la  Commande ");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton modifier_la_commande = new JButton("Modifier la  Commande ");
+		modifier_la_commande.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_1.setForeground(new Color(245, 255, 250));
-		btnNewButton_1.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
-		btnNewButton_1.setBackground(new Color(128, 128, 128));
-		btnNewButton_1.setBounds(288, 146, 202, 89);
-		contentPane.add(btnNewButton_1);
+		modifier_la_commande.setForeground(new Color(245, 255, 250));
+		modifier_la_commande.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
+		modifier_la_commande.setBackground(new Color(128, 128, 128));
+		modifier_la_commande.setBounds(288, 146, 202, 89);
+		contentPane.add(modifier_la_commande);
 		
-		JButton btnNewButton_2 = new JButton("Ajouter un produit");
-		btnNewButton_2.setForeground(Color.WHITE);
-		btnNewButton_2.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
-		btnNewButton_2.setBackground(Color.GRAY);
-		btnNewButton_2.setBounds(288, 400, 202, 89);
-		contentPane.add(btnNewButton_2);
+		JButton ajouter_un_produit = new JButton("Ajouter un produit");
+		ajouter_un_produit.setForeground(Color.WHITE);
+		ajouter_un_produit.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
+		ajouter_un_produit.setBackground(Color.GRAY);
+		ajouter_un_produit.setBounds(288, 400, 202, 89);
+		contentPane.add(ajouter_un_produit);
 		
-		JButton btnNewButton_1_2 = new JButton("Modifier le produit");
-		btnNewButton_1_2.addActionListener(new ActionListener() {
+		JButton modifier_le_produit = new JButton("Modifier le produit");
+		modifier_le_produit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_1_2.setForeground(new Color(245, 255, 250));
-		btnNewButton_1_2.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
-		btnNewButton_1_2.setBackground(Color.GRAY);
-		btnNewButton_1_2.setBounds(288, 496, 202, 89);
-		contentPane.add(btnNewButton_1_2);
+		modifier_le_produit.setForeground(new Color(245, 255, 250));
+		modifier_le_produit.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
+		modifier_le_produit.setBackground(Color.GRAY);
+		modifier_le_produit.setBounds(288, 496, 202, 89);
+		contentPane.add(modifier_le_produit);
 		
-		JButton btnNewButton_1_2_1 = new JButton("Supprimer le produit");
-		btnNewButton_1_2_1.addActionListener(new ActionListener() {
+		JButton supprimer_le_produit = new JButton("Supprimer le produit");
+		supprimer_le_produit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_1_2_1.setForeground(new Color(245, 255, 250));
-		btnNewButton_1_2_1.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
-		btnNewButton_1_2_1.setBackground(Color.GRAY);
-		btnNewButton_1_2_1.setBounds(288, 596, 202, 89);
-		contentPane.add(btnNewButton_1_2_1);
+		supprimer_le_produit.setForeground(new Color(245, 255, 250));
+		supprimer_le_produit.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
+		supprimer_le_produit.setBackground(Color.GRAY);
+		supprimer_le_produit.setBounds(288, 596, 202, 89);
+		contentPane.add(supprimer_le_produit);
 		
 		JPanel panel_1_2 = new JPanel();
 		panel_1_2.setLayout(null);
@@ -363,22 +363,22 @@ public class interface_graphique extends JFrame {
 		lblNewLabel_6_1.setBounds(10, 63, 94, 28);
 		panel_4.add(lblNewLabel_6_1);
 		
-		textField_12 = new JTextField();
-		textField_12.setBounds(114, 11, 86, 33);
-		panel_4.add(textField_12);
-		textField_12.setColumns(10);
+		id_client = new JTextField();
+		id_client.setBounds(114, 11, 86, 33);
+		panel_4.add(id_client);
+		id_client.setColumns(10);
 		
-		textField_14 = new JTextField();
-		textField_14.setColumns(10);
-		textField_14.setBounds(114, 63, 86, 33);
-		panel_4.add(textField_14);
+		nom_client = new JTextField();
+		nom_client.setColumns(10);
+		nom_client.setBounds(114, 63, 86, 33);
+		panel_4.add(nom_client);
 		
-		JButton btnValider = new JButton("Valider");
-		btnValider.setForeground(Color.WHITE);
-		btnValider.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
-		btnValider.setBackground(Color.GRAY);
-		btnValider.setBounds(500, 189, 202, 89);
-		contentPane.add(btnValider);
+		JButton valider_recherche_client = new JButton("Valider");
+		valider_recherche_client.setForeground(Color.WHITE);
+		valider_recherche_client.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
+		valider_recherche_client.setBackground(Color.GRAY);
+		valider_recherche_client.setBounds(500, 189, 202, 89);
+		contentPane.add(valider_recherche_client);
 		
 		JPanel panel_1_3 = new JPanel();
 		panel_1_3.setLayout(null);
@@ -403,27 +403,27 @@ public class interface_graphique extends JFrame {
 		lblNewLabel_6_2.setBounds(10, 11, 119, 28);
 		panel_4_1.add(lblNewLabel_6_2);
 		
-		textField_15 = new JTextField();
-		textField_15.setColumns(10);
-		textField_15.setBounds(127, 11, 86, 33);
-		panel_4_1.add(textField_15);
+		id_commande = new JTextField();
+		id_commande.setColumns(10);
+		id_commande.setBounds(127, 11, 86, 33);
+		panel_4_1.add(id_commande);
 		
-		textField_16 = new JTextField();
-		textField_16.setColumns(10);
-		textField_16.setBounds(127, 63, 86, 33);
-		panel_4_1.add(textField_16);
+		date_commande = new JTextField();
+		date_commande.setColumns(10);
+		date_commande.setBounds(127, 63, 86, 33);
+		panel_4_1.add(date_commande);
 		
 		JLabel lblNewLabel_6_1_1 = new JLabel("Date Commande:");
 		lblNewLabel_6_1_1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel_6_1_1.setBounds(0, 63, 141, 28);
 		panel_4_1.add(lblNewLabel_6_1_1);
 		
-		JButton btnValider_1 = new JButton("Valider");
-		btnValider_1.setForeground(Color.WHITE);
-		btnValider_1.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
-		btnValider_1.setBackground(Color.GRAY);
-		btnValider_1.setBounds(712, 189, 223, 89);
-		contentPane.add(btnValider_1);
+		JButton bouton_recherche_commande = new JButton("Valider");
+		bouton_recherche_commande.setForeground(Color.WHITE);
+		bouton_recherche_commande.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
+		bouton_recherche_commande.setBackground(Color.GRAY);
+		bouton_recherche_commande.setBounds(712, 189, 223, 89);
+		contentPane.add(bouton_recherche_commande);
 		
 		JPanel panel_4_2 = new JPanel();
 		panel_4_2.setLayout(null);
@@ -446,37 +446,37 @@ public class interface_graphique extends JFrame {
 		lblNewLabel_6_3_2.setBounds(10, 149, 94, 28);
 		panel_4_2.add(lblNewLabel_6_3_2);
 		
-		textField_17 = new JTextField();
-		textField_17.setColumns(10);
-		textField_17.setBounds(114, 11, 86, 33);
-		panel_4_2.add(textField_17);
+		ref_produit = new JTextField();
+		ref_produit.setColumns(10);
+		ref_produit.setBounds(114, 11, 86, 33);
+		panel_4_2.add(ref_produit);
 		
-		textField_18 = new JTextField();
-		textField_18.setColumns(10);
-		textField_18.setBounds(114, 55, 86, 33);
-		panel_4_2.add(textField_18);
+		libelle_produit = new JTextField();
+		libelle_produit.setColumns(10);
+		libelle_produit.setBounds(114, 55, 86, 33);
+		panel_4_2.add(libelle_produit);
 		
-		textField_19 = new JTextField();
-		textField_19.setColumns(10);
-		textField_19.setBounds(114, 99, 86, 33);
-		panel_4_2.add(textField_19);
+		prix_min = new JTextField();
+		prix_min.setColumns(10);
+		prix_min.setBounds(114, 99, 86, 33);
+		panel_4_2.add(prix_min);
 		
-		textField_20 = new JTextField();
-		textField_20.setColumns(10);
-		textField_20.setBounds(114, 144, 86, 33);
-		panel_4_2.add(textField_20);
+		prix_max = new JTextField();
+		prix_max.setColumns(10);
+		prix_max.setBounds(114, 144, 86, 33);
+		panel_4_2.add(prix_max);
 		
 		JLabel lblNewLabel_6_3_1 = new JLabel("prix min:");
 		lblNewLabel_6_3_1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel_6_3_1.setBounds(10, 104, 94, 28);
 		panel_4_2.add(lblNewLabel_6_3_1);
 		
-		JButton btnValider_2 = new JButton("Valider");
-		btnValider_2.setForeground(Color.WHITE);
-		btnValider_2.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
-		btnValider_2.setBackground(Color.GRAY);
-		btnValider_2.setBounds(498, 596, 202, 89);
-		contentPane.add(btnValider_2);
+		JButton bouton_recherche_produit = new JButton("Valider");
+		bouton_recherche_produit.setForeground(Color.WHITE);
+		bouton_recherche_produit.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
+		bouton_recherche_produit.setBackground(Color.GRAY);
+		bouton_recherche_produit.setBounds(498, 596, 202, 89);
+		contentPane.add(bouton_recherche_produit);
 		
 		JPanel panel_1_2_1 = new JPanel();
 		panel_1_2_1.setLayout(null);
@@ -523,30 +523,30 @@ public class interface_graphique extends JFrame {
 		lblNewLabel_6_1_3.setBounds(10, 63, 94, 28);
 		panel_4_3.add(lblNewLabel_6_1_3);
 		
-		textField_21 = new JTextField();
-		textField_21.setColumns(10);
-		textField_21.setBounds(114, 11, 86, 33);
-		panel_4_3.add(textField_21);
+		date_min = new JTextField();
+		date_min.setColumns(10);
+		date_min.setBounds(114, 11, 86, 33);
+		panel_4_3.add(date_min);
 		
-		textField_22 = new JTextField();
-		textField_22.setColumns(10);
-		textField_22.setBounds(114, 63, 86, 33);
-		panel_4_3.add(textField_22);
+		date_max = new JTextField();
+		date_max.setColumns(10);
+		date_max.setBounds(114, 63, 86, 33);
+		panel_4_3.add(date_max);
 		
-		JButton btnValider_2_1 = new JButton("Valider");
-		btnValider_2_1.setForeground(Color.WHITE);
-		btnValider_2_1.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
-		btnValider_2_1.setBackground(Color.GRAY);
-		btnValider_2_1.setBounds(710, 596, 225, 89);
-		contentPane.add(btnValider_2_1);
+		JButton bouton_valider_total_produit = new JButton("Valider");
+		bouton_valider_total_produit.setForeground(Color.WHITE);
+		bouton_valider_total_produit.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
+		bouton_valider_total_produit.setBackground(Color.GRAY);
+		bouton_valider_total_produit.setBounds(710, 596, 225, 89);
+		contentPane.add(bouton_valider_total_produit);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBounds(941, 43, 429, 149);
 		contentPane.add(panel_5);
 		panel_5.setLayout(null);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
+		table_affichage_client = new JTable();
+		table_affichage_client.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null},
 				{null, null, null, null},
@@ -563,12 +563,12 @@ public class interface_graphique extends JFrame {
 				"id commande", "id client", "nom", "New column"
 			}
 		));
-		table.setSurrendersFocusOnKeystroke(true);
-		table.setFillsViewportHeight(true);
-		table.setColumnSelectionAllowed(true);
-		table.setCellSelectionEnabled(true);
-		table.setBounds(0, 33, 429, 127);
-		panel_5.add(table);
+		table_affichage_client.setSurrendersFocusOnKeystroke(true);
+		table_affichage_client.setFillsViewportHeight(true);
+		table_affichage_client.setColumnSelectionAllowed(true);
+		table_affichage_client.setCellSelectionEnabled(true);
+		table_affichage_client.setBounds(0, 33, 429, 127);
+		panel_5.add(table_affichage_client);
 		
 		JPanel panel_6_1 = new JPanel();
 		panel_6_1.setBackground(Color.BLACK);
@@ -633,8 +633,8 @@ public class interface_graphique extends JFrame {
 		panel_5_1.setBounds(941, 262, 429, 149);
 		contentPane.add(panel_5_1);
 		
-		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
+		table_affichage_commande_1 = new JTable();
+		table_affichage_commande_1.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null},
 				{null, null, null, null},
@@ -651,12 +651,12 @@ public class interface_graphique extends JFrame {
 				"id commande", "id client", "prix total", "date"
 			}
 		));
-		table_1.setSurrendersFocusOnKeystroke(true);
-		table_1.setFillsViewportHeight(true);
-		table_1.setColumnSelectionAllowed(true);
-		table_1.setCellSelectionEnabled(true);
-		table_1.setBounds(0, 33, 194, 127);
-		panel_5_1.add(table_1);
+		table_affichage_commande_1.setSurrendersFocusOnKeystroke(true);
+		table_affichage_commande_1.setFillsViewportHeight(true);
+		table_affichage_commande_1.setColumnSelectionAllowed(true);
+		table_affichage_commande_1.setCellSelectionEnabled(true);
+		table_affichage_commande_1.setBounds(0, 33, 194, 127);
+		panel_5_1.add(table_affichage_commande_1);
 		
 		JPanel panel_6_1_1_1_2 = new JPanel();
 		panel_6_1_1_1_2.setBackground(Color.BLACK);
@@ -699,8 +699,8 @@ public class interface_graphique extends JFrame {
 		lblNewLabel_8_7.setFont(new Font("Tahoma", Font.BOLD, 9));
 		panel_6_1_1_1_2_6.add(lblNewLabel_8_7);
 		
-		table_3 = new JTable();
-		table_3.setModel(new DefaultTableModel(
+		table_affichage_commande_2 = new JTable();
+		table_affichage_commande_2.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null},
 				{null, null, null, null},
@@ -717,12 +717,12 @@ public class interface_graphique extends JFrame {
 				"ref pd", "qte pd", "prixU", "prixfinal"
 			}
 		));
-		table_3.setSurrendersFocusOnKeystroke(true);
-		table_3.setFillsViewportHeight(true);
-		table_3.setColumnSelectionAllowed(true);
-		table_3.setCellSelectionEnabled(true);
-		table_3.setBounds(227, 33, 194, 127);
-		panel_5_1.add(table_3);
+		table_affichage_commande_2.setSurrendersFocusOnKeystroke(true);
+		table_affichage_commande_2.setFillsViewportHeight(true);
+		table_affichage_commande_2.setColumnSelectionAllowed(true);
+		table_affichage_commande_2.setCellSelectionEnabled(true);
+		table_affichage_commande_2.setBounds(227, 33, 194, 127);
+		panel_5_1.add(table_affichage_commande_2);
 		
 		JPanel panel_6_1_1_1_2_5 = new JPanel();
 		panel_6_1_1_1_2_5.setBackground(Color.BLACK);
@@ -770,8 +770,8 @@ public class interface_graphique extends JFrame {
 		panel_5_2.setBounds(941, 517, 419, 149);
 		contentPane.add(panel_5_2);
 		
-		table_2 = new JTable();
-		table_2.setModel(new DefaultTableModel(
+		table_affichage_produit = new JTable();
+		table_affichage_produit.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null},
@@ -788,12 +788,12 @@ public class interface_graphique extends JFrame {
 				"ref produit", "libelle produit", "prix hors taxe", "taxe", "qte produit", "taux de red", "prix final"
 			}
 		));
-		table_2.setSurrendersFocusOnKeystroke(true);
-		table_2.setFillsViewportHeight(true);
-		table_2.setColumnSelectionAllowed(true);
-		table_2.setCellSelectionEnabled(true);
-		table_2.setBounds(0, 33, 419, 127);
-		panel_5_2.add(table_2);
+		table_affichage_produit.setSurrendersFocusOnKeystroke(true);
+		table_affichage_produit.setFillsViewportHeight(true);
+		table_affichage_produit.setColumnSelectionAllowed(true);
+		table_affichage_produit.setCellSelectionEnabled(true);
+		table_affichage_produit.setBounds(0, 33, 419, 127);
+		panel_5_2.add(table_affichage_produit);
 		
 		JPanel panel_6_7 = new JPanel();
 		panel_6_7.setBackground(Color.BLACK);
