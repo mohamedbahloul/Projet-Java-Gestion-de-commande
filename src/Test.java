@@ -11,6 +11,9 @@ public class Test {
 		System.out.println(G.AfficherProduits());
 		System.out.println(G.AfficherClients());
 		System.out.println(G.AfficherCommandes());
+		G.ModifierObj(new Produit("0021","Ma3joun asnen",400,100,56));
+		G.ModifierObj(new Commande(new Client(114,"mohamed","bahloul"),"22/05/2021"));
+		System.out.println(G.AfficherProduits());
 		//SAL.WriteProdInfos(G.getListP());
 		
 		/*

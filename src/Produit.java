@@ -16,7 +16,7 @@ public class Produit {
 		Taxe = taxe;
 	}
 	public void setQte(int Qte) {
-		this.Qte += Qte;
+		this.Qte = Qte;
 	}
 	public int getQte() {
 		return Qte;
