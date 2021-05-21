@@ -77,11 +77,15 @@ public class interface_graphique extends JFrame {
 	}
 	public void Afficher_Table_Prod() {
 		modèle= (DefaultTableModel) table_affichage_produit.getModel();
-		int i=1;
+		
+		for(int i=0;i<G.getListP().size();i++) {
+				
+		}
+		
 		for(Produit p:G.getListP()) {
-			System.out.println(i); 
-			modèle.insertRow(0, new Object[] {p.getRef(),p.getLibelle(),p.getPHT(),p.getTaxe(),p.getQte(),p.getTauxReduction()});
-			i++;
+			
+			modèle.addRow(new Object[] {p.getRef(),p.getLibelle(),p.getPHT(),p.getTaxe(),p.getQte(),p.getTauxReduction()});
+			//modèle.insertRow(i, new Object[] {p.getRef(),p.getLibelle(),p.getPHT(),p.getTaxe(),p.getQte(),p.getTauxReduction()});
 			
 		}
 	}
@@ -813,18 +817,9 @@ public class interface_graphique extends JFrame {
 		contentPane.add(panel_5_2);
 		
 		table_affichage_produit = new JTable();
+		table_affichage_produit.setEnabled(false);
 		table_affichage_produit.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
 			},
 			new String[] {
 				"ref produit", "libelle produit", "prix hors taxe", "taxe", "qte produit", "taux de red", "prix final"
