@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Gestion implements gestionObjet{
 
-	public void AddObj(Object obj) {
+	public boolean AddObj(Object obj) {
 		if(obj instanceof Commande) {
 			boolean test=false;
 			for(Client c : ListCl)
@@ -17,24 +17,31 @@ public class Gestion implements gestionObjet{
 				ListCl.add(((Commande)obj).getClient());
 			}
 			ListC.add((Commande)obj);
+			return true;
 		}
 		else if(obj instanceof Client) {
-			ListCl.add((Client)obj);
+			Client c=RechercheClientParMatricule(((Client) obj).getMatricule());
+			
+			if(c==null) {
+					ListCl.add((Client)obj);
+					return true;
+			}
+			return false;
 		}
 		else if(obj instanceof Produit) {
-
-			for(Produit p : ListP)
-				if(((Produit)obj).getRef()== p.getRef() ){ 
-					if(((Produit)obj).getLibelle()== p.getLibelle() && ((Produit)obj).getPrixfinal()== p.getPrixfinal())	{
-						p.modifyQte(((Produit)obj).getQte());
-					}
-					else {
-						System.out.println("Cet référence existe déja!!");
-					}
-					return ;
+			Produit p=RechercheProduitParRef(((Produit) obj).getRef());
+				if(p!=null){ 
+					System.out.println("Cet référence existe déja!!");
+					return false;
 				}
-				ListP.add((Produit)obj);
+			ListP.add((Produit)obj);
+				return true;
+				
 		}
+		return false;
+	}
+	public void modifier() {					/*if(((Produit)obj).getLibelle()== p.getLibelle() && ((Produit)obj).getPrixfinal()== p.getPrixfinal())	{
+		p.modifyQte(((Produit)obj).getQte());*/
 	}
 	public void DeleteObj(Object obj) {
 		if(obj instanceof Commande) {

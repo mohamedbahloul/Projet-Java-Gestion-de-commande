@@ -77,16 +77,8 @@ public class interface_graphique extends JFrame {
 	}
 	public void Afficher_Table_Prod() {
 		modèle= (DefaultTableModel) table_affichage_produit.getModel();
-		
-		for(int i=0;i<G.getListP().size();i++) {
-				
-		}
-		
-		for(Produit p:G.getListP()) {
-			
-			modèle.addRow(new Object[] {p.getRef(),p.getLibelle(),p.getPHT(),p.getTaxe(),p.getQte(),p.getTauxReduction()});
-			//modèle.insertRow(i, new Object[] {p.getRef(),p.getLibelle(),p.getPHT(),p.getTaxe(),p.getQte(),p.getTauxReduction()});
-			
+		for(Produit p:G.getListP()) {			
+			modèle.addRow(new Object[] {p.getRef(),p.getLibelle(),p.getPHT(),p.getTaxe(),p.getQte(),p.getTauxReduction()+"%",p.getPrixfinal()});
 		}
 	}
 	/**
@@ -346,9 +338,15 @@ public class interface_graphique extends JFrame {
 					}
 				if (ajout) {
 					Produit p=new Produit(refproduit.getText(),libelleproduit.getText(),Float.parseFloat(prixhorstaxe.getText()) ,Float.parseFloat(taxe.getText()),Integer.parseInt(quantité.getText()));
-					G.AddObj(p);
-					Afficher_Table_Prod();
-
+					if(!(taux_de_reduction.getText().equals(null))) {
+						System.out.println("ijio");
+						if(p.setSolde(Float.parseFloat(taux_de_reduction.getText()))==false)
+							JOptionPane.showMessageDialog(contentPane, "Solde doit etre entre 0 et 100!!", " Solde invalide",JOptionPane.ERROR_MESSAGE); 
+					}
+					if(G.AddObj(p))
+						modèle.addRow(new Object[] {p.getRef(),p.getLibelle(),p.getPHT(),p.getTaxe(),p.getQte(),p.getTauxReduction()+"%",p.getPrixfinal()});
+					else 
+						JOptionPane.showMessageDialog(contentPane, "Réference Existe!", " ref Existe",JOptionPane.ERROR_MESSAGE); 
 				}
 
 				}

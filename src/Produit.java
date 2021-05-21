@@ -1,4 +1,3 @@
-
 public class Produit {
 	private String ref,libelle;
 	private float PHT,Taxe;
@@ -22,8 +21,11 @@ public class Produit {
 	public int getQte() {
 		return Qte;
 	}
-	public void setSolde(float solde) {
+	public boolean setSolde(float solde) {
+		if(solde>100||solde<0)
+			return false;
 		this.solde=solde;
+		return true;
 	}
 	public String getRef() {
 		return ref;
@@ -43,7 +45,7 @@ public class Produit {
 	
 	
 	public float getTauxReduction() {
-			return (PHT+Taxe)*(solde/100);
+			return solde;
 	}
 	public float getPrixfinal() {
 		return (PHT+Taxe)-(PHT+Taxe)*(solde/100);
@@ -53,7 +55,8 @@ public class Produit {
 		this.libelle=libelle;
 		this.PHT=PHT;
 		this.Taxe=Taxe;
-		this.Qte=Qte;		
+		this.Qte=Qte;	
+		solde=0;
 	}
 	public String Save() {
 		return ref+"\t"+libelle+"\t"+PHT+"\t"+Taxe+"\t"+Qte+"\t"+solde;
