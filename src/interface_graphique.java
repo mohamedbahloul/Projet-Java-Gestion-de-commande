@@ -13,6 +13,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JSpinner;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -52,7 +53,7 @@ public class interface_graphique extends JFrame {
 	private JTextField prixfinal;
 	private JTextField qtpdcmd;
 	private JTable table_affichage_commande_2;
-
+	DefaultTableModel modèle;
 	/**
 	 * Launch the application.
 	 */
@@ -68,7 +69,7 @@ public class interface_graphique extends JFrame {
 			}
 		});
 	}
-
+	
 	/**
 	 * Create the frame.
 	 */
@@ -299,6 +300,7 @@ public class interface_graphique extends JFrame {
 		JButton modifier_la_commande = new JButton("Modifier la  Commande ");
 		modifier_la_commande.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		modifier_la_commande.setForeground(new Color(245, 255, 250));
@@ -308,6 +310,23 @@ public class interface_graphique extends JFrame {
 		contentPane.add(modifier_la_commande);
 		
 		JButton ajouter_un_produit = new JButton("Ajouter un produit");
+		ajouter_un_produit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			ajouter_produit_btn();
+			}
+			protected void ajouter_produit_btn() {
+				modèle= (DefaultTableModel) table_affichage_produit.getModel();
+				boolean ajout=true;
+
+				if (refproduit.getText().equals("")||libelleproduit.getText().equals("")||taxe.getText().equals("")||prixhorstaxe.getText().equals("")||quantité.getText().equals("")) {
+			
+					JOptionPane.showMessageDialog(contentPane, "remplissez tous les champs", " champs vides",JOptionPane.ERROR_MESSAGE); 
+					ajout=false;}
+
+				}
+		});
 		ajouter_un_produit.setForeground(Color.WHITE);
 		ajouter_un_produit.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
 		ajouter_un_produit.setBackground(Color.GRAY);
