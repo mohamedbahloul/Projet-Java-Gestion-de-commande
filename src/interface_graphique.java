@@ -28,8 +28,6 @@ public class interface_graphique extends JFrame {
 	private JPanel contentPane;
 	private JTextField nomClient;
 	private JTextField prenomClient;
-	private JTextField matClient;
-	private JTextField datecmd;
 	private JTextField refpdcmd;
 	private JTextField libelleproduit;
 	private JTextField refproduit;
@@ -55,6 +53,10 @@ public class interface_graphique extends JFrame {
 	private JTable table_affichage_commande_2;
 	private static Gestion G;
 	static DefaultTableModel   modèle;
+	private JTextField textField;
+	private JTextField nomclient_ajoutcl;
+	private JTextField textField_2;
+	private JTextField textField_3;
 	/**
 	 * Launch the application.
 	 */
@@ -110,16 +112,6 @@ public class interface_graphique extends JFrame {
 		lblPrnomClient.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
 		panel.add(lblPrnomClient);
 		
-		JLabel lblMatriculeFiscale = new JLabel("Matricule fiscale:");
-		lblMatriculeFiscale.setBounds(10, 97, 139, 31);
-		lblMatriculeFiscale.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
-		panel.add(lblMatriculeFiscale);
-		
-		JLabel lblDateDeLa = new JLabel("date :");
-		lblDateDeLa.setBounds(10, 144, 186, 31);
-		lblDateDeLa.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
-		panel.add(lblDateDeLa);
-		
 		nomClient = new JTextField();
 		nomClient.setBounds(156, 15, 102, 27);
 		panel.add(nomClient);
@@ -129,16 +121,6 @@ public class interface_graphique extends JFrame {
 		prenomClient.setBounds(156, 59, 102, 27);
 		prenomClient.setColumns(10);
 		panel.add(prenomClient);
-		
-		matClient = new JTextField();
-		matClient.setBounds(156, 101, 102, 27);
-		matClient.setColumns(10);
-		panel.add(matClient);
-		
-		datecmd = new JTextField();
-		datecmd.setBounds(156, 148, 102, 27);
-		datecmd.setColumns(10);
-		panel.add(datecmd);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(10, 186, 248, 31);
@@ -197,6 +179,16 @@ public class interface_graphique extends JFrame {
 		JButton suppressiongestionproduit = new JButton("supprimer");
 		suppressiongestionproduit.setBounds(178, 269, 89, 31);
 		panel.add(suppressiongestionproduit);
+		
+		JLabel lblDateDeLa = new JLabel("date :");
+		lblDateDeLa.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
+		lblDateDeLa.setBounds(0, 97, 186, 31);
+		panel.add(lblDateDeLa);
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(156, 97, 102, 27);
+		panel.add(textField);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 228, 196));
@@ -383,7 +375,7 @@ public class interface_graphique extends JFrame {
 		JPanel panel_1_2 = new JPanel();
 		panel_1_2.setLayout(null);
 		panel_1_2.setBackground(new Color(255, 228, 181));
-		panel_1_2.setBounds(498, 11, 202, 27);
+		panel_1_2.setBounds(498, 208, 202, 27);
 		contentPane.add(panel_1_2);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("Recherche Client :");
@@ -393,7 +385,7 @@ public class interface_graphique extends JFrame {
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(255, 228, 181));
-		panel_4.setBounds(500, 45, 202, 133);
+		panel_4.setBounds(500, 242, 202, 149);
 		contentPane.add(panel_4);
 		panel_4.setLayout(null);
 		
@@ -418,16 +410,20 @@ public class interface_graphique extends JFrame {
 		panel_4.add(nom_client);
 		
 		JButton valider_recherche_client = new JButton("Valider");
+		valider_recherche_client.setBounds(49, 104, 90, 29);
+		panel_4.add(valider_recherche_client);
+		valider_recherche_client.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		valider_recherche_client.setForeground(Color.WHITE);
 		valider_recherche_client.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
 		valider_recherche_client.setBackground(Color.GRAY);
-		valider_recherche_client.setBounds(500, 189, 202, 89);
-		contentPane.add(valider_recherche_client);
 		
 		JPanel panel_1_3 = new JPanel();
 		panel_1_3.setLayout(null);
 		panel_1_3.setBackground(new Color(255, 228, 225));
-		panel_1_3.setBounds(710, 11, 225, 27);
+		panel_1_3.setBounds(710, 208, 225, 27);
 		contentPane.add(panel_1_3);
 		
 		JLabel lblNewLabel_1_3 = new JLabel("Recherche Commande :");
@@ -439,7 +435,7 @@ public class interface_graphique extends JFrame {
 		JPanel panel_4_1 = new JPanel();
 		panel_4_1.setLayout(null);
 		panel_4_1.setBackground(new Color(250, 240, 230));
-		panel_4_1.setBounds(712, 43, 223, 133);
+		panel_4_1.setBounds(712, 240, 223, 149);
 		contentPane.add(panel_4_1);
 		
 		JLabel lblNewLabel_6_2 = new JLabel("id Commande:");
@@ -463,16 +459,16 @@ public class interface_graphique extends JFrame {
 		panel_4_1.add(lblNewLabel_6_1_1);
 		
 		JButton bouton_recherche_commande = new JButton("Valider");
+		bouton_recherche_commande.setBounds(79, 107, 80, 29);
+		panel_4_1.add(bouton_recherche_commande);
 		bouton_recherche_commande.setForeground(Color.WHITE);
 		bouton_recherche_commande.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
 		bouton_recherche_commande.setBackground(Color.GRAY);
-		bouton_recherche_commande.setBounds(712, 189, 223, 89);
-		contentPane.add(bouton_recherche_commande);
 		
 		JPanel panel_4_2 = new JPanel();
 		panel_4_2.setLayout(null);
 		panel_4_2.setBackground(new Color(240, 230, 140));
-		panel_4_2.setBounds(498, 401, 202, 182);
+		panel_4_2.setBounds(498, 462, 202, 223);
 		contentPane.add(panel_4_2);
 		
 		JLabel lblNewLabel_6_3 = new JLabel("ref produit:");
@@ -516,16 +512,16 @@ public class interface_graphique extends JFrame {
 		panel_4_2.add(lblNewLabel_6_3_1);
 		
 		JButton bouton_recherche_produit = new JButton("Valider");
+		bouton_recherche_produit.setBounds(52, 186, 80, 27);
+		panel_4_2.add(bouton_recherche_produit);
 		bouton_recherche_produit.setForeground(Color.WHITE);
 		bouton_recherche_produit.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
 		bouton_recherche_produit.setBackground(Color.GRAY);
-		bouton_recherche_produit.setBounds(498, 596, 202, 89);
-		contentPane.add(bouton_recherche_produit);
 		
 		JPanel panel_1_2_1 = new JPanel();
 		panel_1_2_1.setLayout(null);
 		panel_1_2_1.setBackground(new Color(240, 230, 140));
-		panel_1_2_1.setBounds(498, 362, 202, 27);
+		panel_1_2_1.setBounds(498, 423, 202, 27);
 		contentPane.add(panel_1_2_1);
 		
 		JLabel lblNewLabel_1_2_1 = new JLabel("Recherche produit :");
@@ -536,7 +532,7 @@ public class interface_graphique extends JFrame {
 		JPanel panel_1_2_2 = new JPanel();
 		panel_1_2_2.setLayout(null);
 		panel_1_2_2.setBackground(new Color(255, 228, 181));
-		panel_1_2_2.setBounds(710, 362, 225, 49);
+		panel_1_2_2.setBounds(710, 423, 225, 49);
 		contentPane.add(panel_1_2_2);
 		
 		JLabel lblNewLabel_1_2_2 = new JLabel("Total produit");
@@ -554,7 +550,7 @@ public class interface_graphique extends JFrame {
 		JPanel panel_4_3 = new JPanel();
 		panel_4_3.setLayout(null);
 		panel_4_3.setBackground(new Color(255, 228, 181));
-		panel_4_3.setBounds(710, 425, 225, 160);
+		panel_4_3.setBounds(710, 486, 225, 199);
 		contentPane.add(panel_4_3);
 		
 		JLabel lblNewLabel_6_4 = new JLabel("date min:");
@@ -578,11 +574,11 @@ public class interface_graphique extends JFrame {
 		panel_4_3.add(date_max);
 		
 		JButton bouton_valider_total_produit = new JButton("Valider");
+		bouton_valider_total_produit.setBounds(69, 160, 80, 28);
+		panel_4_3.add(bouton_valider_total_produit);
 		bouton_valider_total_produit.setForeground(Color.WHITE);
 		bouton_valider_total_produit.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
 		bouton_valider_total_produit.setBackground(Color.GRAY);
-		bouton_valider_total_produit.setBounds(710, 596, 225, 89);
-		contentPane.add(bouton_valider_total_produit);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBounds(941, 43, 429, 149);
@@ -592,16 +588,6 @@ public class interface_graphique extends JFrame {
 		table_affichage_client = new JTable();
 		table_affichage_client.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
 			},
 			new String[] {
 				"id commande", "id client", "nom", "New column"
@@ -680,16 +666,6 @@ public class interface_graphique extends JFrame {
 		table_affichage_commande_1 = new JTable();
 		table_affichage_commande_1.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
 			},
 			new String[] {
 				"id commande", "id client", "prix total", "date"
@@ -746,16 +722,6 @@ public class interface_graphique extends JFrame {
 		table_affichage_commande_2 = new JTable();
 		table_affichage_commande_2.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
 			},
 			new String[] {
 				"ref pd", "qte pd", "prixU", "prixfinal"
@@ -899,5 +865,73 @@ public class interface_graphique extends JFrame {
 		lblNewLabel_8_2_6.setForeground(Color.WHITE);
 		lblNewLabel_8_2_6.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		panel_6_7_6.add(lblNewLabel_8_2_6);
+		
+		JPanel panel_1_4 = new JPanel();
+		panel_1_4.setLayout(null);
+		panel_1_4.setBackground(new Color(204, 204, 255));
+		panel_1_4.setBounds(498, 11, 208, 27);
+		contentPane.add(panel_1_4);
+		
+		JLabel lblNewLabel_1_4 = new JLabel("Ajout de Commande :");
+		lblNewLabel_1_4.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
+		lblNewLabel_1_4.setBounds(0, 0, 196, 25);
+		panel_1_4.add(lblNewLabel_1_4);
+		
+		JPanel panel_4_4 = new JPanel();
+		panel_4_4.setLayout(null);
+		panel_4_4.setBackground(new Color(204, 204, 255));
+		panel_4_4.setBounds(502, 47, 202, 149);
+		contentPane.add(panel_4_4);
+		
+		JLabel lblNewLabel_6_5 = new JLabel("Nom Client:");
+		lblNewLabel_6_5.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_6_5.setBounds(10, 11, 94, 28);
+		panel_4_4.add(lblNewLabel_6_5);
+		
+		JLabel prenomclient_ajoutcl = new JLabel("Prenom Client:");
+		prenomclient_ajoutcl.setFont(new Font("Tahoma", Font.BOLD, 15));
+		prenomclient_ajoutcl.setBounds(10, 63, 115, 28);
+		panel_4_4.add(prenomclient_ajoutcl);
+		
+		nomclient_ajoutcl = new JTextField();
+		nomclient_ajoutcl.setColumns(10);
+		nomclient_ajoutcl.setBounds(120, 11, 80, 28);
+		panel_4_4.add(nomclient_ajoutcl);
+		
+		JLabel matfiscale_ajoutcl = new JLabel("mat fiscale:");
+		matfiscale_ajoutcl.setFont(new Font("Tahoma", Font.BOLD, 15));
+		matfiscale_ajoutcl.setBounds(10, 109, 94, 28);
+		panel_4_4.add(matfiscale_ajoutcl);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(120, 68, 80, 28);
+		panel_4_4.add(textField_2);
+		
+		textField_3 = new JTextField();
+		textField_3.setColumns(10);
+		textField_3.setBounds(120, 114, 80, 28);
+		panel_4_4.add(textField_3);
+		
+		JButton ajouter_un_client = new JButton("Ajouter un client");
+		ajouter_un_client.setForeground(Color.WHITE);
+		ajouter_un_client.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
+		ajouter_un_client.setBackground(Color.GRAY);
+		ajouter_un_client.setBounds(710, 11, 173, 56);
+		contentPane.add(ajouter_un_client);
+		
+		JButton modifier_un_client = new JButton("modifier un client");
+		modifier_un_client.setForeground(Color.WHITE);
+		modifier_un_client.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
+		modifier_un_client.setBackground(Color.GRAY);
+		modifier_un_client.setBounds(710, 79, 173, 56);
+		contentPane.add(modifier_un_client);
+		
+		JButton supprimer_un_client = new JButton("supprimer un client");
+		supprimer_un_client.setForeground(Color.WHITE);
+		supprimer_un_client.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
+		supprimer_un_client.setBackground(Color.GRAY);
+		supprimer_un_client.setBounds(710, 146, 173, 56);
+		contentPane.add(supprimer_un_client);
 	}
 }
