@@ -872,9 +872,10 @@ public class interface_graphique extends JFrame {
 		panel_1_4.setBounds(498, 11, 208, 27);
 		contentPane.add(panel_1_4);
 		
-		JLabel lblNewLabel_1_4 = new JLabel("Ajout de Commande :");
+		JLabel lblNewLabel_1_4 = new JLabel("Ajout de Client :");
+		lblNewLabel_1_4.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNewLabel_1_4.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
-		lblNewLabel_1_4.setBounds(0, 0, 196, 25);
+		lblNewLabel_1_4.setBounds(26, 0, 170, 25);
 		panel_1_4.add(lblNewLabel_1_4);
 		
 		JPanel panel_4_4 = new JPanel();
