@@ -49,17 +49,23 @@ public class interface_graphique extends JFrame {
 	private JTextField date_max;
 	private JTable table_affichage_client;
 	private JTable table_affichage_commande_1;
-	private JTable table_affichage_produit;
+	private static JTable table_affichage_produit;
 	private JTextField prixfinal;
 	private JTextField qtpdcmd;
 	private JTable table_affichage_commande_2;
-	DefaultTableModel modèle;
+	private static Gestion G;
+	static DefaultTableModel   modèle;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				G=new Gestion();
+				SerializeArrayList SAL=new SerializeArrayList(G);
+				SAL.ReadProd();
+				SAL.ReadCl();
+				SAL.ReadCmd();
 				try {
 					interface_graphique frame = new interface_graphique();
 					frame.setVisible(true);
@@ -69,7 +75,16 @@ public class interface_graphique extends JFrame {
 			}
 		});
 	}
-	
+	public void Afficher_Table_Prod() {
+		modèle= (DefaultTableModel) table_affichage_produit.getModel();
+		int i=1;
+		for(Produit p:G.getListP()) {
+			System.out.println(i); 
+			modèle.insertRow(0, new Object[] {p.getRef(),p.getLibelle(),p.getPHT(),p.getTaxe(),p.getQte(),p.getTauxReduction()});
+			i++;
+			
+		}
+	}
 	/**
 	 * Create the frame.
 	 */
@@ -323,9 +338,17 @@ public class interface_graphique extends JFrame {
 				if (refproduit.getText().equals("")||libelleproduit.getText().equals("")||taxe.getText().equals("")||prixhorstaxe.getText().equals("")||quantité.getText().equals("")) {
 			
 					JOptionPane.showMessageDialog(contentPane, "remplissez tous les champs", " champs vides",JOptionPane.ERROR_MESSAGE); 
-					ajout=false;}
+					ajout=false;
+					}
+				if (ajout) {
+					Produit p=new Produit(refproduit.getText(),libelleproduit.getText(),Float.parseFloat(prixhorstaxe.getText()) ,Float.parseFloat(taxe.getText()),Integer.parseInt(quantité.getText()));
+					G.AddObj(p);
+					Afficher_Table_Prod();
 
 				}
+
+				}
+			
 		});
 		ajouter_un_produit.setForeground(Color.WHITE);
 		ajouter_un_produit.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
@@ -813,7 +836,7 @@ public class interface_graphique extends JFrame {
 		table_affichage_produit.setCellSelectionEnabled(true);
 		table_affichage_produit.setBounds(0, 33, 419, 127);
 		panel_5_2.add(table_affichage_produit);
-		
+		Afficher_Table_Prod();
 		JPanel panel_6_7 = new JPanel();
 		panel_6_7.setBackground(Color.BLACK);
 		panel_6_7.setBounds(0, 11, 61, 20);
