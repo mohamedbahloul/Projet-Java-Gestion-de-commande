@@ -586,6 +586,7 @@ public class interface_graphique extends JFrame {
 		panel_5.setLayout(null);
 		
 		table_affichage_client = new JTable();
+		table_affichage_client.setEnabled(false);
 		table_affichage_client.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -664,6 +665,7 @@ public class interface_graphique extends JFrame {
 		contentPane.add(panel_5_1);
 		
 		table_affichage_commande_1 = new JTable();
+		table_affichage_commande_1.setEnabled(false);
 		table_affichage_commande_1.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -720,6 +722,7 @@ public class interface_graphique extends JFrame {
 		panel_6_1_1_1_2_6.add(lblNewLabel_8_7);
 		
 		table_affichage_commande_2 = new JTable();
+		table_affichage_commande_2.setEnabled(false);
 		table_affichage_commande_2.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
