@@ -40,19 +40,63 @@ public class Gestion implements gestionObjet{
 		}
 		return false;
 	}
-	public void modifier() {					/*if(((Produit)obj).getLibelle()== p.getLibelle() && ((Produit)obj).getPrixfinal()== p.getPrixfinal())	{
-		p.modifyQte(((Produit)obj).getQte());*/
-	}
-	public void DeleteObj(Object obj) {
+	/*le client yetbadel l matricule mte3ou fel commande walla ki na3mel modifier walla nkhaliwahh clé primaire
+	si oui lazem ki na3mel modifier l client w manel9ahech fel tableau yetzed  */
+	public boolean ModifierObj(Object obj) {					
 		if(obj instanceof Commande) {
-			ListC.remove((Commande)obj);
+			Commande c=RechercheCommandesPariD(((Commande) obj).getId());
+			if(c==null)
+				return false;
+			else {
+				c.setClient(((Commande) obj).getClient());
+				c.setDateCmd(((Commande) obj).getDateCmd());
+				c.getListP().clear();
+				for(QteProd p:((Commande) obj).getListP())
+					c.AddProduit(p.getProduit(), p.getQte());
+			}
 		}
 		else if(obj instanceof Client) {
-			ListCl.remove((Client)obj);
+			Client c=RechercheClientParMatricule(((Client) obj).getMatricule());
+			if(c==null)
+				return false;
+			else {
+				c.setNom(((Client) obj).getNom());
+				c.setPrenom(c.getPrenom());
+			}
 		}
 		else if(obj instanceof Produit) {
-			ListP.remove((Produit)obj);
+			Produit p=RechercheProduitParRef(((Produit) obj).getRef());
+			if(p==null)
+				return false;
+			else {
+				p.setPHT(((Produit) obj).getPHT());
+				p.setQte(((Produit) obj).getQte());
+				p.setSolde(((Produit) obj).getTauxReduction());
+				p.setTaxe(((Produit) obj).getTaxe());
+			}
 		}
+		return true;
+	}
+	public boolean DeleteObj(Object obj) {
+		if(obj instanceof Commande) {
+			Commande c=RechercheCommandesPariD(((Commande) obj).getId());
+			if(c==null)
+				return false;
+			ListC.remove(obj);
+		}
+		else if(obj instanceof Client) {
+			Client c=RechercheClientParMatricule(((Client) obj).getMatricule());
+			if(c==null)
+				return false;
+			ListCl.remove(obj);
+		}
+		else if(obj instanceof Produit) {
+			Produit p=RechercheProduitParRef(((Produit) obj).getRef());
+			if(p==null)
+				return false;
+			ListP.remove(obj);
+		}
+		return true;
 	}
 	public void AddProduitToCmd(Produit P,Commande C,int Qte) {
 		
@@ -138,13 +182,12 @@ public class Gestion implements gestionObjet{
 		}
 		return tmp;
 	}
-	public ArrayList<Commande> RechercheCommandesPariD(int id){
-		ArrayList<Commande> tmp=new ArrayList<Commande>();
+	public Commande RechercheCommandesPariD(int id){
 		for(Commande c : ListC) {
 			if(c.getId()==id)
-				tmp.add(c);
+				return c;
 		}
-		return tmp;
+		return null;
 	}
 	public ArrayList<Commande> RechercheCommandesParDate(String d){
 		ArrayList<Commande> tmp=new ArrayList<Commande>();

@@ -6,6 +6,12 @@ public class Commande {
 	public void setClient(Client client) {
 		this.client = client;
 	}
+	public void setDateCmd(String dateCmd) {
+		this.dateCmd = dateCmd;
+	}
+	public static void setNbCommande(int nbCommande) {
+		NbCommande = nbCommande;
+	}
 	private Client client;
 	private String dateCmd;
 	public static int NbCommande;
