@@ -57,6 +57,7 @@ public class interface_graphique extends JFrame {
 	private JTextField nomclient_ajoutcl;
 	private JTextField textField_2;
 	private JTextField textField_3;
+	private JTextField textField_1;
 	/**
 	 * Launch the application.
 	 */
@@ -180,15 +181,25 @@ public class interface_graphique extends JFrame {
 		suppressiongestionproduit.setBounds(178, 269, 89, 31);
 		panel.add(suppressiongestionproduit);
 		
-		JLabel lblDateDeLa = new JLabel("date :");
-		lblDateDeLa.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
-		lblDateDeLa.setBounds(0, 97, 186, 31);
-		panel.add(lblDateDeLa);
-		
 		textField = new JTextField();
 		textField.setColumns(10);
 		textField.setBounds(156, 97, 102, 27);
 		panel.add(textField);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(154, 136, 102, 27);
+		panel.add(textField_1);
+		
+		JLabel matfiscale_ajoutcl_1 = new JLabel("mat fiscale:");
+		matfiscale_ajoutcl_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		matfiscale_ajoutcl_1.setBounds(10, 102, 94, 28);
+		panel.add(matfiscale_ajoutcl_1);
+		
+		JLabel lblDateDeLa = new JLabel("date :");
+		lblDateDeLa.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
+		lblDateDeLa.setBounds(10, 136, 186, 31);
+		panel.add(lblDateDeLa);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 228, 196));
@@ -270,7 +281,7 @@ public class interface_graphique extends JFrame {
 		
 		quantité = new JTextField();
 		quantité.setColumns(10);
-		quantité.setBounds(156, 182, 102, 27);
+		quantité.setBounds(156, 178, 102, 27);
 		panel_3.add(quantité);
 		
 		taux_de_reduction = new JTextField();
@@ -292,6 +303,7 @@ public class interface_graphique extends JFrame {
 		JButton supprimer_la_commande = new JButton("Supprimer la Commande ");
 		supprimer_la_commande.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		supprimer_la_commande.setForeground(new Color(245, 255, 250));
@@ -331,10 +343,11 @@ public class interface_graphique extends JFrame {
 				if (ajout) {
 					Produit p=new Produit(refproduit.getText(),libelleproduit.getText(),Float.parseFloat(prixhorstaxe.getText()) ,Float.parseFloat(taxe.getText()),Integer.parseInt(quantité.getText()));
 					if(!(taux_de_reduction.getText().equals(null))) {
-						System.out.println("ijio");
+						
 						if(p.setSolde(Float.parseFloat(taux_de_reduction.getText()))==false)
 							JOptionPane.showMessageDialog(contentPane, "Solde doit etre entre 0 et 100!!", " Solde invalide",JOptionPane.ERROR_MESSAGE); 
 					}
+					
 					if(G.AddObj(p))
 						modèle.addRow(new Object[] {p.getRef(),p.getLibelle(),p.getPHT(),p.getTaxe(),p.getQte(),p.getTauxReduction()+"%",p.getPrixfinal()});
 					else 
@@ -353,6 +366,7 @@ public class interface_graphique extends JFrame {
 		JButton modifier_le_produit = new JButton("Modifier le produit");
 		modifier_le_produit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		modifier_le_produit.setForeground(new Color(245, 255, 250));
@@ -364,7 +378,24 @@ public class interface_graphique extends JFrame {
 		JButton supprimer_le_produit = new JButton("Supprimer le produit");
 		supprimer_le_produit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			}
+				modèle =(DefaultTableModel)table_affichage_produit.getModel() ;
+				int ligne =table_affichage_produit.getSelectedRow(); //getselectedrow retourne -1 si aucun ligne est sélectionné
+				//sinon elle retourne l'indice du ligne sélectionné 
+				if(ligne!=-1)//on a selectionné une ligne 
+				{ 
+				    // G.DeleteObj( new Produit ((String)(table_affichage_produit.getValueAt(ligne, 0)),(String)(table_affichage_produit.getValueAt(ligne, 1)), Float.parseFloat((String)(table_affichage_produit.getValueAt(ligne, 2))) , Float.parseFloat((String)(table_affichage_produit.getValueAt(ligne, 3))) ,Integer.parseInt((String)(table_affichage_produit.getValueAt(ligne, 4)))));
+					G.getListP().remove(ligne); 
+					
+				      modèle.removeRow(ligne);
+				      refproduit.setText("");//pour vider le champs
+				      libelleproduit.setText("");
+				      prixhorstaxe.setText("");
+				      taxe.setText("");
+				      quantité.setText("");
+				      taux_de_reduction.setText("");
+				      refproduit.requestFocus();
+				}
+				}
 		});
 		supprimer_le_produit.setForeground(new Color(245, 255, 250));
 		supprimer_le_produit.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
@@ -586,7 +617,6 @@ public class interface_graphique extends JFrame {
 		panel_5.setLayout(null);
 		
 		table_affichage_client = new JTable();
-		table_affichage_client.setEnabled(false);
 		table_affichage_client.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -665,7 +695,6 @@ public class interface_graphique extends JFrame {
 		contentPane.add(panel_5_1);
 		
 		table_affichage_commande_1 = new JTable();
-		table_affichage_commande_1.setEnabled(false);
 		table_affichage_commande_1.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -722,7 +751,6 @@ public class interface_graphique extends JFrame {
 		panel_6_1_1_1_2_6.add(lblNewLabel_8_7);
 		
 		table_affichage_commande_2 = new JTable();
-		table_affichage_commande_2.setEnabled(false);
 		table_affichage_commande_2.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -784,7 +812,8 @@ public class interface_graphique extends JFrame {
 		contentPane.add(panel_5_2);
 		
 		table_affichage_produit = new JTable();
-		table_affichage_produit.setEnabled(false);
+		table_affichage_produit.setCellSelectionEnabled(true);
+		table_affichage_produit.setColumnSelectionAllowed(true);
 		table_affichage_produit.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -794,8 +823,6 @@ public class interface_graphique extends JFrame {
 		));
 		table_affichage_produit.setSurrendersFocusOnKeystroke(true);
 		table_affichage_produit.setFillsViewportHeight(true);
-		table_affichage_produit.setColumnSelectionAllowed(true);
-		table_affichage_produit.setCellSelectionEnabled(true);
 		table_affichage_produit.setBounds(0, 33, 419, 127);
 		panel_5_2.add(table_affichage_produit);
 		Afficher_Table_Prod();

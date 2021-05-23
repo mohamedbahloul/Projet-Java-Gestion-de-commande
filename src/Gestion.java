@@ -98,6 +98,7 @@ public class Gestion implements gestionObjet{
 		}
 		return true;
 	}
+	
 	public void AddProduitToCmd(Produit P,Commande C,int Qte) {
 		
 	}
@@ -158,7 +159,7 @@ public class Gestion implements gestionObjet{
 		}
 		return null;
 	}
-	public Client RechercheClientParMatricule(int Mat) {
+	public static Client RechercheClientParMatricule(int Mat) {
 		for(Client c : ListCl) {
 			if(c.getMatricule()==Mat) {
 				return c;
