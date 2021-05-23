@@ -95,6 +95,32 @@ public class interface_graphique extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1404, 735);
 		contentPane = new JPanel();
+		contentPane.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				modèle =(DefaultTableModel)table_affichage_produit.getModel() ;
+				int ligne =table_affichage_produit.getSelectedRow(); //getselectedrow retourne -1 si aucun ligne est sélectionné
+				//sinon elle retourne l'indice du ligne sélectionné 
+				if(ligne!=-1)//on a selectionné une ligne 
+				{ 
+				      refproduit.setText("");//pour vider le champs
+				      libelleproduit.setText("");
+				      prixhorstaxe.setText("");
+				      taxe.setText("");
+				      quantité.setText("");
+				      taux_de_reduction.setText("");	
+				      table_affichage_produit.clearSelection();
+				}
+				modèle =(DefaultTableModel)table_affichage_client.getModel() ;
+				ligne =table_affichage_client.getSelectedRow(); //getselectedrow retourne -1 si aucun ligne est sélectionné
+				//sinon elle retourne l'indice du ligne sélectionné 
+				if(ligne!=-1)//on a selectionné une ligne 
+				{ 
+				      table_affichage_produit.clearSelection();
+				}
+				
+			}
+		});
 		contentPane.setBackground(new Color(245, 255, 250));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -372,6 +398,36 @@ public class interface_graphique extends JFrame {
 		JButton modifier_le_produit = new JButton("Modifier le produit");
 		modifier_le_produit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				modèle =(DefaultTableModel)table_affichage_produit.getModel() ;
+				int ligne =table_affichage_produit.getSelectedRow(); //getselectedrow retourne -1 si aucun ligne est sélectionné
+				//sinon elle retourne l'indice du ligne sélectionné 
+				if(ligne!=-1)//on a selectionné une ligne 
+				{ 
+					
+				    // G.DeleteObj( new Produit ((String)(table_affichage_produit.getValueAt(ligne, 0)),(String)(table_affichage_produit.getValueAt(ligne, 1)), Float.parseFloat((String)(table_affichage_produit.getValueAt(ligne, 2))) , Float.parseFloat((String)(table_affichage_produit.getValueAt(ligne, 3))) ,Integer.parseInt((String)(table_affichage_produit.getValueAt(ligne, 4)))));
+					  G.getListP().get(ligne).setPHT(Float.parseFloat(prixhorstaxe.getText()) ); 
+					  G.getListP().get(ligne).setTaxe(Float.parseFloat(taxe.getText()) );
+					  G.getListP().get(ligne).setLibelle(libelleproduit.getText()); 
+					  G.getListP().get(ligne).setQte(Integer.parseInt(quantité.getText()) );
+					  G.getListP().get(ligne).setSolde(Float.parseFloat(taux_de_reduction.getText()) );
+					  modèle.setValueAt(libelleproduit.getText(), ligne, 1);
+					  modèle.setValueAt(prixhorstaxe.getText(), ligne, 2);
+					  modèle.setValueAt(taxe.getText(), ligne, 3);
+					  modèle.setValueAt(quantité.getText(), ligne, 4);
+					  modèle.setValueAt(taux_de_reduction.getText(), ligne, 5);
+					  modèle.setValueAt(G.getListP().get(ligne).getPrixfinal(), ligne, 6);
+					  SAL.WriteProdInfos();
+				      refproduit.setText("");//pour vider le champs
+				      libelleproduit.setText("");
+				      prixhorstaxe.setText("");
+				      taxe.setText("");
+				      quantité.setText("");
+				      taux_de_reduction.setText("");
+				      refproduit.requestFocus();
+				      
+				}
+					
 				
 			}
 		});
@@ -822,6 +878,22 @@ public class interface_graphique extends JFrame {
 		table_affichage_produit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				modèle =(DefaultTableModel)table_affichage_produit.getModel() ;
+				int ligne =table_affichage_produit.getSelectedRow(); //getselectedrow retourne -1 si aucun ligne est sélectionné
+				//sinon elle retourne l'indice du ligne sélectionné 
+				if(ligne!=-1)//on a selectionné une ligne 
+				{ 
+				      refproduit.setText(G.getListP().get(ligne).getRef());//pour remplir les champs par le produit selectionné
+				      libelleproduit.setText(G.getListP().get(ligne).getLibelle()); 
+				      prixhorstaxe.setText((G.getListP().get(ligne).getPHT())+"");// +"" pour caster implicitement la valeur float en String
+				      taxe.setText(G.getListP().get(ligne).getTaxe()+"");
+				      quantité.setText(G.getListP().get(ligne).getQte()+"");
+				      taux_de_reduction.setText(G.getListP().get(ligne).getTauxReduction()+"");
+				      refpdcmd.setText(G.getListP().get(ligne).getRef());
+				      refpdcmd.setEnabled(false);
+				      qtpdcmd.setText("1");
+				      refproduit.requestFocus();
+				}
 			}
 		});
 		

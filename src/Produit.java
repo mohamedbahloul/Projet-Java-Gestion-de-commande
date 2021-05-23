@@ -18,6 +18,9 @@ public class Produit {
 	public void setQte(int Qte) {
 		this.Qte = Qte;
 	}
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
+	}
 	public int getQte() {
 		return Qte;
 	}
