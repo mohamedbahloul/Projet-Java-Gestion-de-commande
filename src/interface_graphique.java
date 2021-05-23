@@ -22,6 +22,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.UIManager;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class interface_graphique extends JFrame {
 
@@ -817,6 +819,12 @@ public class interface_graphique extends JFrame {
 		contentPane.add(panel_5_2);
 		
 		table_affichage_produit = new JTable();
+		table_affichage_produit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+		
 		table_affichage_produit.setCellSelectionEnabled(true);
 		table_affichage_produit.setColumnSelectionAllowed(true);
 		table_affichage_produit.setModel(new DefaultTableModel(
