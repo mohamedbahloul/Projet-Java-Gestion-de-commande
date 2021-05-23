@@ -52,6 +52,7 @@ public class interface_graphique extends JFrame {
 	private JTextField qtpdcmd;
 	private JTable table_affichage_commande_2;
 	private static Gestion G;
+	private static SerializeArrayList SAL;
 	static DefaultTableModel   modèle;
 	private JTextField textField;
 	private JTextField nomclient_ajoutcl;
@@ -65,7 +66,7 @@ public class interface_graphique extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				G=new Gestion();
-				SerializeArrayList SAL=new SerializeArrayList(G);
+				SAL=new SerializeArrayList(G);
 				SAL.ReadProd();
 				SAL.ReadCl();
 				SAL.ReadCmd();
@@ -348,8 +349,11 @@ public class interface_graphique extends JFrame {
 							JOptionPane.showMessageDialog(contentPane, "Solde doit etre entre 0 et 100!!", " Solde invalide",JOptionPane.ERROR_MESSAGE); 
 					}
 					
-					if(G.AddObj(p))
+					if(G.AddObj(p)) {
 						modèle.addRow(new Object[] {p.getRef(),p.getLibelle(),p.getPHT(),p.getTaxe(),p.getQte(),p.getTauxReduction()+"%",p.getPrixfinal()});
+						SAL.WriteProdInfos();
+					}
+					
 					else 
 						JOptionPane.showMessageDialog(contentPane, "Réference Existe!", " ref Existe",JOptionPane.ERROR_MESSAGE); 
 				}
@@ -384,7 +388,8 @@ public class interface_graphique extends JFrame {
 				if(ligne!=-1)//on a selectionné une ligne 
 				{ 
 				    // G.DeleteObj( new Produit ((String)(table_affichage_produit.getValueAt(ligne, 0)),(String)(table_affichage_produit.getValueAt(ligne, 1)), Float.parseFloat((String)(table_affichage_produit.getValueAt(ligne, 2))) , Float.parseFloat((String)(table_affichage_produit.getValueAt(ligne, 3))) ,Integer.parseInt((String)(table_affichage_produit.getValueAt(ligne, 4)))));
-					G.getListP().remove(ligne); 
+					  G.getListP().remove(ligne); 
+					  SAL.WriteProdInfos();
 					
 				      modèle.removeRow(ligne);
 				      refproduit.setText("");//pour vider le champs
