@@ -7,7 +7,7 @@ public class Client {
 		this.nom=nom;
 		this.prenom=prenom;
 		this.matricule=matricule;
-		idC=nbClient++;		
+		setIdC(nbClient++);		
 	}
 	public int getMatricule() {
 		return matricule;
@@ -44,9 +44,12 @@ public class Client {
 	}
 
 	public String Save() {
-		return idC+"\t"+matricule+"\t"+nom+"\t"+prenom;
+		return getIdC()+"\t"+matricule+"\t"+nom+"\t"+prenom;
 	}
 	public String toString() {
-		return "Id client = "+idC+"\t matricule = "+matricule+"\t nom = "+nom+"\t prenom = "+prenom;
+		return "Id client = "+getIdC()+"\t matricule = "+matricule+"\t nom = "+nom+"\t prenom = "+prenom;
+	}
+	public int getIdC() {
+		return idC;
 	}
 }

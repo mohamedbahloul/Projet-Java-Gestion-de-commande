@@ -58,8 +58,8 @@ public class interface_graphique extends JFrame {
 	static DefaultTableModel   modèle;
 	private JTextField textField;
 	private JTextField nomclient_ajoutcl;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField prenomajout;
+	private JTextField matajout;
 	private JTextField textField_1;
 	/**
 	 * Launch the application.
@@ -1019,17 +1019,50 @@ public class interface_graphique extends JFrame {
 		matfiscale_ajoutcl.setBounds(10, 109, 94, 28);
 		panel_4_4.add(matfiscale_ajoutcl);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(120, 68, 80, 28);
-		panel_4_4.add(textField_2);
+		prenomajout = new JTextField();
+		prenomajout.setColumns(10);
+		prenomajout.setBounds(120, 68, 80, 28);
+		panel_4_4.add(prenomajout);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(120, 114, 80, 28);
-		panel_4_4.add(textField_3);
+		matajout = new JTextField();
+		matajout.setColumns(10);
+		matajout.setBounds(120, 114, 80, 28);
+		panel_4_4.add(matajout);
 		
 		JButton ajouter_un_client = new JButton("Ajouter un client");
+		ajouter_un_client.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				ajouter_client_btn();
+			}
+			
+			protected void ajouter_client_btn() {
+				modèle= (DefaultTableModel) table_affichage_client.getModel();
+				boolean ajout=true;
+
+				if (nomclient_ajoutcl.getText().equals("")||prenomajout.getText().equals("")||matajout.getText().equals("")) {
+			
+					JOptionPane.showMessageDialog(contentPane, "remplissez tous les champs", " champs vides",JOptionPane.ERROR_MESSAGE); 
+					ajout=false;
+					}
+				if (ajout) {
+					Client c =new Client(Integer.parseInt(matajout.getText()),nomclient_ajoutcl.getText(),prenomajout.getText());
+					
+					
+					if(G.AddObj(c)) {
+						modèle.addRow(new Object[] {c.getIdC() ,c.getNom(),c.getPrenom(),c.getMatricule()});
+						SAL.WriteClInfos();
+					}
+					
+					else 
+						JOptionPane.showMessageDialog(contentPane, "Réference Existe!", " ref Existe",JOptionPane.ERROR_MESSAGE); 
+				}
+
+				}
+			
+		});
+		
 		ajouter_un_client.setForeground(Color.WHITE);
 		ajouter_un_client.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
 		ajouter_un_client.setBackground(Color.GRAY);
