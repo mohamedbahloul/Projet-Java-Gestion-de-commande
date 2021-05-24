@@ -6,16 +6,14 @@ public class Gestion implements gestionObjet{
 
 	public boolean AddObj(Object obj) {
 		if(obj instanceof Commande) {
-			boolean test=false;
-			for(Client c : ListCl)
-				if(((Commande)obj).getClient().getMatricule()== c.getMatricule() && ((Commande)obj).getClient().getNom()== c.getNom() && ((Commande)obj).getClient().getPrenom()== c.getPrenom()) {
-					test=true;
-					c.nbClient--;
-					((Commande)obj).setClient(c);//changer le client par le client trouvé car lorsqu'on a fait new le system a creé un nouveau client
+			Client cl=RechercheClientParMatricule((((Commande) obj).getClient()).getMatricule());
+				if(cl!=null) {
+					cl.nbClient--;
+					((Commande)obj).setClient(cl);//changer le client par le client trouvé car lorsqu'on a fait new le system a creé un nouveau client
 				}
-			if(test==false) {
-				ListCl.add(((Commande)obj).getClient());
-			}
+				else {
+					ListCl.add(((Commande)obj).getClient());
+				}
 			ListC.add((Commande)obj);
 			return true;
 		}

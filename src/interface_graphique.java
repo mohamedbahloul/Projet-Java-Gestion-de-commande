@@ -56,7 +56,7 @@ public class interface_graphique extends JFrame {
 	private static Gestion G;
 	private static SerializeArrayList SAL;
 	static DefaultTableModel   modèle;
-	private JTextField textField;
+	private JTextField MatClient;
 	private JTextField nomclient_ajoutcl;
 	private JTextField prenomajout;
 	private JTextField matajout;
@@ -87,6 +87,19 @@ public class interface_graphique extends JFrame {
 			modèle.addRow(new Object[] {p.getRef(),p.getLibelle(),p.getPHT(),p.getTaxe(),p.getQte(),p.getTauxReduction()+"%",p.getPrixfinal()});
 		}
 	}
+	public void Afficher_Table_Client() {
+		modèle= (DefaultTableModel) table_affichage_client.getModel();
+		for(Client c:G.getListCl()) {			
+			modèle.addRow(new Object[] {c.getIdC() ,c.getNom(),c.getPrenom(),c.getMatricule()});
+		}
+	}
+	public void Afficher_Table_Cmd() {
+		modèle= (DefaultTableModel) table_affichage_commande_1.getModel();
+		for(Commande c:G.getListC()) {		
+			System.out.println(c.toString());
+			//modèle.addRow(new Object[] {c.getId() ,c.getClient().getIdC(),c.getprixTotal(),c.getDateCmd()});
+		}
+	}
 	/**
 	 * Create the frame.
 	 */
@@ -109,6 +122,9 @@ public class interface_graphique extends JFrame {
 				      taxe.setText("");
 				      quantité.setText("");
 				      taux_de_reduction.setText("");	
+				      refpdcmd.setEnabled(true);
+				      refpdcmd.setText("");
+				      qtpdcmd.setText("");
 				      table_affichage_produit.clearSelection();
 				}
 				modèle =(DefaultTableModel)table_affichage_client.getModel() ;
@@ -116,7 +132,18 @@ public class interface_graphique extends JFrame {
 				//sinon elle retourne l'indice du ligne sélectionné 
 				if(ligne!=-1)//on a selectionné une ligne 
 				{ 
-				      table_affichage_produit.clearSelection();
+					  nomclient_ajoutcl.setText("");
+					  prenomajout.setText("");
+					  matajout.setText("");
+					  
+					  nomClient.setText("");
+					  prenomClient.setText("");
+					  MatClient.setText("");
+					  
+					  nomClient.setEnabled(true);
+					  prenomClient.setEnabled(true);
+					  MatClient.setEnabled(true);
+				      table_affichage_client.clearSelection();
 				}
 				
 			}
@@ -210,10 +237,10 @@ public class interface_graphique extends JFrame {
 		suppressiongestionproduit.setBounds(178, 269, 89, 31);
 		panel.add(suppressiongestionproduit);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(156, 97, 102, 27);
-		panel.add(textField);
+		MatClient = new JTextField();
+		MatClient.setColumns(10);
+		MatClient.setBounds(156, 97, 102, 27);
+		panel.add(MatClient);
 		
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
@@ -321,7 +348,42 @@ public class interface_graphique extends JFrame {
 		JButton ajouter_une_Commande = new JButton("Ajouter une Commande ");
 		ajouter_une_Commande.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			}
+					ajouter_cmd_btn();
+				}
+				private boolean testDate(String s) {return true;}//pour tester le mois ke jour et l'année 
+				protected void ajouter_cmd_btn() {
+					modèle= (DefaultTableModel) table_affichage_commande_1.getModel();
+					boolean ajout=true;
+					if (nomClient.getText().equals("")||prenomClient.getText().equals("")||MatClient.getText().equals("")) {
+				
+						JOptionPane.showMessageDialog(contentPane, "remplissez tous les champs", " champs vides",JOptionPane.ERROR_MESSAGE); 
+						ajout=false;
+						}
+					if (ajout) {
+						Commande c=null;
+
+						if(date_commande.getText().equals("")) {
+							c=new Commande(new Client(Integer.parseInt(MatClient.getText()),nomClient.getText(),prenomClient.getText()));
+							System.out.println("dsf");
+						}
+						else 
+							if(testDate(date_commande.getText()))
+								c=new Commande(new Client(Integer.parseInt(MatClient.getText()),nomClient.getText(),prenomClient.getText()),date_commande.getText());
+							else 
+								JOptionPane.showMessageDialog(contentPane, "Veuillez saisir une date valide de type JJ/MM/AA !!", "Date Invalide!",JOptionPane.ERROR_MESSAGE);
+							
+							
+
+						
+						if(G.AddObj(c)) {
+							modèle.addRow(new Object[] {c.getId(),c.getClient().getIdC(),c.getprixTotal(),c.getDateCmd()});
+							System.out.println(c.getDateCmd());
+							SAL.WriteCmdInfos();
+						}
+					}
+
+					}
+			
 		});
 		ajouter_une_Commande.setForeground(new Color(255, 255, 255));
 		ajouter_une_Commande.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
@@ -346,6 +408,7 @@ public class interface_graphique extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 			}
+
 		});
 		modifier_la_commande.setForeground(new Color(245, 255, 250));
 		modifier_la_commande.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
@@ -680,6 +743,27 @@ public class interface_graphique extends JFrame {
 		panel_5.setLayout(null);
 		
 		table_affichage_client = new JTable();
+		table_affichage_client.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				modèle =(DefaultTableModel)table_affichage_client.getModel() ;
+				int ligne =table_affichage_client.getSelectedRow(); //getselectedrow retourne -1 si aucun ligne est sélectionné
+				//sinon elle retourne l'indice du ligne sélectionné 
+				if(ligne!=-1)//on a selectionné une ligne 
+				{ 
+
+					  nomclient_ajoutcl.setText(G.getListCl().get(ligne).getNom());
+					  prenomajout.setText(G.getListCl().get(ligne).getPrenom());
+					  matajout.setText(G.getListCl().get(ligne).getMatricule()+"");
+					  nomClient.setText(G.getListCl().get(ligne).getNom());
+					  prenomClient.setText(G.getListCl().get(ligne).getPrenom());
+					  MatClient.setText(G.getListCl().get(ligne).getMatricule()+"");
+					  nomClient.setEnabled(false);
+					  prenomClient.setEnabled(false);
+					  MatClient.setEnabled(false);
+				}
+			}
+		});
 		table_affichage_client.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -739,7 +823,7 @@ public class interface_graphique extends JFrame {
 		lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_7.setBounds(981, 11, 343, 27);
 		contentPane.add(lblNewLabel_7);
-		
+		Afficher_Table_Client();
 		JLabel lblNewLabel_7_1 = new JLabel("Affichage commande:");
 		lblNewLabel_7_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_7_1.setFont(new Font("Times New Roman", Font.BOLD, 22));
@@ -758,6 +842,11 @@ public class interface_graphique extends JFrame {
 		contentPane.add(panel_5_1);
 		
 		table_affichage_commande_1 = new JTable();
+		table_affichage_commande_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
 		table_affichage_commande_1.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -812,7 +901,7 @@ public class interface_graphique extends JFrame {
 		lblNewLabel_8_7.setForeground(Color.WHITE);
 		lblNewLabel_8_7.setFont(new Font("Tahoma", Font.BOLD, 9));
 		panel_6_1_1_1_2_6.add(lblNewLabel_8_7);
-		
+		Afficher_Table_Cmd();
 		table_affichage_commande_2 = new JTable();
 		table_affichage_commande_2.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -1070,6 +1159,31 @@ public class interface_graphique extends JFrame {
 		contentPane.add(ajouter_un_client);
 		
 		JButton modifier_un_client = new JButton("modifier un client");
+		modifier_un_client.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Modifier_client_btn();
+			}
+			
+			protected void Modifier_client_btn() {
+			modèle =(DefaultTableModel)table_affichage_client.getModel() ;
+			int ligne =table_affichage_client.getSelectedRow(); //getselectedrow retourne -1 si aucun ligne est sélectionné
+			//sinon elle retourne l'indice du ligne sélectionné 
+			if(ligne!=-1)//on a selectionné une ligne 
+			{ 
+				
+				  G.getListCl().get(ligne).setNom(nomclient_ajoutcl.getText());
+				  G.getListCl().get(ligne).setPrenom(prenomajout.getText());
+				  modèle.setValueAt(nomclient_ajoutcl.getText(), ligne, 1);
+				  modèle.setValueAt(prenomajout.getText(), ligne, 2);
+				  SAL.WriteClInfos();
+				  matajout.setText("");
+				  prenomajout.setText("");
+				  nomclient_ajoutcl.setText("");
+				  matajout.requestFocus();
+			      
+			}
+			
+		}});
 		modifier_un_client.setForeground(Color.WHITE);
 		modifier_un_client.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
 		modifier_un_client.setBackground(Color.GRAY);
@@ -1077,6 +1191,26 @@ public class interface_graphique extends JFrame {
 		contentPane.add(modifier_un_client);
 		
 		JButton supprimer_un_client = new JButton("supprimer un client");
+		supprimer_un_client.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				supprimer_Client_btn();
+			}
+			protected void supprimer_Client_btn() {
+				modèle =(DefaultTableModel)table_affichage_client.getModel() ;
+				int ligne =table_affichage_client.getSelectedRow(); //getselectedrow retourne -1 si aucun ligne est sélectionné
+				//sinon elle retourne l'indice du ligne sélectionné 
+				if(ligne!=-1)//on a selectionné une ligne 
+				{ 
+					  G.getListCl().remove(ligne); 
+					  SAL.WriteClInfos();
+				      modèle.removeRow(ligne);
+					  matajout.setText("");
+					  prenomajout.setText("");
+					  nomclient_ajoutcl.setText("");
+					  matajout.requestFocus();
+				}
+			}
+		});
 		supprimer_un_client.setForeground(Color.WHITE);
 		supprimer_un_client.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
 		supprimer_un_client.setBackground(Color.GRAY);
