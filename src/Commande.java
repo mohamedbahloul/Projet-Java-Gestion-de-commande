@@ -68,20 +68,21 @@ public class Commande {
 		
 		
 	}*/
-	public void AddProduit(Produit p,int Qte) {
+	public boolean AddProduit(Produit p,int Qte) {
 		if(p.getQte()>=Qte) {
 			for(QteProd qp:ListP) {
 				if(qp.getProduit().equals(p)) {
 					p.modifyQte(-Qte);
 					qp.setQte(qp.getQte()+Qte);
-					return;
+					
 				}
 			}
 			ListP.add(new QteProd(p,Qte));
 			p.modifyQte(-Qte);
+			return true;
 		}
 		else {
-			System.out.println("stock insuffisant");
+			return false;
 		}
 	}
 	public void AddProduitFromRead(Produit p,int Qte) {

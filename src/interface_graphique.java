@@ -275,7 +275,7 @@ public class interface_graphique extends JFrame {
 							for(i=0;i<ListProd_Cmd.size();i++)
 									if(ListProd_Cmd.get(i).getProduit().equals(p)) {
 										test=false;
-										ListProd_Cmd.get(i).getProduit().modifyQte(Integer.parseInt(qtpdcmd.getText())); 
+										ListProd_Cmd.get(i).setQte(ListProd_Cmd.get(i).getQte()+ Integer.parseInt(qtpdcmd.getText())); 
 										
 										break;
 									}
@@ -283,8 +283,16 @@ public class interface_graphique extends JFrame {
 								ListProd_Cmd.add(new QteProd(p,Integer.parseInt(qtpdcmd.getText())));
 							modèle.addRow(new Object[] {p.getRef(), qtpdcmd.getText(),p.getPrixfinal(),p.getPrixfinal()* Integer.parseInt(qtpdcmd.getText())});
 							}
-							else
-								modèle.setValueAt(ListProd_Cmd.get(i).getQte(), i, 1);
+							else {
+								int k=0;
+								while(true) {
+									System.out.println("hh");
+									if(modèle.getValueAt(k, 0)==ListProd_Cmd.get(i).getProduit().getRef()) {
+										modèle.setValueAt(Integer.parseInt(qtpdcmd.getText())+Integer.parseInt(modèle.getValueAt(k, 1).toString()), k, 1);
+										break;
+									}
+								k++;
+								}
 							}
 						float sum=0;
 						for(QteProd qp : ListProd_Cmd)
@@ -292,6 +300,7 @@ public class interface_graphique extends JFrame {
 						prixfinal.setText(sum+"");
 					}
 
+				}
 				}
 			
 		});
@@ -461,12 +470,28 @@ public class interface_graphique extends JFrame {
 						
 						if(G.AddObj(c)) {
 							for(QteProd p : ListProd_Cmd) {
-								c.AddProduit(p.getProduit(), p.getQte());
+								if(c.AddProduit(p.getProduit(), p.getQte())==true)
+								{
+									ListProd_Cmd.clear();
+									modèle.addRow(new Object[] {c.getId(),c.getClient().getIdC(),c.getprixTotal(),c.getDateCmd()});
+									SAL.WriteCmdInfos();
+									SAL.WriteProdInfos();
+									modèle= (DefaultTableModel) table_affichage_produit.getModel();
+									int i=0;
+										while(true) {
+											if(p.getProduit().getRef().equals(modèle.getValueAt(i, 0).toString()) ) {
+												modèle.setValueAt(p.getProduit().getQte(), i, 4);
+												break;
+											}
+											i++;
+										}
+										JOptionPane.showMessageDialog(contentPane, "Commande Ajoutée avec succés !!", "Commande Ajoutée!",JOptionPane.INFORMATION_MESSAGE);
+								}
+								else {
+									JOptionPane.showMessageDialog(contentPane, "Quantité insuffisante !!", "Qte Insuffisante!",JOptionPane.ERROR_MESSAGE);
+								}
 							}
-							ListProd_Cmd.clear();
-							modèle.addRow(new Object[] {c.getId(),c.getClient().getIdC(),c.getprixTotal(),c.getDateCmd()});
-							
-							SAL.WriteCmdInfos();
+
 						}
 					}
 
@@ -482,8 +507,17 @@ public class interface_graphique extends JFrame {
 		JButton supprimer_la_commande = new JButton("Supprimer la Commande ");
 		supprimer_la_commande.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-			}
+				modèle =(DefaultTableModel)table_affichage_commande_1.getModel() ;
+				int ligne =table_affichage_commande_1.getSelectedRow(); //getselectedrow retourne -1 si aucun ligne est sélectionné
+				//sinon elle retourne l'indice du ligne sélectionné 
+				if(ligne!=-1)//on a selectionné une ligne 
+				{ 
+					  G.getListC().remove(ligne); 
+					  SAL.WriteCmdInfos();
+				      modèle.removeRow(ligne);
+				}
+				}
+			
 		});
 		supprimer_la_commande.setForeground(new Color(245, 255, 250));
 		supprimer_la_commande.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
@@ -494,17 +528,42 @@ public class interface_graphique extends JFrame {
 		JButton modifier_la_commande = new JButton("Modifier la  Commande ");
 		modifier_la_commande.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ArrayList<QteProd> listCopie=new ArrayList<QteProd>();
 				modèle =(DefaultTableModel)table_affichage_commande_1.getModel() ;
 				int ligne =table_affichage_commande_1.getSelectedRow(); 
 				if(ligne!=-1)
 				{ 
 					Commande c=G.RechercheCommandesPariD(Integer.parseInt(modèle.getValueAt(ligne, 0).toString()) );	
+					for(QteProd qp:c.getListP())
+						listCopie.add(qp);
 					c.getListP().clear();
 						for(QteProd p : ListProd_Cmd) {
-							c.AddProduit(p.getProduit(), p.getQte());
+							if(c.AddProduit(p.getProduit(), p.getQte())==true)
+							{
+								ListProd_Cmd.clear();
+								modèle.addRow(new Object[] {c.getId(),c.getClient().getIdC(),c.getprixTotal(),c.getDateCmd()});
+								SAL.WriteCmdInfos();
+								SAL.WriteProdInfos();
+								modèle= (DefaultTableModel) table_affichage_produit.getModel();
+								int i=0;
+									while(true) {
+										if(p.getProduit().getRef().equals(modèle.getValueAt(i, 0).toString()) ) {
+											modèle.setValueAt(p.getProduit().getQte(), i, 4);
+											break;
+										}
+										i++;
+									}
+									JOptionPane.showMessageDialog(contentPane, "Commande Modifié avec succés !!", "Commande Modifié!",JOptionPane.INFORMATION_MESSAGE);
+							}
+							else {
+								c.getListP().clear();
+								for(QteProd qp: listCopie)
+									c.getListP().add(qp);
+								JOptionPane.showMessageDialog(contentPane, "Quantité insuffisante !!", "Qte Insuffisante!",JOptionPane.ERROR_MESSAGE);
+							}
 						}
-						SAL.WriteCmdInfos();
 				}
+				
 			}
 
 		});
