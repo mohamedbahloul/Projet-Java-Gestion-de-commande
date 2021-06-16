@@ -50,8 +50,23 @@ public class Commande {
 		for(int i =0;i<ListP.size();i++) {
 			prix+=ListP.get(i).getQte()*ListP.get(i).getProduit().getPrixfinal();
 		}
-		return prix;
+		return Math.round(prix);
 	}
+	/*public void ModifierProduit(ArrayList<QteProd> qp) {
+		for( int i=0;i<ListP.size();i++)
+			if(qp.contains(ListP.get(i))) {
+				for(QteProd h : qp) {
+					if(qp.equals(ListP.get(i))) {
+						ListP.get(i).getProduit().modifyQte(h.getQte());
+						ListP.remove(h);
+					}
+				}
+			}
+		for(int i =0;i<qp.size();i++ )
+			ListP.add(qp.get(i));
+		
+		
+	}*/
 	public void AddProduit(Produit p,int Qte) {
 		if(p.getQte()>=Qte) {
 			for(QteProd qp:ListP) {
@@ -70,9 +85,6 @@ public class Commande {
 	}
 	public void AddProduitFromRead(Produit p,int Qte) {
 			ListP.add(new QteProd(p,Qte));
-	}
-	public void AddProduitRef(String ref,int Qte) {
-		
 	}
 	public String Save() {
 		 String S=Id +"\t"+ client.getMatricule()+"\t"+dateCmd+"\t";

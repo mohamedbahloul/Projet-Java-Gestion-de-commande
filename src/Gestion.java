@@ -157,9 +157,17 @@ public class Gestion implements gestionObjet{
 		}
 		return null;
 	}
-	public static Client RechercheClientParMatricule(int Mat) {
+	public Client RechercheClientParMatricule(int Mat) {
 		for(Client c : ListCl) {
-			if(c.getMatricule()==Mat) {
+			if( c.getMatricule()== Mat) {
+				return c;
+			}
+		}
+		return null;
+	}
+	public Client RechercheClientParId(int id) {
+		for(Client c : ListCl) {
+			if( c.getIdC()== id) {
 				return c;
 			}
 		}

@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.UIManager;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class interface_graphique extends JFrame {
 
@@ -56,11 +57,13 @@ public class interface_graphique extends JFrame {
 	private static Gestion G;
 	private static SerializeArrayList SAL;
 	static DefaultTableModel   modèle;
+	static DefaultTableModel   modèle2;
 	private JTextField MatClient;
 	private JTextField nomclient_ajoutcl;
 	private JTextField prenomajout;
 	private JTextField matajout;
-	private JTextField textField_1;
+	private JTextField DateCmd;
+	static ArrayList<QteProd> ListProd_Cmd=new ArrayList<QteProd>();
 	/**
 	 * Launch the application.
 	 */
@@ -96,7 +99,8 @@ public class interface_graphique extends JFrame {
 	public void Afficher_Table_Cmd() {
 		modèle= (DefaultTableModel) table_affichage_commande_1.getModel();
 		for(Commande c:G.getListC()) {		
-			System.out.println(c.toString());
+			//System.out.println(c.toString());
+			modèle.addRow(new Object[] {c.getId(),c.getClient().getIdC(),c.getprixTotal(),c.getDateCmd()});
 			//modèle.addRow(new Object[] {c.getId() ,c.getClient().getIdC(),c.getprixTotal(),c.getDateCmd()});
 		}
 	}
@@ -111,10 +115,12 @@ public class interface_graphique extends JFrame {
 		contentPane.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				modèle2 =(DefaultTableModel)table_affichage_commande_2.getModel() ;
+				int ligne2 =table_affichage_commande_2.getSelectedRow(); 
 				modèle =(DefaultTableModel)table_affichage_produit.getModel() ;
 				int ligne =table_affichage_produit.getSelectedRow(); //getselectedrow retourne -1 si aucun ligne est sélectionné
 				//sinon elle retourne l'indice du ligne sélectionné 
-				if(ligne!=-1)//on a selectionné une ligne 
+				if(ligne!=-1||ligne2!=-1)//pour supprimer les 2 zones de textes d'ajout produit vers commande
 				{ 
 				      refproduit.setText("");//pour vider le champs
 				      libelleproduit.setText("");
@@ -145,6 +151,25 @@ public class interface_graphique extends JFrame {
 					  MatClient.setEnabled(true);
 				      table_affichage_client.clearSelection();
 				}
+				modèle =(DefaultTableModel)table_affichage_commande_1.getModel() ;
+				ligne =table_affichage_commande_1.getSelectedRow(); 
+				if(ligne!=-1) 
+				{ 
+				      nomClient.setText("");//pour remplir les champs par le produit selectionné
+				      prenomClient.setText("");
+				      MatClient.setText("");
+				      DateCmd.setText("");
+				      prixfinal.setText("");
+					  table_affichage_commande_1.clearSelection();
+				}
+				int i=0;
+				  while(modèle2.getRowCount()!=0) {
+					  if(modèle2.getValueAt(i, 0)!=null) {
+						  modèle2.removeRow(i);
+						  i--;
+					  }
+					  i++;
+				  }
 				
 			}
 		});
@@ -211,6 +236,7 @@ public class interface_graphique extends JFrame {
 		panel.add(lblPrixFinalCmd);
 		
 		prixfinal = new JTextField();
+		prixfinal.setEditable(false);
 		prixfinal.setColumns(10);
 		prixfinal.setBounds(156, 307, 102, 27);
 		panel.add(prixfinal);
@@ -230,10 +256,59 @@ public class interface_graphique extends JFrame {
 		panel.add(qtpdcmd);
 		
 		JButton ajoutgestionproduit = new JButton("ajouter");
+		ajoutgestionproduit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ajouter_pd_cmd_btn();}
+				protected void ajouter_pd_cmd_btn() {
+					modèle= (DefaultTableModel) table_affichage_commande_2.getModel();
+					boolean ajout=true;
+					if (refpdcmd.getText().equals("")||qtpdcmd.getText().equals("")) {
+						JOptionPane.showMessageDialog(contentPane, "remplissez tous les champs", " champs vides",JOptionPane.ERROR_MESSAGE); 
+						ajout=false;
+						}
+					boolean test=true;
+					int i;
+					if (ajout) {
+						Produit p=G.RechercheProduitParRef(refpdcmd.getText());	
+						if(p!=null) {
+							for(i=0;i<ListProd_Cmd.size();i++)
+									if(ListProd_Cmd.get(i).getProduit().equals(p)) {
+										test=false;
+										ListProd_Cmd.get(i).getProduit().modifyQte(Integer.parseInt(qtpdcmd.getText())); 
+										
+										break;
+									}
+							if(test==true) {
+								ListProd_Cmd.add(new QteProd(p,Integer.parseInt(qtpdcmd.getText())));
+							modèle.addRow(new Object[] {p.getRef(), qtpdcmd.getText(),p.getPrixfinal(),p.getPrixfinal()* Integer.parseInt(qtpdcmd.getText())});
+							}
+							else
+								modèle.setValueAt(ListProd_Cmd.get(i).getQte(), i, 1);
+							}
+						float sum=0;
+						for(QteProd qp : ListProd_Cmd)
+							sum+=qp.getProduit().getPrixfinal()*qp.getQte();
+						prixfinal.setText(sum+"");
+					}
+
+				}
+			
+		});
 		ajoutgestionproduit.setBounds(178, 228, 89, 31);
 		panel.add(ajoutgestionproduit);
 		
 		JButton suppressiongestionproduit = new JButton("supprimer");
+		suppressiongestionproduit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modèle =(DefaultTableModel)table_affichage_commande_2.getModel() ;
+				int ligne =table_affichage_commande_2.getSelectedRow();
+				if(ligne!=-1) {
+					modèle.removeRow(ligne);
+					ListProd_Cmd.remove(ligne);
+				}
+				
+			}
+		});
 		suppressiongestionproduit.setBounds(178, 269, 89, 31);
 		panel.add(suppressiongestionproduit);
 		
@@ -242,10 +317,10 @@ public class interface_graphique extends JFrame {
 		MatClient.setBounds(156, 97, 102, 27);
 		panel.add(MatClient);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(154, 136, 102, 27);
-		panel.add(textField_1);
+		DateCmd = new JTextField();
+		DateCmd.setColumns(10);
+		DateCmd.setBounds(154, 136, 102, 27);
+		panel.add(DateCmd);
 		
 		JLabel matfiscale_ajoutcl_1 = new JLabel("mat fiscale:");
 		matfiscale_ajoutcl_1.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -350,9 +425,10 @@ public class interface_graphique extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 					ajouter_cmd_btn();
 				}
-				private boolean testDate(String s) {return true;}//pour tester le mois ke jour et l'année 
+				private boolean testDate(String s) {return true;}//pour tester le mois le jour et l'année 
 				protected void ajouter_cmd_btn() {
 					modèle= (DefaultTableModel) table_affichage_commande_1.getModel();
+					modèle2= (DefaultTableModel) table_affichage_commande_2.getModel();
 					boolean ajout=true;
 					if (nomClient.getText().equals("")||prenomClient.getText().equals("")||MatClient.getText().equals("")) {
 				
@@ -362,13 +438,13 @@ public class interface_graphique extends JFrame {
 					if (ajout) {
 						Commande c=null;
 
-						if(date_commande.getText().equals("")) {
+						if(DateCmd.getText().equals("")) {
 							c=new Commande(new Client(Integer.parseInt(MatClient.getText()),nomClient.getText(),prenomClient.getText()));
 							System.out.println("dsf");
 						}
 						else 
-							if(testDate(date_commande.getText()))
-								c=new Commande(new Client(Integer.parseInt(MatClient.getText()),nomClient.getText(),prenomClient.getText()),date_commande.getText());
+							if(testDate(DateCmd.getText()))
+								c=new Commande(new Client(Integer.parseInt(MatClient.getText()),nomClient.getText(),prenomClient.getText()),DateCmd.getText());
 							else 
 								JOptionPane.showMessageDialog(contentPane, "Veuillez saisir une date valide de type JJ/MM/AA !!", "Date Invalide!",JOptionPane.ERROR_MESSAGE);
 							
@@ -376,8 +452,12 @@ public class interface_graphique extends JFrame {
 
 						
 						if(G.AddObj(c)) {
+							for(QteProd p : ListProd_Cmd) {
+								c.AddProduit(p.getProduit(), p.getQte());
+							}
+							ListProd_Cmd.clear();
 							modèle.addRow(new Object[] {c.getId(),c.getClient().getIdC(),c.getprixTotal(),c.getDateCmd()});
-							System.out.println(c.getDateCmd());
+							
 							SAL.WriteCmdInfos();
 						}
 					}
@@ -406,7 +486,17 @@ public class interface_graphique extends JFrame {
 		JButton modifier_la_commande = new JButton("Modifier la  Commande ");
 		modifier_la_commande.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				modèle =(DefaultTableModel)table_affichage_commande_1.getModel() ;
+				int ligne =table_affichage_commande_1.getSelectedRow(); 
+				if(ligne!=-1)
+				{ 
+					Commande c=G.RechercheCommandesPariD(Integer.parseInt(modèle.getValueAt(ligne, 0).toString()) );	
+					c.getListP().clear();
+						for(QteProd p : ListProd_Cmd) {
+							c.AddProduit(p.getProduit(), p.getQte());
+						}
+						SAL.WriteCmdInfos();
+				}
 			}
 
 		});
@@ -845,7 +935,40 @@ public class interface_graphique extends JFrame {
 		table_affichage_commande_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				modèle =(DefaultTableModel)table_affichage_commande_1.getModel() ;
+				modèle2 =(DefaultTableModel)table_affichage_commande_2.getModel() ;
+				int ligne =table_affichage_commande_1.getSelectedRow(); 
+				if(ligne!=-1)
+				{ 
+					int i=0;
+					  while(modèle2.getRowCount()!=0) {
+						  if(modèle2.getValueAt(i, 0)!=null) {
+							  modèle2.removeRow(i);
+							  i--;
+						  }
+						  i++;
+					  }
+					  Commande cmd= G.RechercheCommandesPariD(Integer.parseInt(modèle.getValueAt(ligne, 0).toString()));
+					  if(cmd!=null) {
+						  for(QteProd qp : cmd.getListP())
+								modèle2.addRow(new Object[] {qp.getProduit().getRef() , qp.getQte(),qp.getProduit().getPrixfinal(),qp.getProduit().getPrixfinal()* qp.getQte()});
+					  }
+					  
+					  System.out.println(Integer.parseInt(modèle.getValueAt(ligne, 1).toString()));
+					  System.out.println(G.AfficherClients());
+					  Client c =G.RechercheClientParId(Integer.parseInt(modèle.getValueAt(ligne, 1).toString()));
+					  System.out.println(c.toString()); 
+				      nomClient.setText(c.getNom());//pour remplir les champs par le produit selectionné
+				      prenomClient.setText(c.getPrenom());
+				      MatClient.setText(c.getMatricule()+"");
+				      DateCmd.setText(modèle.getValueAt(ligne, 3).toString());
+				      prixfinal.setText(modèle.getValueAt(ligne, 2).toString());
+				      for(QteProd qp : cmd.getListP())
+				    	  ListProd_Cmd.add(qp);
+
+				}
 			}
+			
 		});
 		table_affichage_commande_1.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -903,6 +1026,19 @@ public class interface_graphique extends JFrame {
 		panel_6_1_1_1_2_6.add(lblNewLabel_8_7);
 		Afficher_Table_Cmd();
 		table_affichage_commande_2 = new JTable();
+		table_affichage_commande_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				modèle =(DefaultTableModel)table_affichage_commande_2.getModel() ;
+				int ligne =table_affichage_commande_1.getSelectedRow(); 
+				if(ligne!=-1)
+				{ 
+					  refpdcmd.setText(modèle.getValueAt(ligne, 0).toString());
+				      refpdcmd.setEnabled(false);
+				      qtpdcmd.setText(modèle.getValueAt(ligne, 1).toString());
+				}
+			}
+		});
 		table_affichage_commande_2.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -942,7 +1078,7 @@ public class interface_graphique extends JFrame {
 		panel_6_1_1_1_2_3.setBounds(221, 11, 56, 20);
 		panel_5_1.add(panel_6_1_1_1_2_3);
 		
-		JLabel lblNewLabel_8_4 = new JLabel("libelle pd");
+		JLabel lblNewLabel_8_4 = new JLabel("ref pd");
 		lblNewLabel_8_4.setForeground(Color.WHITE);
 		lblNewLabel_8_4.setFont(new Font("Tahoma", Font.BOLD, 11));
 		panel_6_1_1_1_2_3.add(lblNewLabel_8_4);
