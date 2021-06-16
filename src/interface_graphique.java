@@ -64,6 +64,7 @@ public class interface_graphique extends JFrame {
 	private JTextField matajout;
 	private JTextField DateCmd;
 	static ArrayList<QteProd> ListProd_Cmd=new ArrayList<QteProd>();
+	private JTextField prenom_client;
 	/**
 	 * Launch the application.
 	 */
@@ -425,7 +426,14 @@ public class interface_graphique extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 					ajouter_cmd_btn();
 				}
-				private boolean testDate(String s) {return true;}//pour tester le mois le jour et l'année 
+				private boolean testDate(String s) {//pour tester le mois le jour et l'année 
+					
+					
+					
+					
+					
+					
+					return true;}
 				protected void ajouter_cmd_btn() {
 					modèle= (DefaultTableModel) table_affichage_commande_1.getModel();
 					modèle2= (DefaultTableModel) table_affichage_commande_2.getModel();
@@ -632,13 +640,13 @@ public class interface_graphique extends JFrame {
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(255, 228, 181));
-		panel_4.setBounds(500, 242, 202, 149);
+		panel_4.setBounds(500, 242, 202, 177);
 		contentPane.add(panel_4);
 		panel_4.setLayout(null);
 		
-		JLabel lblNewLabel_6 = new JLabel("id Client:");
-		lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_6.setBounds(10, 11, 94, 28);
+		JLabel lblNewLabel_6 = new JLabel("matricule Client:");
+		lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_6.setBounds(0, 13, 115, 28);
 		panel_4.add(lblNewLabel_6);
 		
 		JLabel lblNewLabel_6_1 = new JLabel("Nom Client:");
@@ -657,15 +665,63 @@ public class interface_graphique extends JFrame {
 		panel_4.add(nom_client);
 		
 		JButton valider_recherche_client = new JButton("Valider");
-		valider_recherche_client.setBounds(49, 104, 90, 29);
+		valider_recherche_client.setBounds(100, 148, 90, 29);
 		panel_4.add(valider_recherche_client);
 		valider_recherche_client.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
-			}
-		});
+				modèle2 =(DefaultTableModel)table_affichage_client.getModel() ;
+				int i=0;
+				  while(modèle2.getRowCount()!=0) {
+					  if(modèle2.getValueAt(i, 0)!=null) {
+						  modèle2.removeRow(i);
+						  i--;
+					  }
+					  i++;
+				  }
+				boolean recherche =true;
+
+				if (id_client.getText().equals("")&&nom_client.getText().equals("")&&prenom_client.getText().equals("")) {
+			
+					JOptionPane.showMessageDialog(contentPane, "remplissez l'une des champs", " champs vides",JOptionPane.ERROR_MESSAGE); 
+					recherche=false;
+					}
+				
+				if (recherche) {
+				if (id_client.getText()!=("")) {
+					Client c= G.RechercheClientParMatricule(Integer.parseInt(id_client.getText()));
+					if (c!= null) {
+					modèle2.addRow(new Object[] {c.getIdC(),c.getNom(),c.getPrenom(),c.getMatricule()});
+					SAL.WriteClInfos();
+					
+					}
+					
+					}
+				else
+					if (nom_client.getText()!=("")&&prenom_client.getText()!=("") ) {
+					{Client c= G.RechercheClientParNom(nom_client.getText(),prenom_client.getText());
+				if (c!= null) {
+				modèle2.addRow(new Object[] {c.getIdC(),c.getNom(),c.getPrenom(),c.getMatricule()});
+				SAL.WriteClInfos();
+					
+				}}
+				
+				}
+				
+				}}});
 		valider_recherche_client.setForeground(Color.WHITE);
 		valider_recherche_client.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
 		valider_recherche_client.setBackground(Color.GRAY);
+		
+		JLabel lblNewLabel_6_1_4 = new JLabel("Prenom Client:");
+		lblNewLabel_6_1_4.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_6_1_4.setBounds(0, 103, 115, 28);
+		panel_4.add(lblNewLabel_6_1_4);
+		
+		prenom_client = new JTextField();
+		prenom_client.setColumns(10);
+		prenom_client.setBounds(114, 103, 86, 33);
+		panel_4.add(prenom_client);
 		
 		JPanel panel_1_3 = new JPanel();
 		panel_1_3.setLayout(null);

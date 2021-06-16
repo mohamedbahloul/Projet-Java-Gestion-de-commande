@@ -12,6 +12,7 @@ public class Commande {
 	public static void setNbCommande(int nbCommande) {
 		NbCommande = nbCommande;
 	}
+	
 	private Client client;
 	private String dateCmd;
 	public static int NbCommande;
