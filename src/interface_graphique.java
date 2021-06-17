@@ -866,8 +866,44 @@ public class interface_graphique extends JFrame {
 		JButton bouton_recherche_commande = new JButton("Valider");
 		bouton_recherche_commande.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			}
-		});
+				
+				modèle2 =(DefaultTableModel)table_affichage_commande_1.getModel() ;
+				int i=0;
+				  while(modèle2.getRowCount()!=0) {
+					  if(modèle2.getValueAt(i, 0)!=null) {
+						  modèle2.removeRow(i);
+						  i--;
+					  }
+					  i++;
+				  }
+				boolean recherche =true;
+
+				if (id_commande.getText().equals("")&&date_commande.getText().equals("")) {
+			
+					JOptionPane.showMessageDialog(contentPane, "remplissez l'une des champs", " champs vides",JOptionPane.ERROR_MESSAGE); 
+					recherche=false;
+					}
+				if (recherche) {
+					ArrayList<Commande> ListCommandes=new ArrayList<Commande>();
+					ArrayList<Commande> ListCommandes2=new ArrayList<Commande>();
+					ListCommandes=(ArrayList<Commande>)G.getListC() .clone();
+					Commande cmd=null;
+					if (!id_commande.getText().equals("") ) {
+						try {
+						cmd=G.RechercheCommandesPariD(Integer.parseInt(id_client.getText()));
+						}catch(NumberFormatException err) {
+							JOptionPane.showMessageDialog(contentPane, "Veuillez saisir une matricule valide", " Format invalide",JOptionPane.ERROR_MESSAGE);
+							return;
+						}
+						
+						if(cmd!=null) {
+						
+						}
+						else
+							JOptionPane.showMessageDialog(contentPane, "Pas de Commandes possédant ces informations", " Aucune commande trouvé",JOptionPane.INFORMATION_MESSAGE);
+					}
+					
+		}}});
 		bouton_recherche_commande.setBounds(133, 108, 80, 29);
 		panel_4_1.add(bouton_recherche_commande);
 		bouton_recherche_commande.setForeground(Color.WHITE);
@@ -997,6 +1033,11 @@ public class interface_graphique extends JFrame {
 		panel_4_3.add(date_max);
 		
 		JButton bouton_valider_total_produit = new JButton("Valider");
+		bouton_valider_total_produit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		bouton_valider_total_produit.setBounds(133, 145, 80, 28);
 		panel_4_3.add(bouton_valider_total_produit);
 		bouton_valider_total_produit.setForeground(Color.WHITE);
