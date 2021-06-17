@@ -750,8 +750,15 @@ public class interface_graphique extends JFrame {
 					ArrayList<Client> ListClient=new ArrayList<Client>();
 					ArrayList<Client> ListClient2=new ArrayList<Client>();
 					ListClient=(ArrayList<Client>)G.getListCl().clone();
+					Client c=null;
 					if (!id_client.getText().equals("") ) {
-						Client c=G.RechercheClientParMatricule(Integer.parseInt(id_client.getText()));
+						try {
+						c=G.RechercheClientParMatricule(Integer.parseInt(id_client.getText()));
+						}catch(NumberFormatException err) {
+							JOptionPane.showMessageDialog(contentPane, "Veuillez saisir une matricule valide", " Format invalide",JOptionPane.ERROR_MESSAGE);
+							return;
+						}
+						
 						if(c!=null) {
 							ListClient.clear();
 							ListClient.add(c);
@@ -765,38 +772,18 @@ public class interface_graphique extends JFrame {
 						System.out.println(ListClient2.toString());
 						ListClient.clear();
 						if(ListClient2!=null) {
-							for(Client c:ListClient2)
-								ListClient.add(c);
+							for(Client k:ListClient2)
+								ListClient.add(k);
 						}
 						
 					}
 					System.out.println(ListClient2.toString());
 					if(ListClient.size()!=0)
-						for(Client c : ListClient) {
-							modèle2.addRow(new Object[] {c.getIdC(),c.getNom(),c.getPrenom(),c.getMatricule()});
+						for(Client k : ListClient) {
+							modèle2.addRow(new Object[] {k.getIdC(),k.getNom(),k.getPrenom(),k.getMatricule()});
 						}
 					else
 						JOptionPane.showMessageDialog(contentPane, "Pas de Client possédant ces informations", " Aucun client trouvé",JOptionPane.INFORMATION_MESSAGE);
-					/*if (id_client.getText()!=("")) {
-						Client c= G.RechercheClientParMatricule(Integer.parseInt(id_client.getText()));
-						if (c!= null) {
-						modèle2.addRow(new Object[] {c.getIdC(),c.getNom(),c.getPrenom(),c.getMatricule()});
-						SAL.WriteClInfos();
-						
-						}
-						
-						}
-					else
-						if (nom_client.getText()!=("")&&prenom_client.getText()!=("") ) {
-						{Client c= G.RechercheClientParNom(nom_client.getText(),prenom_client.getText());
-					if (c!= null) {
-					modèle2.addRow(new Object[] {c.getIdC(),c.getNom(),c.getPrenom(),c.getMatricule()});
-					SAL.WriteClInfos();
-						
-					}}
-					
-					}
-				*/
 				}}});
 		valider_recherche_client.setForeground(Color.WHITE);
 		valider_recherche_client.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
@@ -813,6 +800,25 @@ public class interface_graphique extends JFrame {
 		panel_4.add(prenom_client);
 		
 		JButton Reset_recherche_client_1 = new JButton("Reset");
+		Reset_recherche_client_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				nom_client.setText("");
+				prenom_client.setText("");
+				id_client.setText("");
+				modèle= (DefaultTableModel) table_affichage_client.getModel();
+				int i=0;
+				  while(modèle.getRowCount()!=0) {
+					  if(modèle.getValueAt(i, 0)!=null) {
+						  modèle.removeRow(i);
+						  i--;
+					  }
+					  i++;
+				  }
+				for(Client c:G.getListCl()) {			
+					modèle.addRow(new Object[] {c.getIdC() ,c.getNom(),c.getPrenom(),c.getMatricule()});
+				}
+			}
+		});
 		Reset_recherche_client_1.setForeground(Color.WHITE);
 		Reset_recherche_client_1.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
 		Reset_recherche_client_1.setBackground(Color.GRAY);
@@ -952,7 +958,7 @@ public class interface_graphique extends JFrame {
 		panel_1_2_2.setBounds(710, 423, 225, 49);
 		contentPane.add(panel_1_2_2);
 		
-		JLabel lblNewLabel_1_2_2 = new JLabel("Total produit");
+		JLabel lblNewLabel_1_2_2 = new JLabel("Total Commande");
 		lblNewLabel_1_2_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_2_2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 		lblNewLabel_1_2_2.setBounds(10, 0, 205, 25);
