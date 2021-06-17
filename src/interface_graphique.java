@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.UIManager;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class interface_graphique extends JFrame {
@@ -65,6 +66,7 @@ public class interface_graphique extends JFrame {
 	private JTextField DateCmd;
 	static ArrayList<QteProd> ListProd_Cmd=new ArrayList<QteProd>();
 	private JTextField prenom_client;
+	private JTextField count_cmd;
 	/**
 	 * Launch the application.
 	 */
@@ -237,6 +239,7 @@ public class interface_graphique extends JFrame {
 		panel.add(lblPrixFinalCmd);
 		
 		prixfinal = new JTextField();
+		prixfinal.setText("0");
 		prixfinal.setEditable(false);
 		prixfinal.setColumns(10);
 		prixfinal.setBounds(156, 307, 102, 27);
@@ -886,22 +889,40 @@ public class interface_graphique extends JFrame {
 				if (recherche) {
 					ArrayList<Commande> ListCommandes=new ArrayList<Commande>();
 					ArrayList<Commande> ListCommandes2=new ArrayList<Commande>();
-					ListCommandes=(ArrayList<Commande>)G.getListC() .clone();
+					ListCommandes=(ArrayList<Commande>)G.getListC().clone();
 					Commande cmd=null;
 					if (!id_commande.getText().equals("") ) {
 						try {
-						cmd=G.RechercheCommandesPariD(Integer.parseInt(id_client.getText()));
+						cmd=G.RechercheCommandesPariD(Integer.parseInt(id_commande.getText()));
 						}catch(NumberFormatException err) {
-							JOptionPane.showMessageDialog(contentPane, "Veuillez saisir une matricule valide", " Format invalide",JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(contentPane, "Veuillez saisir un id valide", " Format invalide",JOptionPane.ERROR_MESSAGE);
 							return;
 						}
 						
 						if(cmd!=null) {
-						
+							ListCommandes.clear();
+							ListCommandes.add(cmd);
 						}
 						else
 							JOptionPane.showMessageDialog(contentPane, "Pas de Commandes possédant ces informations", " Aucune commande trouvé",JOptionPane.INFORMATION_MESSAGE);
 					}
+					
+					if (!date_commande.getText().equals("")) {
+
+						ListCommandes2=G.RechercheCommandesParDate(date_commande.getText(),ListCommandes);
+						ListCommandes.clear();
+						if(ListCommandes2!=null) {
+							for(Commande k:ListCommandes2)
+								ListCommandes.add(k);
+						}
+					
+				}
+				if(ListCommandes.size()!=0)
+					for(Commande k : ListCommandes) {
+						modèle2.addRow(new Object[] {k.getId(),k.getClient().getIdC(),k.getprixTotal(),k.getDateCmd()});
+					}
+				else
+					JOptionPane.showMessageDialog(contentPane, "Pas de Commande possédant ces informations", " Aucune commande trouvé",JOptionPane.INFORMATION_MESSAGE);
 					
 		}}});
 		bouton_recherche_commande.setBounds(133, 108, 80, 29);
@@ -911,6 +932,34 @@ public class interface_graphique extends JFrame {
 		bouton_recherche_commande.setBackground(Color.GRAY);
 		
 		JButton Reset_recherche_commande = new JButton("Reset");
+		Reset_recherche_commande.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				id_commande.setText("");
+				date_commande.setText("");
+				modèle= (DefaultTableModel) table_affichage_commande_1.getModel();
+				int i=0;
+				  while(modèle.getRowCount()!=0) {
+					  if(modèle.getValueAt(i, 0)!=null) {
+						  modèle.removeRow(i);
+						  i--;
+					  }
+					  i++;
+				  }
+				for(Commande c:G.getListC()) {			
+					modèle.addRow(new Object[] {c.getId(),c.getClient().getIdC(),c.getprixTotal(),c.getDateCmd()});
+				}
+				modèle= (DefaultTableModel) table_affichage_commande_2.getModel();
+				 i=0;
+				  while(modèle.getRowCount()!=0) {
+					  if(modèle.getValueAt(i, 0)!=null) {
+						  modèle.removeRow(i);
+						  i--;
+					  }
+					  i++;
+				  }
+			}
+			
+		});
 		Reset_recherche_commande.setForeground(Color.WHITE);
 		Reset_recherche_commande.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
 		Reset_recherche_commande.setBackground(Color.GRAY);
@@ -1035,6 +1084,59 @@ public class interface_graphique extends JFrame {
 		JButton bouton_valider_total_produit = new JButton("Valider");
 		bouton_valider_total_produit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				modèle2 =(DefaultTableModel)table_affichage_commande_1.getModel() ;
+				int i=0;
+				  while(modèle2.getRowCount()!=0) {
+					  if(modèle2.getValueAt(i, 0)!=null) {
+						  modèle2.removeRow(i);
+						  i--;
+					  }
+					  i++;
+				  }
+				boolean recherche =true;
+
+				if (date_min.getText().equals("")&&date_max.getText().equals("")) {
+			
+					JOptionPane.showMessageDialog(contentPane, "remplissez l'une des champs", " champs vides",JOptionPane.ERROR_MESSAGE); 
+					recherche=false;
+					}
+				if (recherche) {
+					ArrayList<Commande> ListCommandes=new ArrayList<Commande>();
+					ArrayList<Commande> ListCommandes2=new ArrayList<Commande>();
+					//Commande cmd=null;
+					/*if (!id_commande.getText().equals("") ) {
+						try {
+						cmd=G.RechercheCommandesPariD(Integer.parseInt(id_commande.getText()));
+						}catch(NumberFormatException err) {
+							JOptionPane.showMessageDialog(contentPane, "Veuillez saisir un id valide", " Format invalide",JOptionPane.ERROR_MESSAGE);
+							return;
+						}
+						
+						if(cmd!=null) {
+							ListCommandes.clear();
+							ListCommandes.add(cmd);
+						}
+						else
+							JOptionPane.showMessageDialog(contentPane, "Pas de Commandes possédant ces informations", " Aucune commande trouvé",JOptionPane.INFORMATION_MESSAGE);
+					}
+					*/
+					try {
+					ListCommandes=G.RechercheCommandeParintervalleDate2(date_min.getText(), date_max.getText());
+					}catch(ParseException err) {
+						err.getMessage();
+						JOptionPane.showMessageDialog(contentPane, "Veuillez saisir une date valide!!", "Date Invalide",JOptionPane.ERROR_MESSAGE);
+					}
+					count_cmd.setText(ListCommandes.size()+"");
+					if(ListCommandes.size()!=0) {
+						for(Commande k : ListCommandes) {
+							modèle2.addRow(new Object[] {k.getId(),k.getClient().getIdC(),k.getprixTotal(),k.getDateCmd()});
+						}
+						
+					}
+					else
+						JOptionPane.showMessageDialog(contentPane, "Pas de Commande dans cet interval", " Aucune commande trouvé",JOptionPane.INFORMATION_MESSAGE);
+						
+				}
 				
 			}
 		});
@@ -1050,6 +1152,17 @@ public class interface_graphique extends JFrame {
 		Reset_total_produit_.setBackground(Color.GRAY);
 		Reset_total_produit_.setBounds(12, 143, 80, 28);
 		panel_4_3.add(Reset_total_produit_);
+		
+		count_cmd = new JTextField();
+		count_cmd.setEditable(false);
+		count_cmd.setColumns(10);
+		count_cmd.setBounds(114, 106, 86, 33);
+		panel_4_3.add(count_cmd);
+		
+		JLabel Total_cmd = new JLabel("Total Cmd:");
+		Total_cmd.setFont(new Font("Tahoma", Font.BOLD, 15));
+		Total_cmd.setBounds(10, 105, 94, 28);
+		panel_4_3.add(Total_cmd);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBounds(941, 43, 429, 149);

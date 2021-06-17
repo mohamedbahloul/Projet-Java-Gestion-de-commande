@@ -1,4 +1,7 @@
 
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -215,9 +218,9 @@ public class Gestion implements gestionObjet{
 		}
 		return null;
 	}
-	public ArrayList<Commande> RechercheCommandesParDate(String d){
+	public ArrayList<Commande> RechercheCommandesParDate(String d,ArrayList<Commande> ListeCmd){
 		ArrayList<Commande> tmp=new ArrayList<Commande>();
-		for(Commande c : ListC) {
+		for(Commande c : ListeCmd) {
 			if(c.getDateCmd().equals(d))
 				tmp.add(c);
 		}
@@ -251,6 +254,37 @@ public class Gestion implements gestionObjet{
 	
         /////////PARTIE CALCUL ET AFFICHAGE DES COMMANDES DANS UNE PERIODE DONNEE/////////
 	
+	
+		
+	public ArrayList<Commande> RechercheCommandeParintervalleDate2(String datemin , String datemax) throws ParseException{
+		SimpleDateFormat sdformat = new SimpleDateFormat("dd/MM/yyyy");
+	    Date act ;
+	    ArrayList<Commande> tmp=new ArrayList<Commande>();
+		for(Commande c : ListC) {
+			act = sdformat.parse(c.getDateCmd());
+			if(!datemin.equals("")&&!datemax.equals("")) {
+				Date max =sdformat.parse(datemax); 
+			    Date min =sdformat.parse(datemin);
+				if(max.compareTo(act)>=0&&act.compareTo(min)>=0) {
+					tmp.add(c);	
+				}
+			}
+			else if (datemin.equals("")) {
+				Date max =sdformat.parse(datemax); 
+				if(max.compareTo(act)>=0) {
+					tmp.add(c);	
+				}
+			}
+			else {
+				Date min =sdformat.parse(datemin);
+				if(act.compareTo(min)>=0) {
+					tmp.add(c);	
+				}
+			}
+		}
+	    return tmp;
+	}
+	/*
 	public ArrayList<Commande> RechercheCommandeParintervalleDate(String datemin , String datemax){
 		ArrayList<Commande> tmp=new ArrayList<Commande>();
 		for(Commande c : ListC) {
@@ -261,16 +295,14 @@ public class Gestion implements gestionObjet{
 			{
 				if( Integer.valueOf(date[1])  >= Integer.valueOf(min[1]) && Integer.valueOf(max[1])  >= Integer.valueOf(date[1]) )
 					if ( Integer.valueOf(date[0])  >= Integer.valueOf(min[0]) && Integer.valueOf(max[0])  >= Integer.valueOf(date[0]) )
-						{tmp.add(c);
-						
+						{
+							tmp.add(c);
 						}
 			}
 				
 		}
 		return tmp;
 		}
-		
-		
 		public int countCommandeParintervalleDate(String datemin , String datemax){
 			int count=0; 
 			for(Commande c : ListC) {
@@ -291,6 +323,6 @@ public class Gestion implements gestionObjet{
 		
 	}
 	
-	
+	*/
 	
 }
