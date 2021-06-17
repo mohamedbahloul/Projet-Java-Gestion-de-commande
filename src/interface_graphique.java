@@ -1013,6 +1013,78 @@ public class interface_graphique extends JFrame {
 		panel_4_2.add(lblNewLabel_6_3_1);
 		
 		JButton bouton_recherche_produit = new JButton("Valider");
+		bouton_recherche_produit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				modèle2 =(DefaultTableModel)table_affichage_produit.getModel() ;
+				int i=0;
+				  while(modèle2.getRowCount()!=0) {
+					  if(modèle2.getValueAt(i, 0)!=null) {
+						  modèle2.removeRow(i);
+						  i--;
+					  }
+					  i++;
+				  }
+				boolean recherche =true;
+
+				if (ref_produit.getText().equals("")&&libelle_produit.getText().equals("")&&prix_max.getText().equals("")&& prix_min.getText().equals("")) {
+					JOptionPane.showMessageDialog(contentPane, "remplissez l'une des champs au moins", " champs vides",JOptionPane.ERROR_MESSAGE); 
+					recherche=false;
+					}
+				
+				if (recherche) {
+					ArrayList<Produit> ListProduit=new ArrayList<Produit>();
+					ArrayList<Produit> ListProduit2=new ArrayList<Produit>();
+					ListProduit=(ArrayList<Produit>)G.getListP().clone();
+					Produit p=null;
+				       if (!ref_produit.getText().equals("") )
+				       {
+						p=G.RechercheProduitParRef(ref_produit.getText());
+						
+						
+						if(p!=null) {
+							ListProduit.clear();
+							ListProduit.add(p);
+						}
+						
+						else {JOptionPane.showMessageDialog(contentPane, "Pas de produit possédant ces informations", " Aucun produit trouvé",JOptionPane.INFORMATION_MESSAGE);}
+				       }
+				       else
+						if (!libelle_produit.getText().equals("")) {
+
+						ListProduit2=G.RechercheProduitParLibelle(libelle_produit.getText(),ListProduit);
+						System.out.println(ListProduit2.toString());
+						ListProduit.clear();
+						if(ListProduit2!=null) {
+							for(Produit k:ListProduit2)
+								ListProduit.add(k);
+						}
+						
+					}
+					
+						else if (!prix_min.getText().equals("")||!prix_max.getText().equals("")) {
+
+						ListProduit2=G.RechercheProduitPartranchedePrix(Float.parseFloat(prix_min.getText()), Float.parseFloat(prix_max.getText()), ListProduit2);
+						System.out.println(ListProduit2.toString());
+						ListProduit.clear();
+						if(ListProduit2!=null) {
+							for(Produit k:ListProduit2)
+								ListProduit.add(k);
+						}
+						
+					}
+					
+					if(ListProduit.size()!=0)
+						for(Produit k : ListProduit) {
+							modèle2.addRow(new Object[] {k.getRef(),k.getLibelle(),k.getPHT(),k.getTaxe(),k.getQte(),k.getTauxReduction()+"%",k.getPrixfinal()});
+						}
+					else
+						JOptionPane.showMessageDialog(contentPane, "Pas de produit possédant ces informations", " Aucun produit trouvé",JOptionPane.INFORMATION_MESSAGE);
+				}}
+				
+				
+			}
+		);
 		bouton_recherche_produit.setBounds(120, 184, 80, 27);
 		panel_4_2.add(bouton_recherche_produit);
 		bouton_recherche_produit.setForeground(Color.WHITE);
@@ -1020,6 +1092,30 @@ public class interface_graphique extends JFrame {
 		bouton_recherche_produit.setBackground(Color.GRAY);
 		
 		JButton Reset_recherche_produit_ = new JButton("Reset");
+		Reset_recherche_produit_.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ref_produit.setText("");
+				libelle_produit.setText("");
+				prix_min.setText("");
+				prix_max.setText("");
+				
+				modèle= (DefaultTableModel) table_affichage_produit.getModel();
+				int i=0;
+				
+				  while(modèle.getRowCount()!=0) {
+					  if(modèle.getValueAt(i, 0)!=null) {
+						  modèle.removeRow(i);
+						  i--;
+					  }
+					  i++;
+				  }
+				for(Produit p:G.getListP()) {			
+					modèle.addRow(new Object[] {p.getRef(),p.getLibelle(),p.getPHT(),p.getTaxe(),p.getQte(),p.getTauxReduction(),p.getPrixfinal()});
+				}
+			}
+			
+		});
 		Reset_recherche_produit_.setForeground(Color.WHITE);
 		Reset_recherche_produit_.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
 		Reset_recherche_produit_.setBackground(Color.GRAY);

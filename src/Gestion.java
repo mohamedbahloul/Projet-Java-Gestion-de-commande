@@ -212,6 +212,7 @@ public class Gestion implements gestionObjet{
 		return tmp;
 	}
 	public Commande RechercheCommandesPariD(int id){
+		
 		for(Commande c : ListC) {
 			if(c.getId()==id)
 				return c;
@@ -234,16 +235,16 @@ public class Gestion implements gestionObjet{
 		return null;
 	}
 	
-	public ArrayList<Produit> RechercheProduitParLibelle(String L){
+	public ArrayList<Produit> RechercheProduitParLibelle(String L,ArrayList<Produit> ListeP){
 		ArrayList<Produit> tmp=new ArrayList<Produit>();
-		for(Produit p : ListP) {
+		for(Produit p : ListeP) {
 			if(p.getLibelle().equals(L))
 				tmp.add(p);
 		}
 		return tmp;
 	}
 	
-	public ArrayList<Produit> RechercheProduitPartranchedePrix(float prixmin , float prixmax){
+	public ArrayList<Produit> RechercheProduitPartranchedePrix(float prixmin , float prixmax,ArrayList<Produit> ListeP){
 		ArrayList<Produit> tmp=new ArrayList<Produit>();
 		for(Produit p : ListP) {
 			if(p.getPrixfinal() >= prixmin && p.getPrixfinal() <= prixmax)
