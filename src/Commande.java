@@ -53,21 +53,6 @@ public class Commande {
 		}
 		return Math.round(prix);
 	}
-	/*public void ModifierProduit(ArrayList<QteProd> qp) {
-		for( int i=0;i<ListP.size();i++)
-			if(qp.contains(ListP.get(i))) {
-				for(QteProd h : qp) {
-					if(qp.equals(ListP.get(i))) {
-						ListP.get(i).getProduit().modifyQte(h.getQte());
-						ListP.remove(h);
-					}
-				}
-			}
-		for(int i =0;i<qp.size();i++ )
-			ListP.add(qp.get(i));
-		
-		
-	}*/
 	public boolean AddProduit(Produit p,int Qte) {
 		if(p.getQte()>=Qte) {
 			for(QteProd qp:ListP) {

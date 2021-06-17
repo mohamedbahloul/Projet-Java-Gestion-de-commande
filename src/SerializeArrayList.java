@@ -137,8 +137,7 @@ public class SerializeArrayList  {
       Path chemin = Paths.get("Commande.txt");
       InputStream input = null;
       try {
-          input = Files.newInputStream(chemin);
-           
+          input = Files.newInputStream(chemin);          
           BufferedReader reader = new BufferedReader(new InputStreamReader(input));
           while(reader.ready()){
 	    	  String s=reader.readLine();
@@ -149,7 +148,6 @@ public class SerializeArrayList  {
 		          for(int i=3;i<Str.length;i++) {     
 		    		  cmd.AddProduitFromRead(G.RechercheProduitParRef(Str[i++]), Integer.parseInt(Str[i]));
 		    	  }
-		          //System.out.println(cmd.toString());
 		          G.getListC().add(cmd);
 	          }
           }

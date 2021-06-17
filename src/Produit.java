@@ -71,8 +71,5 @@ public class Produit {
 			 S+="\t Solde= "+solde+"%";
 		 return S;
 	}
-	public void DeleteProduit() {
-		
-	}
 	
 }

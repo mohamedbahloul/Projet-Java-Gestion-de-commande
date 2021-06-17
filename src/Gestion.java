@@ -18,7 +18,6 @@ public class Gestion implements gestionObjet{
 					ListCl.add(((Commande)obj).getClient());
 				}
 			ListC.add((Commande)obj);
-			System.out.println("jnjnjo");
 			return true;
 		}
 		else if(obj instanceof Client) {
@@ -100,10 +99,6 @@ public class Gestion implements gestionObjet{
 		}
 		return true;
 	}
-	
-	public void AddProduitToCmd(Produit P,Commande C,int Qte) {
-		
-	}
 	public ArrayList<Produit> getListP(){return ListP;}
 	public ArrayList<Client> getListCl(){return ListCl;}
 	public ArrayList<Commande> getListC(){return ListC;}
@@ -114,15 +109,12 @@ public class Gestion implements gestionObjet{
 		return ListCl.toString()+"\n";
 	}
 	public String AfficherProduits () {
-			
-
 		return ListP.toString()+"\n";
 	}
 	public void setSoldeP(String ref,float solde) {
 		for(Produit p : ListP) {
 			if(p.getRef()==ref) {
 				p.setSolde(solde);
-				System.out.println(p.toString());
 				System.out.println("Le produit ayant la reférence "+ref +" est soldé avec un taux de réduction égale à "+p.getTauxReduction() +" Le prix finale de ce produit est "+p.getPrixfinal());
 				return;
 			}
@@ -169,14 +161,12 @@ public class Gestion implements gestionObjet{
 				}
 				else {
 					if( c.getNom().toLowerCase().equals(nom.toLowerCase())) {
-						System.out.println("fds");
 						cl.add(c);
 					}
 				}
 				
 					
 			}
-		System.out.println(cl.toString());
 		return cl;
 		
 	}
@@ -286,45 +276,6 @@ public class Gestion implements gestionObjet{
 		}
 	    return tmp;
 	}
-	/*
-	public ArrayList<Commande> RechercheCommandeParintervalleDate(String datemin , String datemax){
-		ArrayList<Commande> tmp=new ArrayList<Commande>();
-		for(Commande c : ListC) {
-			String[] min = datemin.split("/");
-			String[] max = datemax.split("/");
-			String[] date= (c.getDateCmd()).split("/"); 
-			if( Integer.valueOf(date[2])  >= Integer.valueOf(min[2]) && Integer.valueOf(max[2])  >= Integer.valueOf(date[2]) )
-			{
-				if( Integer.valueOf(date[1])  >= Integer.valueOf(min[1]) && Integer.valueOf(max[1])  >= Integer.valueOf(date[1]) )
-					if ( Integer.valueOf(date[0])  >= Integer.valueOf(min[0]) && Integer.valueOf(max[0])  >= Integer.valueOf(date[0]) )
-						{
-							tmp.add(c);
-						}
-			}
-				
-		}
-		return tmp;
-		}
-		public int countCommandeParintervalleDate(String datemin , String datemax){
-			int count=0; 
-			for(Commande c : ListC) {
-				String[] min = datemin.split("/");
-				String[] max = datemax.split("/");
-				String[] date= (c.getDateCmd()).split("/"); 
-				if( Integer.valueOf(date[2])  >= Integer.valueOf(min[2]) && Integer.valueOf(max[2])  >= Integer.valueOf(date[2]) )
-				{
-					if( Integer.valueOf(date[1])  >= Integer.valueOf(min[1]) && Integer.valueOf(max[1])  >= Integer.valueOf(date[1]) )
-						if ( Integer.valueOf(date[0])  >= Integer.valueOf(min[0]) && Integer.valueOf(max[0])  >= Integer.valueOf(date[0]) )
-							{
-							count++;
-							}
-				}
-					
-			}
-			return count;
-		
-	}
 	
-	*/
 	
 }
