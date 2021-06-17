@@ -1125,7 +1125,8 @@ public class interface_graphique extends JFrame {
 					}catch(ParseException err) {
 						err.getMessage();
 						JOptionPane.showMessageDialog(contentPane, "Veuillez saisir une date valide!!", "Date Invalide",JOptionPane.ERROR_MESSAGE);
-					}
+						return;
+					} 
 					count_cmd.setText(ListCommandes.size()+"");
 					if(ListCommandes.size()!=0) {
 						for(Commande k : ListCommandes) {
@@ -1147,6 +1148,28 @@ public class interface_graphique extends JFrame {
 		bouton_valider_total_produit.setBackground(Color.GRAY);
 		
 		JButton Reset_total_produit_ = new JButton("Reset");
+		Reset_total_produit_.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				date_min.setText("");
+				date_max.setText("");
+				count_cmd.setText("");
+				
+				modèle= (DefaultTableModel) table_affichage_commande_1.getModel();
+				int i=0;
+				  while(modèle.getRowCount()!=0) {
+					  if(modèle.getValueAt(i, 0)!=null) {
+						  modèle.removeRow(i);
+						  i--;
+					  }
+					  i++;
+				  }
+				for(Commande c:G.getListC()) {			
+					modèle.addRow(new Object[] {c.getId() ,c.getClient().getIdC(),c.getprixTotal(),c.getDateCmd()});
+				}
+			}
+		});
+				
+			
 		Reset_total_produit_.setForeground(Color.WHITE);
 		Reset_total_produit_.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
 		Reset_total_produit_.setBackground(Color.GRAY);
