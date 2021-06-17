@@ -149,11 +149,17 @@ public class Gestion implements gestionObjet{
 		
 	}
 	/////////PARTIE RECHERCHE/////////
-	public Client RechercheClientParNom(String nom,String prenom) {
-		for(Client c : ListCl) {
-			if(( c.getNom().toLowerCase().equals(nom.toLowerCase())  || c.getNom().toLowerCase().equals(prenom.toLowerCase()) )&&( c.getPrenom().toLowerCase().equals(nom.toLowerCase()) || c.getPrenom().toLowerCase().equals(prenom.toLowerCase()))) {
-				return c;
+	public ArrayList<Client> RechercheClientParNom(String nom,String prenom,ArrayList<Client> listclient) {
+		ArrayList<Client> cl=new ArrayList<Client>();
+		if(listclient!=null)
+			for(Client c : listclient) {
+				if(( c.getNom().toLowerCase().equals(nom.toLowerCase())  || c.getNom().toLowerCase().equals(prenom.toLowerCase()) )&&( c.getPrenom().toLowerCase().equals(nom.toLowerCase()) || c.getPrenom().toLowerCase().equals(prenom.toLowerCase()))) {
+					cl.add(c);			}
+				
 			}
+		if(cl.size()!=0) {
+			System.out.println(cl.toString());
+			return cl;
 		}
 		return null;
 	}
@@ -176,7 +182,7 @@ public class Gestion implements gestionObjet{
 	public ArrayList<Commande> RechercheCommandesParNomClient(String nom,String prenom){
 		ArrayList<Commande> tmp=new ArrayList<Commande>();
 		for(Commande c : ListC) {
-			if(c.getClient().equals(RechercheClientParNom(nom,prenom)))
+			if(RechercheClientParNom(nom,prenom,ListCl).contains(c.getClient()))
 				tmp.add(c);
 		}
 		return tmp;

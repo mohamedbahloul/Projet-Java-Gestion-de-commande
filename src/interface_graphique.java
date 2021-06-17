@@ -747,26 +747,46 @@ public class interface_graphique extends JFrame {
 					}
 				
 				if (recherche) {
-				if (id_client.getText()!=("")) {
-					Client c= G.RechercheClientParMatricule(Integer.parseInt(id_client.getText()));
+					ArrayList<Client> ListClient=new ArrayList<Client>();
+					ListClient=G.getListCl();
+					if (id_client.getText()!=("")) {
+						Client c=G.RechercheClientParMatricule(Integer.parseInt(id_client.getText()));
+						if(c!=null) {
+							ListClient.clear();
+							ListClient.add(c);
+						}
+						else
+							JOptionPane.showMessageDialog(contentPane, "Pas de Client possédant ces informations", " Aucun client trouvé",JOptionPane.INFORMATION_MESSAGE);
+					}
+					if (!nom_client.getText().equals("")||!prenom_client.getText().equals("")) {
+						System.out.println(ListClient.toString());
+						ListClient=G.RechercheClientParNom(nom_client.getText(),prenom_client.getText(),ListClient);
+					}
+					
+					if(ListClient!=null)
+						for(Client c : ListClient) {
+							modèle2.addRow(new Object[] {c.getIdC(),c.getNom(),c.getPrenom(),c.getMatricule()});
+						}
+					/*if (id_client.getText()!=("")) {
+						Client c= G.RechercheClientParMatricule(Integer.parseInt(id_client.getText()));
+						if (c!= null) {
+						modèle2.addRow(new Object[] {c.getIdC(),c.getNom(),c.getPrenom(),c.getMatricule()});
+						SAL.WriteClInfos();
+						
+						}
+						
+						}
+					else
+						if (nom_client.getText()!=("")&&prenom_client.getText()!=("") ) {
+						{Client c= G.RechercheClientParNom(nom_client.getText(),prenom_client.getText());
 					if (c!= null) {
 					modèle2.addRow(new Object[] {c.getIdC(),c.getNom(),c.getPrenom(),c.getMatricule()});
 					SAL.WriteClInfos();
+						
+					}}
 					
 					}
-					
-					}
-				else
-					if (nom_client.getText()!=("")&&prenom_client.getText()!=("") ) {
-					{Client c= G.RechercheClientParNom(nom_client.getText(),prenom_client.getText());
-				if (c!= null) {
-				modèle2.addRow(new Object[] {c.getIdC(),c.getNom(),c.getPrenom(),c.getMatricule()});
-				SAL.WriteClInfos();
-					
-				}}
-				
-				}
-				
+				*/
 				}}});
 		valider_recherche_client.setForeground(Color.WHITE);
 		valider_recherche_client.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
