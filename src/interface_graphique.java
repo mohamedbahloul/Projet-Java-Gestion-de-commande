@@ -25,7 +25,9 @@ import javax.swing.UIManager;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class interface_graphique extends JFrame {
 
@@ -107,6 +109,18 @@ public class interface_graphique extends JFrame {
 			//modèle.addRow(new Object[] {c.getId() ,c.getClient().getIdC(),c.getprixTotal(),c.getDateCmd()});
 		}
 	}
+	public boolean testDate(String s) {//pour tester si la date est compatible 
+		SimpleDateFormat sdformat = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			Date act = sdformat.parse(s);
+		}catch(ParseException err){
+			err.getMessage();
+			JOptionPane.showMessageDialog(contentPane, "Veuillez saisir une date de format DD/MM/YYYY", " Date invalide!",JOptionPane.ERROR_MESSAGE); 
+			return false;
+		}
+		
+		return true;
+		}
 	/**
 	 * Create the frame.
 	 */
@@ -156,6 +170,7 @@ public class interface_graphique extends JFrame {
 				}
 				modèle =(DefaultTableModel)table_affichage_commande_1.getModel() ;
 				ligne =table_affichage_commande_1.getSelectedRow(); 
+				prixfinal.setText("0");
 				if(ligne!=-1) 
 				{ 
 				      nomClient.setText("");//pour remplir les champs par le produit selectionné
@@ -288,10 +303,11 @@ public class interface_graphique extends JFrame {
 							}
 							else {
 								int k=0;
-								while(true) {
+								while(modèle.getRowCount()!=0) {
 									System.out.println("hh");
 									if(modèle.getValueAt(k, 0)==ListProd_Cmd.get(i).getProduit().getRef()) {
 										modèle.setValueAt(Integer.parseInt(qtpdcmd.getText())+Integer.parseInt(modèle.getValueAt(k, 1).toString()), k, 1);
+										modèle.setValueAt(Integer.parseInt(modèle.getValueAt(k, 1).toString())*p.getPrixfinal(), k, 3);
 										break;
 									}
 								k++;
@@ -438,14 +454,7 @@ public class interface_graphique extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 					ajouter_cmd_btn();
 				}
-				private boolean testDate(String s) {//pour tester le mois le jour et l'année 
-					
-					
-					
-					
-					
-					
-					return true;}
+				
 				protected void ajouter_cmd_btn() {
 					modèle= (DefaultTableModel) table_affichage_commande_1.getModel();
 					modèle2= (DefaultTableModel) table_affichage_commande_2.getModel();
@@ -460,27 +469,20 @@ public class interface_graphique extends JFrame {
 
 						if(DateCmd.getText().equals("")) {
 							c=new Commande(new Client(Integer.parseInt(MatClient.getText()),nomClient.getText(),prenomClient.getText()));
-							System.out.println("dsf");
 						}
 						else 
-							if(testDate(DateCmd.getText()))
+							if(testDate(DateCmd.getText())) {
 								c=new Commande(new Client(Integer.parseInt(MatClient.getText()),nomClient.getText(),prenomClient.getText()),DateCmd.getText());
-							else 
-								JOptionPane.showMessageDialog(contentPane, "Veuillez saisir une date valide de type JJ/MM/AA !!", "Date Invalide!",JOptionPane.ERROR_MESSAGE);
-							
-							
-
-						
-						if(G.AddObj(c)) {
-							for(QteProd p : ListProd_Cmd) {
-								if(c.AddProduit(p.getProduit(), p.getQte())==true)
-								{
-									ListProd_Cmd.clear();
-									modèle.addRow(new Object[] {c.getId(),c.getClient().getIdC(),c.getprixTotal(),c.getDateCmd()});
-									SAL.WriteCmdInfos();
-									SAL.WriteProdInfos();
-									modèle= (DefaultTableModel) table_affichage_produit.getModel();
-									int i=0;
+								}
+							else
+								return;
+						if(ListProd_Cmd.size()!=0) {
+							if(G.AddObj(c)==true) {
+								modèle= (DefaultTableModel) table_affichage_produit.getModel();
+								for(QteProd p : ListProd_Cmd) {
+									if(c.AddProduit(p.getProduit(), p.getQte())==true)//si la qte quand veut ajouter est inferieur à celle qui est deja stocké il retourne false
+									{
+										int i=0;
 										while(true) {
 											if(p.getProduit().getRef().equals(modèle.getValueAt(i, 0).toString()) ) {
 												modèle.setValueAt(p.getProduit().getQte(), i, 4);
@@ -488,16 +490,30 @@ public class interface_graphique extends JFrame {
 											}
 											i++;
 										}
-										JOptionPane.showMessageDialog(contentPane, "Commande Ajoutée avec succés !!", "Commande Ajoutée!",JOptionPane.INFORMATION_MESSAGE);
+									}
 								}
-								else {
-									JOptionPane.showMessageDialog(contentPane, "Quantité insuffisante !!", "Qte Insuffisante!",JOptionPane.ERROR_MESSAGE);
-								}
+								ListProd_Cmd.clear();
+								modèle= (DefaultTableModel) table_affichage_commande_1.getModel();
+								modèle.addRow(new Object[] {c.getId(),c.getClient().getIdC(),c.getprixTotal(),c.getDateCmd()});
+								SAL.WriteCmdInfos();
+								SAL.WriteProdInfos();
+								modèle= (DefaultTableModel) table_affichage_commande_2.getModel();
+								int i=0;
+								  while(modèle.getRowCount()!=0) {
+									  if(modèle.getValueAt(i, 0)!=null) {
+										  modèle.removeRow(i);
+										  i--;
+									  }
+									  i++;
+								  } 
+								JOptionPane.showMessageDialog(contentPane, "Commande Ajoutée avec succés !!", "Commande Ajoutée!",JOptionPane.INFORMATION_MESSAGE);
+								
 							}
-
+						}
+						else {
+							JOptionPane.showMessageDialog(contentPane, "Veuillez ajouter un ou des produits !!", "Aucun produit!",JOptionPane.ERROR_MESSAGE);
 						}
 					}
-
 					}
 			
 		});
@@ -537,14 +553,59 @@ public class interface_graphique extends JFrame {
 				if(ligne!=-1)
 				{ 
 					Commande c=G.RechercheCommandesPariD(Integer.parseInt(modèle.getValueAt(ligne, 0).toString()) );	
-					for(QteProd qp:c.getListP())
-						listCopie.add(qp);
-					c.getListP().clear();
+					if(ListProd_Cmd.size()!=0) {
+						for(QteProd qp:c.getListP()) {
+							qp.getProduit().modifyQte(qp.getQte());
+						}
+						c.getListP().clear();
+							modèle= (DefaultTableModel) table_affichage_produit.getModel();
+							for(QteProd p : ListProd_Cmd) {
+								if(c.AddProduit(p.getProduit(), p.getQte())==true)//si la qte qu'on veut ajouter est inferieur à celle qui est deja stocké il retourne false
+								{
+									int i=0;
+									while(true) {
+										if(p.getProduit().getRef().equals(modèle.getValueAt(i, 0).toString()) ) {
+											modèle.setValueAt(p.getProduit().getQte(), i, 4);
+											break;
+										}
+										i++;
+									}
+								}
+							}
+							ListProd_Cmd.clear();
+							modèle= (DefaultTableModel) table_affichage_commande_1.getModel();
+							modèle.setValueAt(c.getprixTotal(), ligne, 2);
+							if(!DateCmd.getText().equals("")) {
+								if(testDate(DateCmd.getText())) {
+									modèle.setValueAt(DateCmd.getText(), ligne, 3);
+									c.setDateCmd(DateCmd.getText());
+									}		
+							}
+							SAL.WriteCmdInfos();
+							SAL.WriteProdInfos();
+							modèle= (DefaultTableModel) table_affichage_commande_2.getModel();
+							int i=0;
+							  while(modèle.getRowCount()!=0) {
+								  if(modèle.getValueAt(i, 0)!=null) {
+									  modèle.removeRow(i);
+									  i--;
+								  }
+								  i++;
+							  } 
+							JOptionPane.showMessageDialog(contentPane, "Commande modifié avec succés !!", "Commande modifié!",JOptionPane.INFORMATION_MESSAGE);
+							
+						}
+					else {
+						JOptionPane.showMessageDialog(contentPane, "on ne peut pas modifié la commande si aucun produit n'est selectionné!!", "Aucun produit!",JOptionPane.ERROR_MESSAGE);
+					}
+					
+					
+					
+					/*
 						for(QteProd p : ListProd_Cmd) {
 							if(c.AddProduit(p.getProduit(), p.getQte())==true)
 							{
 								ListProd_Cmd.clear();
-								modèle.addRow(new Object[] {c.getId(),c.getClient().getIdC(),c.getprixTotal(),c.getDateCmd()});
 								SAL.WriteCmdInfos();
 								SAL.WriteProdInfos();
 								modèle= (DefaultTableModel) table_affichage_produit.getModel();
@@ -564,7 +625,16 @@ public class interface_graphique extends JFrame {
 									c.getListP().add(qp);
 								JOptionPane.showMessageDialog(contentPane, "Quantité insuffisante !!", "Qte Insuffisante!",JOptionPane.ERROR_MESSAGE);
 							}
-						}
+							modèle= (DefaultTableModel) table_affichage_commande_1.getModel();
+							modèle.setValueAt(c.getprixTotal(), ligne, 2);
+							if(!DateCmd.getText().equals("")) {
+								if(testDate(DateCmd.getText())) {
+									modèle.setValueAt(DateCmd.getText(), ligne, 3);
+									c.setDateCmd(DateCmd.getText());
+									}
+								
+							}
+						}*/
 				}
 				
 			}
@@ -1486,7 +1556,7 @@ public class interface_graphique extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				modèle =(DefaultTableModel)table_affichage_commande_2.getModel() ;
-				int ligne =table_affichage_commande_1.getSelectedRow(); 
+				int ligne =table_affichage_commande_2.getSelectedRow(); 
 				if(ligne!=-1)
 				{ 
 					  refpdcmd.setText(modèle.getValueAt(ligne, 0).toString());

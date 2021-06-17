@@ -18,6 +18,7 @@ public class Gestion implements gestionObjet{
 					ListCl.add(((Commande)obj).getClient());
 				}
 			ListC.add((Commande)obj);
+			System.out.println("jnjnjo");
 			return true;
 		}
 		else if(obj instanceof Client) {
