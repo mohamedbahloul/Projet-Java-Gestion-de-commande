@@ -724,7 +724,7 @@ public class interface_graphique extends JFrame {
 		panel_4.add(nom_client);
 		
 		JButton valider_recherche_client = new JButton("Valider");
-		valider_recherche_client.setBounds(100, 148, 90, 29);
+		valider_recherche_client.setBounds(114, 143, 90, 29);
 		panel_4.add(valider_recherche_client);
 		valider_recherche_client.addActionListener(new ActionListener() {
 			
@@ -802,6 +802,13 @@ public class interface_graphique extends JFrame {
 		prenom_client.setBounds(114, 103, 86, 33);
 		panel_4.add(prenom_client);
 		
+		JButton Reset_recherche_client_1 = new JButton("Reset");
+		Reset_recherche_client_1.setForeground(Color.WHITE);
+		Reset_recherche_client_1.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
+		Reset_recherche_client_1.setBackground(Color.GRAY);
+		Reset_recherche_client_1.setBounds(0, 143, 90, 29);
+		panel_4.add(Reset_recherche_client_1);
+		
 		JPanel panel_1_3 = new JPanel();
 		panel_1_3.setLayout(null);
 		panel_1_3.setBackground(new Color(255, 228, 225));
@@ -841,11 +848,22 @@ public class interface_graphique extends JFrame {
 		panel_4_1.add(lblNewLabel_6_1_1);
 		
 		JButton bouton_recherche_commande = new JButton("Valider");
-		bouton_recherche_commande.setBounds(79, 107, 80, 29);
+		bouton_recherche_commande.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		bouton_recherche_commande.setBounds(133, 108, 80, 29);
 		panel_4_1.add(bouton_recherche_commande);
 		bouton_recherche_commande.setForeground(Color.WHITE);
 		bouton_recherche_commande.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
 		bouton_recherche_commande.setBackground(Color.GRAY);
+		
+		JButton Reset_recherche_commande = new JButton("Reset");
+		Reset_recherche_commande.setForeground(Color.WHITE);
+		Reset_recherche_commande.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
+		Reset_recherche_commande.setBackground(Color.GRAY);
+		Reset_recherche_commande.setBounds(10, 108, 80, 29);
+		panel_4_1.add(Reset_recherche_commande);
 		
 		JPanel panel_4_2 = new JPanel();
 		panel_4_2.setLayout(null);
@@ -894,11 +912,18 @@ public class interface_graphique extends JFrame {
 		panel_4_2.add(lblNewLabel_6_3_1);
 		
 		JButton bouton_recherche_produit = new JButton("Valider");
-		bouton_recherche_produit.setBounds(52, 186, 80, 27);
+		bouton_recherche_produit.setBounds(120, 184, 80, 27);
 		panel_4_2.add(bouton_recherche_produit);
 		bouton_recherche_produit.setForeground(Color.WHITE);
 		bouton_recherche_produit.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
 		bouton_recherche_produit.setBackground(Color.GRAY);
+		
+		JButton Reset_recherche_produit_ = new JButton("Reset");
+		Reset_recherche_produit_.setForeground(Color.WHITE);
+		Reset_recherche_produit_.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
+		Reset_recherche_produit_.setBackground(Color.GRAY);
+		Reset_recherche_produit_.setBounds(10, 184, 80, 27);
+		panel_4_2.add(Reset_recherche_produit_);
 		
 		JPanel panel_1_2_1 = new JPanel();
 		panel_1_2_1.setLayout(null);
@@ -956,11 +981,18 @@ public class interface_graphique extends JFrame {
 		panel_4_3.add(date_max);
 		
 		JButton bouton_valider_total_produit = new JButton("Valider");
-		bouton_valider_total_produit.setBounds(69, 160, 80, 28);
+		bouton_valider_total_produit.setBounds(133, 145, 80, 28);
 		panel_4_3.add(bouton_valider_total_produit);
 		bouton_valider_total_produit.setForeground(Color.WHITE);
 		bouton_valider_total_produit.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
 		bouton_valider_total_produit.setBackground(Color.GRAY);
+		
+		JButton Reset_total_produit_ = new JButton("Reset");
+		Reset_total_produit_.setForeground(Color.WHITE);
+		Reset_total_produit_.setFont(new Font("Candara", Font.BOLD | Font.ITALIC, 15));
+		Reset_total_produit_.setBackground(Color.GRAY);
+		Reset_total_produit_.setBounds(12, 143, 80, 28);
+		panel_4_3.add(Reset_total_produit_);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBounds(941, 43, 429, 149);
