@@ -748,8 +748,9 @@ public class interface_graphique extends JFrame {
 				
 				if (recherche) {
 					ArrayList<Client> ListClient=new ArrayList<Client>();
-					ListClient=G.getListCl();
-					if (id_client.getText()!=("")) {
+					ArrayList<Client> ListClient2=new ArrayList<Client>();
+					ListClient=(ArrayList<Client>)G.getListCl().clone();
+					if (!id_client.getText().equals("") ) {
 						Client c=G.RechercheClientParMatricule(Integer.parseInt(id_client.getText()));
 						if(c!=null) {
 							ListClient.clear();
@@ -759,14 +760,23 @@ public class interface_graphique extends JFrame {
 							JOptionPane.showMessageDialog(contentPane, "Pas de Client possédant ces informations", " Aucun client trouvé",JOptionPane.INFORMATION_MESSAGE);
 					}
 					if (!nom_client.getText().equals("")||!prenom_client.getText().equals("")) {
-						System.out.println(ListClient.toString());
-						ListClient=G.RechercheClientParNom(nom_client.getText(),prenom_client.getText(),ListClient);
+
+						ListClient2=G.RechercheClientParNom(nom_client.getText(),prenom_client.getText(),ListClient);
+						System.out.println(ListClient2.toString());
+						ListClient.clear();
+						if(ListClient2!=null) {
+							for(Client c:ListClient2)
+								ListClient.add(c);
+						}
+						
 					}
-					
-					if(ListClient!=null)
+					System.out.println(ListClient2.toString());
+					if(ListClient.size()!=0)
 						for(Client c : ListClient) {
 							modèle2.addRow(new Object[] {c.getIdC(),c.getNom(),c.getPrenom(),c.getMatricule()});
 						}
+					else
+						JOptionPane.showMessageDialog(contentPane, "Pas de Client possédant ces informations", " Aucun client trouvé",JOptionPane.INFORMATION_MESSAGE);
 					/*if (id_client.getText()!=("")) {
 						Client c= G.RechercheClientParMatricule(Integer.parseInt(id_client.getText()));
 						if (c!= null) {

@@ -153,15 +153,28 @@ public class Gestion implements gestionObjet{
 		ArrayList<Client> cl=new ArrayList<Client>();
 		if(listclient!=null)
 			for(Client c : listclient) {
-				if(( c.getNom().toLowerCase().equals(nom.toLowerCase())  || c.getNom().toLowerCase().equals(prenom.toLowerCase()) )&&( c.getPrenom().toLowerCase().equals(nom.toLowerCase()) || c.getPrenom().toLowerCase().equals(prenom.toLowerCase()))) {
-					cl.add(c);			}
+				if(!prenom.equals("")&&!nom.equals("")) {
+					if(( c.getNom().toLowerCase().equals(nom.toLowerCase())  )&&(c.getPrenom().toLowerCase().equals(prenom.toLowerCase()))) {
+						cl.add(c);	
+					}
+				}
+				else if(nom.equals("")) {
+					if(c.getPrenom().toLowerCase().equals(prenom.toLowerCase())){
+						cl.add(c);			
+						}
+				}
+				else {
+					if( c.getNom().toLowerCase().equals(nom.toLowerCase())) {
+						System.out.println("fds");
+						cl.add(c);
+					}
+				}
 				
+					
 			}
-		if(cl.size()!=0) {
-			System.out.println(cl.toString());
-			return cl;
-		}
-		return null;
+		System.out.println(cl.toString());
+		return cl;
+		
 	}
 	public Client RechercheClientParMatricule(int Mat) {
 		for(Client c : ListCl) {
