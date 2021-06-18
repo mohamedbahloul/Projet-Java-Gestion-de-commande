@@ -69,17 +69,22 @@ public class interface_graphique extends JFrame {
 	static ArrayList<QteProd> ListProd_Cmd=new ArrayList<QteProd>();
 	private JTextField prenom_client;
 	private JTextField count_cmd;
+	
+	
 	/**
 	 * Launch the application.
 	 */
+	
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				G=new Gestion();
 				SAL=new SerializeArrayList(G);
-				SAL.ReadProd();
-				SAL.ReadCl();
-				SAL.ReadCmd();
+				SAL.ReadProd(); //lecture de la fichier produit 
+				SAL.ReadCl();//lecture de la fichier Client
+				SAL.ReadCmd(); ////lecture de la fichier Commande
+				
 				try {
 					interface_graphique frame = new interface_graphique();
 					frame.setVisible(true);
@@ -89,26 +94,31 @@ public class interface_graphique extends JFrame {
 			}
 		});
 	}
+	
+	
 	public void Afficher_Table_Prod() {
-		modèle= (DefaultTableModel) table_affichage_produit.getModel();
+		modèle= (DefaultTableModel) table_affichage_produit.getModel(); /*on prend la table
+		produit  = modele  */
 		for(Produit p:G.getListP()) {			
 			modèle.addRow(new Object[] {p.getRef(),p.getLibelle(),p.getPHT(),p.getTaxe(),p.getQte(),p.getTauxReduction()+"%",p.getPrixfinal()});
+		/* on affiche le produit dans la table affichage produit */
 		}
 	}
 	public void Afficher_Table_Client() {
 		modèle= (DefaultTableModel) table_affichage_client.getModel();
+		/*on met la table affichege client  dans la variable modele*/
 		for(Client c:G.getListCl()) {			
 			modèle.addRow(new Object[] {c.getIdC() ,c.getNom(),c.getPrenom(),c.getMatricule()});
+			/*on affiche les informations relié au client dans le tab client*/
 		}
 	}
 	public void Afficher_Table_Cmd() {
 		modèle= (DefaultTableModel) table_affichage_commande_1.getModel();
 		for(Commande c:G.getListC()) {		
 			modèle.addRow(new Object[] {c.getId(),c.getClient().getIdC(),c.getprixTotal(),c.getDateCmd()});
-			//modèle.addRow(new Object[] {c.getId() ,c.getClient().getIdC(),c.getprixTotal(),c.getDateCmd()});
 		}
 	}
-	public boolean testDate(String s) {//pour tester si la date est compatible 
+	public boolean testDate(String s) {//pour tester si la date est compatible au format déclaré 
 		SimpleDateFormat sdformat = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			Date act = sdformat.parse(s);
@@ -120,9 +130,10 @@ public class interface_graphique extends JFrame {
 		
 		return true;
 		}
+	
+	
 	/**
-	 * Create the frame.
-	 */
+	 * Create the frame. //// programmation des boutons , des champs à remplir ...*/
 	public interface_graphique() {
 		setTitle("Gestion des commandes");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -138,7 +149,9 @@ public class interface_graphique extends JFrame {
 				//sinon elle retourne l'indice du ligne sélectionné 
 				if(ligne!=-1||ligne2!=-1)//pour supprimer les 2 zones de textes d'ajout produit vers commande
 				{ 
-				      refproduit.setText("");//pour vider le champs
+					//pour vider le champs:
+					
+				      refproduit.setText("");
 				      libelleproduit.setText("");
 				      prixhorstaxe.setText("");
 				      taxe.setText("");
@@ -147,13 +160,16 @@ public class interface_graphique extends JFrame {
 				      refpdcmd.setEnabled(true);
 				      refpdcmd.setText("");
 				      qtpdcmd.setText("");
-				      table_affichage_produit.clearSelection();
+				      table_affichage_produit.clearSelection();// annuler la selection 
 				}
+				
 				modèle =(DefaultTableModel)table_affichage_client.getModel() ;
 				ligne =table_affichage_client.getSelectedRow(); //getselectedrow retourne -1 si aucun ligne est sélectionné
 				//sinon elle retourne l'indice du ligne sélectionné 
 				if(ligne!=-1)//on a selectionné une ligne 
 				{ 
+					//pour vider les champs:
+					
 					  nomclient_ajoutcl.setText("");
 					  prenomajout.setText("");
 					  matajout.setText("");
@@ -167,19 +183,21 @@ public class interface_graphique extends JFrame {
 					  MatClient.setEnabled(true);
 				      table_affichage_client.clearSelection();
 				}
+				
 				modèle =(DefaultTableModel)table_affichage_commande_1.getModel() ;
 				ligne =table_affichage_commande_1.getSelectedRow(); 
-				prixfinal.setText("0");
-				ListProd_Cmd.clear();
-				if(ligne!=-1) 
+				prixfinal.setText("0"); //par defaut le prix final prend 0
+				ListProd_Cmd.clear(); 
+				if(ligne!=-1) //ligne selectionné
 				{ 
-				      nomClient.setText("");//pour remplir les champs par le produit selectionné
+				      nomClient.setText("");
 				      prenomClient.setText("");
 				      MatClient.setText("");
 				      DateCmd.setText("");
 				      prixfinal.setText("");
 					  table_affichage_commande_1.clearSelection();
 				}
+				//pour vider la table :
 				int i=0;
 				  while(modèle2.getRowCount()!=0) {
 					  if(modèle2.getValueAt(i, 0)!=null) {
@@ -453,17 +471,18 @@ public class interface_graphique extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 					ajouter_cmd_btn();
 				}
-				
+				////programmation du bouton ajouter commande:
+			
 				protected void ajouter_cmd_btn() {
-					modèle= (DefaultTableModel) table_affichage_commande_1.getModel();
-					modèle2= (DefaultTableModel) table_affichage_commande_2.getModel();
+					modèle= (DefaultTableModel) table_affichage_commande_1.getModel();//on prend la tab cmd 1
+					modèle2= (DefaultTableModel) table_affichage_commande_2.getModel();//on prend la tab cmd2 
 					boolean ajout=true;
 					if (nomClient.getText().equals("")||prenomClient.getText().equals("")||MatClient.getText().equals("")) {
-				
+						//si toutes les champs sont vides pas d'ajout 
 						JOptionPane.showMessageDialog(contentPane, "remplissez tous les champs", " champs vides",JOptionPane.ERROR_MESSAGE); 
 						ajout=false;
 						}
-					if (ajout) {
+					if (ajout) /*si ajout est vrai , il existe des champs remplis*/{
 						Commande c=null;
 
 						if(DateCmd.getText().equals("")) {
@@ -525,7 +544,8 @@ public class interface_graphique extends JFrame {
 		supprimer_la_commande.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modèle =(DefaultTableModel)table_affichage_commande_1.getModel() ;
-				int ligne =table_affichage_commande_1.getSelectedRow(); //getselectedrow retourne -1 si aucun ligne est sélectionné
+				int ligne =table_affichage_commande_1.getSelectedRow();
+				//getselectedrow retourne -1 si aucun ligne est sélectionné
 				//sinon elle retourne l'indice du ligne sélectionné 
 				if(ligne!=-1)//on a selectionné une ligne 
 				{ 
@@ -559,7 +579,8 @@ public class interface_graphique extends JFrame {
 						c.getListP().clear();
 							modèle= (DefaultTableModel) table_affichage_produit.getModel();
 							for(QteProd p : ListProd_Cmd) {
-								if(c.AddProduit(p.getProduit(), p.getQte())==true)//si la qte qu'on veut ajouter est inferieur à celle qui est deja stocké il retourne false
+								if(c.AddProduit(p.getProduit(), p.getQte())==true)
+			//si la qte qu'on veut ajouter est inferieur à celle qui est deja stocké il retourne false
 								{
 									int i=0;
 									while(true) {
@@ -656,12 +677,12 @@ public class interface_graphique extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				modèle =(DefaultTableModel)table_affichage_produit.getModel() ;
-				int ligne =table_affichage_produit.getSelectedRow(); //getselectedrow retourne -1 si aucun ligne est sélectionné
+				int ligne =table_affichage_produit.getSelectedRow();
+				//getselectedrow retourne -1 si aucun ligne est sélectionné
 				//sinon elle retourne l'indice du ligne sélectionné 
 				if(ligne!=-1)//on a selectionné une ligne 
 				{ 
 					
-				      // G.DeleteObj( new Produit ((String)(table_affichage_produit.getValueAt(ligne, 0)),(String)(table_affichage_produit.getValueAt(ligne, 1)), Float.parseFloat((String)(table_affichage_produit.getValueAt(ligne, 2))) , Float.parseFloat((String)(table_affichage_produit.getValueAt(ligne, 3))) ,Integer.parseInt((String)(table_affichage_produit.getValueAt(ligne, 4)))));
 					  G.getListP().get(ligne).setPHT(Float.parseFloat(prixhorstaxe.getText()) ); 
 					  G.getListP().get(ligne).setTaxe(Float.parseFloat(taxe.getText()) );
 					  G.getListP().get(ligne).setLibelle(libelleproduit.getText()); 
@@ -673,8 +694,10 @@ public class interface_graphique extends JFrame {
 					  modèle.setValueAt(quantité.getText(), ligne, 4);
 					  modèle.setValueAt(taux_de_reduction.getText(), ligne, 5);
 					  modèle.setValueAt(G.getListP().get(ligne).getPrixfinal(), ligne, 6);
-					  SAL.WriteProdInfos();
-				      refproduit.setText("");//pour vider le champs
+					  SAL.WriteProdInfos();//enregistrer dans le fichier produit
+					
+					  //pour vider le champs:
+				      refproduit.setText("");
 				      libelleproduit.setText("");
 				      prixhorstaxe.setText("");
 				      taxe.setText("");
@@ -698,11 +721,11 @@ public class interface_graphique extends JFrame {
 		supprimer_le_produit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modèle =(DefaultTableModel)table_affichage_produit.getModel() ;
-				int ligne =table_affichage_produit.getSelectedRow(); //getselectedrow retourne -1 si aucun ligne est sélectionné
+				int ligne =table_affichage_produit.getSelectedRow();
+				//getselectedrow retourne -1 si aucun ligne est sélectionné
 				//sinon elle retourne l'indice du ligne sélectionné 
 				if(ligne!=-1)//on a selectionné une ligne 
 				{ 
-				    // G.DeleteObj( new Produit ((String)(table_affichage_produit.getValueAt(ligne, 0)),(String)(table_affichage_produit.getValueAt(ligne, 1)), Float.parseFloat((String)(table_affichage_produit.getValueAt(ligne, 2))) , Float.parseFloat((String)(table_affichage_produit.getValueAt(ligne, 3))) ,Integer.parseInt((String)(table_affichage_produit.getValueAt(ligne, 4)))));
 					  G.getListP().remove(ligne); 
 					  SAL.WriteProdInfos();
 				      modèle.removeRow(ligne);
@@ -767,6 +790,8 @@ public class interface_graphique extends JFrame {
 			
 			public void actionPerformed(ActionEvent e) {
 				modèle2 =(DefaultTableModel)table_affichage_client.getModel() ;
+				
+				//vider le tab:
 				int i=0;
 				  while(modèle2.getRowCount()!=0) {
 					  if(modèle2.getValueAt(i, 0)!=null) {
@@ -775,6 +800,7 @@ public class interface_graphique extends JFrame {
 					  }
 					  i++;
 				  }
+				  
 				boolean recherche =true;
 
 				if (id_client.getText().equals("")&&nom_client.getText().equals("")&&prenom_client.getText().equals("")) {
@@ -1422,7 +1448,8 @@ public class interface_graphique extends JFrame {
 								modèle2.addRow(new Object[] {qp.getProduit().getRef() , qp.getQte(),qp.getProduit().getPrixfinal(),qp.getProduit().getPrixfinal()* qp.getQte()});
 					  }		
 					  Client c =G.RechercheClientParId(Integer.parseInt(modèle.getValueAt(ligne, 1).toString()));
-				      nomClient.setText(c.getNom());//pour remplir les champs par le produit selectionné
+					//pour remplir les champs par le produit selectionné
+					  nomClient.setText(c.getNom());
 				      prenomClient.setText(c.getPrenom());
 				      MatClient.setText(c.getMatricule()+"");
 				      DateCmd.setText(modèle.getValueAt(ligne, 3).toString());
@@ -1774,8 +1801,11 @@ public class interface_graphique extends JFrame {
 				
 				  G.getListCl().get(ligne).setNom(nomclient_ajoutcl.getText());
 				  G.getListCl().get(ligne).setPrenom(prenomajout.getText());
+				  G.getListCl().get(ligne).setMatricule(Integer.parseInt(matajout.getText()) );
 				  modèle.setValueAt(nomclient_ajoutcl.getText(), ligne, 1);
 				  modèle.setValueAt(prenomajout.getText(), ligne, 2);
+				  modèle.setValueAt(matajout.getText(), ligne, 3);
+
 				  SAL.WriteClInfos();
 				  matajout.setText("");
 				  prenomajout.setText("");

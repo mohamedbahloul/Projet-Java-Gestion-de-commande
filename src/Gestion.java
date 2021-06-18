@@ -4,11 +4,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+/* l'ajout et la suppression aura lieu dans gestion objet mais la modification on la mis ici juste
+ * pour le teste mais elle se passe dans la partie interface graphique*/
 
 public class Gestion implements gestionObjet{
-
+//Gestion implemente du gestion objet 
+	
 	public boolean AddObj(Object obj) {
-		if(obj instanceof Commande) {
+		if(obj instanceof Commande) { //si l'objet est une commande on fait cela :
 			Client cl=RechercheClientParMatricule((((Commande) obj).getClient()).getMatricule());
 				if(cl!=null) {
 					cl.nbClient--;
@@ -20,7 +23,7 @@ public class Gestion implements gestionObjet{
 			ListC.add((Commande)obj);
 			return true;
 		}
-		else if(obj instanceof Client) {
+		else if(obj instanceof Client) { //si l'objet est un client :
 			Client c=RechercheClientParMatricule(((Client) obj).getMatricule());
 			
 			if(c==null) {
@@ -29,7 +32,7 @@ public class Gestion implements gestionObjet{
 			}
 			return false;
 		}
-		else if(obj instanceof Produit) {
+		else if(obj instanceof Produit) { //si l'objet est un produit:
 			Produit p=RechercheProduitParRef(((Produit) obj).getRef());
 				if(p!=null){ 
 					System.out.println("Cet référence existe déja!!");
@@ -43,6 +46,9 @@ public class Gestion implements gestionObjet{
 	}
 	/*le client yetbadel l matricule mte3ou fel commande walla ki na3mel modifier walla nkhaliwahh clé primaire
 	si oui lazem ki na3mel modifier l client w manel9ahech fel tableau yetzed  */
+	
+	//la partie modifier est traité principalement dans l'interface graphique 
+	
 	public boolean ModifierObj(Object obj) {					
 		if(obj instanceof Commande) {
 			Commande c=RechercheCommandesPariD(((Commande) obj).getId());
@@ -78,6 +84,9 @@ public class Gestion implements gestionObjet{
 		}
 		return true;
 	}
+	
+	/// la suppression :
+	
 	public boolean DeleteObj(Object obj) {
 		if(obj instanceof Commande) {
 			Commande c=RechercheCommandesPariD(((Commande) obj).getId());
@@ -99,18 +108,26 @@ public class Gestion implements gestionObjet{
 		}
 		return true;
 	}
+	
 	public ArrayList<Produit> getListP(){return ListP;}
 	public ArrayList<Client> getListCl(){return ListCl;}
 	public ArrayList<Commande> getListC(){return ListC;}
+	
 	public String AfficherCommandes () {
 		return ListC.toString()+"\n";
 	}
+	
+	
 	public String AfficherClients () {
 		return ListCl.toString()+"\n";
 	}
+	
+	
 	public String AfficherProduits () {
 		return ListP.toString()+"\n";
 	}
+	
+	
 	public void setSoldeP(String ref,float solde) {
 		for(Produit p : ListP) {
 			if(p.getRef()==ref) {
@@ -122,16 +139,20 @@ public class Gestion implements gestionObjet{
 		}
 		
 	}
+	
+	
 	public void unsetSolde(String ref) {
 		for(Produit p : ListP) {
 			if(p.getRef()==ref) {
 				p.setSolde(0);
-				System.out.println("Le produit ayant la reférence "+ref +" n'est pas soldé");
+				System.out.println("Le produit ayant la reférence "+ref +" n'est pas soldé"); //si le solde =0 produit non soldé
 				return;
 			}
 		System.out.println("Ce produit n'existe pas!!");
 		}
 	}
+	
+	
 	public void modifierQteProduit(String ref,int Qte) {
 		for(Produit p : ListP)
 		{
