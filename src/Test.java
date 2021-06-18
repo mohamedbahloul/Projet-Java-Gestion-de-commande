@@ -11,9 +11,10 @@ public class Test {
 		System.out.println(G.AfficherProduits());
 		System.out.println(G.AfficherClients());
 		System.out.println(G.AfficherCommandes());
-		G.ModifierObj(new Produit("0021","Ma3joun asnen",400,100,56));
 		G.AddObj(new Commande(new Client(114,"mohamed","bahloul")));
 		System.out.println(G.AfficherCommandes());
+		System.out.println(G.AfficherClients());
+		//G.ModifierObj(new Commande())
 		//SAL.WriteProdInfos(G.getListP());
 		
 		/*
@@ -53,11 +54,11 @@ public class Test {
 		System.out.println("calcul et affichage des produits dans une periode donnée");
 		System.out.println(G.RechercheCommandeParintervalleDate("1/01/2021", "30/10/2024") .toString());
 		System.out.println("le nombre de commande dans cette periode est : " +G.countCommandeParintervalleDate("1/01/2021", "30/10/2021"));
-		
+		*/
 		
 		SAL.WriteProdInfos();
 		SAL.WriteCmdInfos();
 		SAL.WriteClInfos();
-	*/}
+	}
 
 }

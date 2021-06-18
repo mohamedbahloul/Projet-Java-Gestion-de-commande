@@ -554,6 +554,9 @@ public class interface_graphique extends JFrame {
 				      modèle.removeRow(ligne);
 				      JOptionPane.showMessageDialog(contentPane, "Commande supprimé avec succés !!", "Commande supprimé!",JOptionPane.INFORMATION_MESSAGE);
 				}
+				else {
+					JOptionPane.showMessageDialog(contentPane, "Aucune Commande sélectionnée", "Commande n'est pas sélectionné!",JOptionPane.INFORMATION_MESSAGE);
+				}
 				}
 			
 		});
@@ -612,12 +615,25 @@ public class interface_graphique extends JFrame {
 								  }
 								  i++;
 							  } 
+							  modèle= (DefaultTableModel) table_affichage_produit.getModel();
+								 i=0;
+								  while(modèle.getRowCount()!=0) {
+									  if(modèle.getValueAt(i, 0)!=null) {
+										  modèle.removeRow(i);
+										  i--;
+									  }
+									  i++;
+								  } 
+							  Afficher_Table_Prod();
 							JOptionPane.showMessageDialog(contentPane, "Commande modifié avec succés !!", "Commande modifié!",JOptionPane.INFORMATION_MESSAGE);
 							
 						}
 					else {
 						JOptionPane.showMessageDialog(contentPane, "on ne peut pas modifié la commande si aucun produit n'est selectionné!!", "Aucun produit!",JOptionPane.ERROR_MESSAGE);
 					}
+				}
+				else {
+					JOptionPane.showMessageDialog(contentPane, "Aucune Commande sélectionnée", "Commande n'est pas sélectionné!",JOptionPane.INFORMATION_MESSAGE);
 				}
 				
 			}
@@ -707,6 +723,9 @@ public class interface_graphique extends JFrame {
 				      JOptionPane.showMessageDialog(contentPane, "Produit modifié!", "Produit modifié!",JOptionPane.INFORMATION_MESSAGE); 
 				      
 				}
+				else {
+					JOptionPane.showMessageDialog(contentPane, "Aucun Produit sélectionnée", "Produit n'est pas sélectionné!",JOptionPane.INFORMATION_MESSAGE);
+				}
 					
 				
 			}
@@ -737,6 +756,9 @@ public class interface_graphique extends JFrame {
 				      taux_de_reduction.setText("");
 				      refproduit.requestFocus();
 				      JOptionPane.showMessageDialog(contentPane, "Produit supprimé!", " Produit supprimé!",JOptionPane.INFORMATION_MESSAGE); 
+				}
+				else {
+					JOptionPane.showMessageDialog(contentPane, "Aucun Produit sélectionnée", "Produit n'est pas sélectionné!",JOptionPane.INFORMATION_MESSAGE);
 				}
 				}
 		});
@@ -1454,6 +1476,7 @@ public class interface_graphique extends JFrame {
 				      MatClient.setText(c.getMatricule()+"");
 				      DateCmd.setText(modèle.getValueAt(ligne, 3).toString());
 				      prixfinal.setText(modèle.getValueAt(ligne, 2).toString());
+				      ListProd_Cmd.clear();
 				      for(QteProd qp : cmd.getListP())
 				    	  ListProd_Cmd.add(qp);
 
@@ -1527,6 +1550,7 @@ public class interface_graphique extends JFrame {
 					  refpdcmd.setText(modèle.getValueAt(ligne, 0).toString());
 				      refpdcmd.setEnabled(false);
 				      qtpdcmd.setText(modèle.getValueAt(ligne, 1).toString());
+				      
 				}
 			}
 		});
@@ -1814,6 +1838,9 @@ public class interface_graphique extends JFrame {
 				  JOptionPane.showMessageDialog(contentPane, "Client modifié!", " Client modifié!",JOptionPane.INFORMATION_MESSAGE); 
 			      
 			}
+			else {
+				JOptionPane.showMessageDialog(contentPane, "Aucun Client sélectionnée", "Client n'est pas sélectionné!",JOptionPane.INFORMATION_MESSAGE);
+			}
 			
 		}});
 		modifier_un_client.setForeground(Color.WHITE);
@@ -1859,6 +1886,9 @@ public class interface_graphique extends JFrame {
 					  nomclient_ajoutcl.setText("");
 					  matajout.requestFocus();
 					  JOptionPane.showMessageDialog(contentPane, "Client supprimé!", " Client supprimé!",JOptionPane.INFORMATION_MESSAGE); 
+				}
+				else {
+					JOptionPane.showMessageDialog(contentPane, "Aucun Produit sélectionnée", "Produit n'est pas sélectionné!",JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});

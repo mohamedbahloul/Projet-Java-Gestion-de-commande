@@ -10,7 +10,7 @@ public class Client {
 		setIdC(nbClient++);		//le nombre va etre incrémenté automatiquement
 	}
 	
-	 /// on a définie les getters et les setters 
+	 /// on a défini les getters et les setters 
 	
 	public int getIdC() {
 		return idC;
